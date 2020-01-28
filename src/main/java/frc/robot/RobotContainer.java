@@ -11,9 +11,11 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.MoveDart;
 import frc.robot.subsystems.Dart;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Intake;
+import frc.robot.util.JoystickController;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /**
@@ -32,7 +34,7 @@ public class RobotContainer {
 
   public static Dart dart;
 
-  public static JoystickController j0;
+  public static JoystickController j2;
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -53,6 +55,9 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+
+    dart.setDefaultCommand(new MoveDart());
+
   }
 
 
