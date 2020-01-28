@@ -22,14 +22,15 @@ public class Intake extends SubsystemBase {
   public Intake() 
   {
     intake = new WPI_TalonSRX(RobotMap.INTAKE_ID);
+    intake.configFactoryDefault();
   }
 
-  public void move(double speed) 
+  public void spin(double speed) 
   {
     intake.set(speed);
   }
 
-  public void stop() 
+  public void stopSpinning() 
   {
     intake.stopMotor();
   }
