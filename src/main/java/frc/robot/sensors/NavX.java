@@ -9,7 +9,6 @@ public class NavX {
     public NavX(AHRS ahrs) {
         this.navX = ahrs;
     }
-
     public double getAngle() {
         return navX.getYaw();
 
