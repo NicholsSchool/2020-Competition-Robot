@@ -7,20 +7,39 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
+import frc.robot.Constants;
+import frc.robot.RobotMap;
 
 /**
  * Add your docs here.
  */
 public class Shooter {
-    private WPI_TalonSRX shooter;
+    private WPI_TalonFX shooter;
 
     public Shooter() {
-        shooter = new WPI_TalonSRX(RobotMap.SHOOTER_ID);
+        shooter = new WPI_TalonFX(RobotMap.SHOOTER_ID);
     }
 
     public void shoot(){
-        move 
+         move(Constants.SHOOTER_SPEED);
     }
+
+    private void move(double SHOOTER_SPEED) {
+        double speed;
+        shooter.set(speed);
+    }
+
+    public void stop(){
+        shooter.stopMotor();
+    }
+
+    @Override 
+    public void periodic() {
+
+    }
+
 
 }
