@@ -7,10 +7,21 @@
 
 package frc.robot;
 
+import com.kauailabs.navx.frc.AHRS;
+
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.autonomous.BBTurn;
+import frc.robot.autonomous.PIDDrive;
+import frc.robot.autonomous.PIDTurn;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.sensors.NavX;
+import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.Intake;
+import frc.robot.util.JoystickController;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /**
@@ -21,17 +32,35 @@ import edu.wpi.first.wpilibj2.command.Command;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
+  public static DriveTrain driveTrain;
+  public static JoystickController j0;
+  public static JoystickController j1;
+  public static AHRS ahrs;
+  public static NavX navX; 
+
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
-  private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
+  public static Intake intake;
 
+  private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
+    navX = new NavX(new AHRS(SPI.Port.kMXP));
+    driveTrain = new DriveTrain();
+
+    j0 = new JoystickController(0);
+    j1 = new JoystickController(1);
+    j0.b7.whenPressed(new BBTurn(90, 0.6));
+    j0.b5.whenPressed(new PIDTurn(90));
+    j0.b3.whenPressed(new PIDDrive(12));
+    
     // Configure the button bindings
+
+
     configureButtonBindings();
   }
 
