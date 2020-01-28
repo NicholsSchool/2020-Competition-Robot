@@ -9,6 +9,8 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import frc.robot.RobotMap;
+
 /**
  * Add your docs here.
  */
@@ -20,7 +22,7 @@ public class Shooter {
     }
 
     public void shoot(){
-        move 
+      //  move 
     }
 
 }
