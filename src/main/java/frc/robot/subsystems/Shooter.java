@@ -7,8 +7,20 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
 /**
  * Add your docs here.
  */
 public class Shooter {
+    private WPI_TalonSRX shooter;
+
+    public Shooter() {
+        shooter = new WPI_TalonSRX(RobotMap.SHOOTER_ID);
+    }
+
+    public void shoot(){
+        move 
+    }
+
 }
