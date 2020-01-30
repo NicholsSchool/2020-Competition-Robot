@@ -11,8 +11,10 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.TakeIn;
+import frc.robot.commands.TakeOut;
 import frc.robot.subsystems.Intake;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.util.JoystickController;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -25,7 +27,7 @@ public class RobotContainer {
 
   public static Intake intake;
 
-  public static Joystick j0;
+  public static JoystickController j0;
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -45,7 +47,11 @@ public class RobotContainer {
    */
   private void configureButtonBindings() 
   {
-    j0 = new Joystick(0);
+    j0 = new JoystickController(0);
+
+    j0.b8.whenPressed(new TakeIn());
+    j0.b9.whenPressed(new TakeOut());
+    
     intake.setDefaultCommand(new TakeIn());
   }
 
