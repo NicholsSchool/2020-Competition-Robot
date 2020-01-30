@@ -8,6 +8,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
+//import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ExampleSubsystem;
@@ -23,12 +24,13 @@ import edu.wpi.first.wpilibj2.command.Command;
 public class RobotContainer {
 
   public static Shooter shooter;
+  public static Shooter lock;
+ // public static JoystickController j0;
+  //public static JoystickController j1;
+  //public static JoystickButton b5;
+  //public static JoystickButton b6;
+
   // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-
-  private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
-
-
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -45,7 +47,13 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+    // j0 = new JoystickController (0);
+    // j1 = new JoystickController (1);
+    // j0.b5.whenPressed(new shoot());
+    // j0.b6.whenPressed();
+
   }
+
 
 
   /**
