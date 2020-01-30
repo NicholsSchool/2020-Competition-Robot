@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.autonomous.BBDrive;
 import frc.robot.autonomous.BBTurn;
 import frc.robot.autonomous.PIDDrive;
 import frc.robot.autonomous.PIDTurn;
@@ -57,7 +58,7 @@ public class RobotContainer {
     j0.b7.whenPressed(new BBTurn(90, 0.6));
     j0.b5.whenPressed(new PIDTurn(90));
     j0.b3.whenPressed(new PIDDrive(12));
-    
+    j0.b6.whenPressed(new BBDrive(12, 0.5));
     // Configure the button bindings
 
 

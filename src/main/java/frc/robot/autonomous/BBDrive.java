@@ -27,7 +27,7 @@ public class BBDrive extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    RobotContainer.navX.reset();
+    RobotContainer.driveTrain.resetEncoder();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -53,7 +53,7 @@ public class BBDrive extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    double currentDistance = RobotContainer.navX.getDistance();
+    double currentDistance = RobotContainer.driveTrain.getEncoderValue();
     return (currentDistance < desiredDistance + 5 && currentDistance > desiredDistance - 5);
   }
 }
