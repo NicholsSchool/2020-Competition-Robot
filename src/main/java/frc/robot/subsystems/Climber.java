@@ -11,11 +11,12 @@ public class Climber extends SubsystemBase {
     public Climber() {
         climber = new WPI_TalonSRX(RobotMap.CLIMBER_MOTOR_ID);
     }
-     public void reach(double speed){
+
+    public void move(double speed){
         climber.set(speed);
-     }
+    }
+
     public void stop(){
         climber.stopMotor();
     }
-
 }
