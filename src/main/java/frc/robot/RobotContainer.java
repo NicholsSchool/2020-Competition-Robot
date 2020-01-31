@@ -8,6 +8,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.TakeIn;
@@ -23,6 +24,7 @@ import frc.robot.util.JoystickController;
  * (including subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+  public static Shooter shooter;
   // The robot's subsystems and commands are defined here...
 
   public static Intake intake;
@@ -54,6 +56,7 @@ public class RobotContainer {
     
     intake.setDefaultCommand(new TakeIn());
   }
+
 
 
   /**
