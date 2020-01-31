@@ -8,12 +8,16 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
+
+import frc.robot.commands.MoveDart;
+import frc.robot.subsystems.Dart;
 import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.TakeIn;
 import frc.robot.commands.TakeOut;
 import frc.robot.subsystems.Intake;
+import frc.robot.util.JoystickController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.util.JoystickController;
 
@@ -28,14 +32,17 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
   public static Intake intake;
+  public static Dart dart;
 
+  public static JoystickController j2;
   public static JoystickController j0;
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
-  public RobotContainer() 
-  {
+  public RobotContainer() {
+
+    dart = new Dart();
     // Configure the button bindings
     intake = new Intake();
     configureButtonBindings();
@@ -47,8 +54,9 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  private void configureButtonBindings() 
-  {
+  private void configureButtonBindings() {
+
+    dart.setDefaultCommand(new MoveDart());
     j0 = new JoystickController(0);
 
     j0.b8.whenPressed(new TakeIn());
