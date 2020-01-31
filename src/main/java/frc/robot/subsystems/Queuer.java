@@ -65,4 +65,11 @@ public class Queuer extends SubsystemBase {
         lock3.stopMotor();
         lock4.stopMotor();
     }
+
+    @Override
+    public void periodic() {
+        lock2.getStatorCurrent();
+        lock3.getStatorCurrent();
+        lock4.getStatorCurrent();
+    }
 }
