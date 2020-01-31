@@ -10,6 +10,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.RobotMap;
 
 public class Intake extends SubsystemBase {
@@ -22,9 +23,20 @@ public class Intake extends SubsystemBase {
   public Intake() 
   {
     intake = new WPI_TalonSRX(RobotMap.INTAKE_ID);
+    intake.configFactoryDefault();
   }
 
-  public void move(double speed) 
+  public void takeIn() 
+  {
+    move(Constants.INTAKE_SPEED);
+  }
+
+  public void takeOut() 
+  {
+    move(-Constants.INTAKE_SPEED);
+  }
+
+  private void move(double speed) 
   {
     intake.set(speed);
   }
