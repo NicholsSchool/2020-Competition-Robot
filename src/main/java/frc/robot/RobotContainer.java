@@ -8,15 +8,18 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.ExampleCommand;
+
 import frc.robot.commands.MoveDart;
 import frc.robot.subsystems.Dart;
-import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.Shooter;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.commands.TakeIn;
+import frc.robot.commands.TakeOut;
 import frc.robot.subsystems.Intake;
 import frc.robot.util.JoystickController;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.util.JoystickController;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -25,16 +28,14 @@ import edu.wpi.first.wpilibj2.command.Command;
  * (including subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+  public static Shooter shooter;
   // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
   public static Intake intake;
-
-  private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
-
   public static Dart dart;
 
   public static JoystickController j2;
+  public static JoystickController j0;
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -42,9 +43,8 @@ public class RobotContainer {
   public RobotContainer() {
 
     dart = new Dart();
-
-    
     // Configure the button bindings
+    intake = new Intake();
     configureButtonBindings();
   }
 
@@ -57,8 +57,14 @@ public class RobotContainer {
   private void configureButtonBindings() {
 
     dart.setDefaultCommand(new MoveDart());
+    j0 = new JoystickController(0);
 
+    j0.b8.whenPressed(new TakeIn());
+    j0.b9.whenPressed(new TakeOut());
+    
+    intake.setDefaultCommand(new TakeIn());
   }
+
 
 
   /**
@@ -68,6 +74,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return m_autoCommand;
+    return null;
   }
 }
