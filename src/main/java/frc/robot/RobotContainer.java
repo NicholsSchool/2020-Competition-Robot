@@ -8,12 +8,14 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
-//import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.ExampleCommand;
-import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Shooter;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.commands.TakeIn;
+import frc.robot.commands.TakeOut;
+import frc.robot.subsystems.Intake;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.util.JoystickController;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -22,21 +24,20 @@ import edu.wpi.first.wpilibj2.command.Command;
  * (including subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-
   public static Shooter shooter;
-  public static Shooter lock;
- // public static JoystickController j0;
-  //public static JoystickController j1;
-  //public static JoystickButton b5;
-  //public static JoystickButton b6;
-
   // The robot's subsystems and commands are defined here...
+
+  public static Intake intake;
+
+  public static JoystickController j0;
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
-  public RobotContainer() {
+  public RobotContainer() 
+  {
     // Configure the button bindings
+    intake = new Intake();
     configureButtonBindings();
   }
 
@@ -46,12 +47,14 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  private void configureButtonBindings() {
-    // j0 = new JoystickController (0);
-    // j1 = new JoystickController (1);
-    // j0.b5.whenPressed(new shoot());
-    // j0.b6.whenPressed();
+  private void configureButtonBindings() 
+  {
+    j0 = new JoystickController(0);
 
+    j0.b8.whenPressed(new TakeIn());
+    j0.b9.whenPressed(new TakeOut());
+    
+    intake.setDefaultCommand(new TakeIn());
   }
 
 

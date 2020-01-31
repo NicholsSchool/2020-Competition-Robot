@@ -17,4 +17,6 @@ package frc.robot;
  */
 public final class Constants {
     public static double SHOOTER_SPEED = 0.5;
+    public static double INTAKE_SPEED = 0.1;
+
 }
