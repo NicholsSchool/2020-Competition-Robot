@@ -1,5 +1,5 @@
 /*----------------------------------------------------------------------------*/
-/* Copyright (c) 2018-2019 FIRST. All Rights Reserved.                        */
+/* Copyright (c) 2019 FIRST. All Rights Reserved.                             */
 /* Open Source Software - may be modified and shared by FRC teams. The code   */
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
@@ -9,33 +9,34 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
-// Hi Owen this is Tommy, honestly Daniel says hi.  
-public class Climb extends CommandBase{ 
 
-  public Climb() {
-    addRequirements(RobotContainer.climb);     
+public class Retract extends CommandBase {
+
+
+  public Retract() {
+    addRequirements(RobotContainer.climb);
   }
 
-  // Called when the command is initially scheduled.
+
+  @Override
   public void initialize() {
-      
   }
 
-  // Called every time the scheduler runs while the command is scheduled.
+
+  @Override
   public void execute() {
-      RobotContainer.climb.climb();
+    RobotContainer.climb.retract();
   }
 
-  // Called once the command ends or is interrupted.
-  public void end(boolean interupted) {
+
+  @Override
+  public void end(boolean interrupted) {
     RobotContainer.climb.stop();
   }
 
-  // Returns true when the command should end.
+
+  @Override
   public boolean isFinished() {
     return false;
   }
 }
-
-
-
