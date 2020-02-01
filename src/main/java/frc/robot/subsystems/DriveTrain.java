@@ -8,7 +8,9 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.RobotContainer;
 import frc.robot.RobotMap;
+import frc.robot.sensors.NavX;
 
 public class DriveTrain extends SubsystemBase {
 
@@ -60,10 +62,11 @@ public class DriveTrain extends SubsystemBase {
 
   public void move(double leftSpeed, double rightSpeed) {
     drive.tankDrive(leftSpeed, rightSpeed);
-  }
+  } 
   public void encoderTest(){
     SmartDashboard.putNumber("lMaster", lMaster.getSelectedSensorPosition());
     SmartDashboard.putNumber("rMaster", rMaster.getSelectedSensorPosition());
+    SmartDashboard.putNumber("NavX Angle: ", RobotContainer.navX.getAngle());
   
   }
 
@@ -77,7 +80,9 @@ public class DriveTrain extends SubsystemBase {
   }
   @Override
   public void periodic() {
+    RobotContainer.navX.getAngle();
     encoderTest();
+   
     // This method will be called once per scheduler run
   }
 
