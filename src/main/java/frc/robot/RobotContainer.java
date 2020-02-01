@@ -25,8 +25,7 @@ import edu.wpi.first.wpilibj2.command.Command;
  */
 public class RobotContainer {
   public static Shooter shooter;
-  // The robot's subsystems and commands are defined here...
-  shooter = new Shooter();
+  // The robot's subsystems and commands are defined here.
 
   public static Intake intake;
   public static Queuer queuer;
@@ -43,6 +42,7 @@ public class RobotContainer {
     j0 = new JoystickController(0);
     queuer = new Queuer();
     dart = new Dart();
+    shooter = new Shooter();
     // Configure the button bindings
     intake = new Intake();
     configureButtonBindings();
