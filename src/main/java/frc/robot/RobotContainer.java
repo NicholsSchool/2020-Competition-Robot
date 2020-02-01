@@ -31,6 +31,7 @@ public class RobotContainer {
   //public static JoystickButton b6;
 
   // The robot's subsystems and commands are defined here...
+  shooter = new Shooter();
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
