@@ -21,6 +21,9 @@ public class Dart extends SubsystemBase {
   
   private WPI_TalonSRX dart;
 
+  /**
+   * this instantiates the dart object
+   */
   public Dart() {
 
     dart = new WPI_TalonSRX(RobotMap.DART);
@@ -29,23 +32,34 @@ public class Dart extends SubsystemBase {
 
   }
 
+  
+/**
+ * this sets the dart to the speed inputed
+ * @param speed dart movement speed
+ */
   public void move(double speed) {
 
     dart.set(speed);
 
   }
 
+  /**
+   * this can be called apon to stop the dart object from moving
+   */
   public void stop() {
 
     dart.stopMotor();
 
   }
 
+  /**
+   * this displays the eletrical current the dart is getting
+   */
   @Override
   public void periodic() {
 
     SmartDashboard.putNumber("Dart Eletrical Current: ", dart.getStatorCurrent());
-    SmartDashboard.putNumber("Battery Voltage: ", dart.getBusVoltage());5
+    SmartDashboard.putNumber("Battery Voltage: ", dart.getBusVoltage());
     
   }
 }
