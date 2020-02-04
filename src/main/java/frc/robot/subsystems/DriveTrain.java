@@ -59,10 +59,20 @@ public class DriveTrain extends SubsystemBase {
     rMaster.configOpenloopRamp(Constants.RAMP_TIME);
 
   }
-
+  /**
+   * 
+   * method used to move.
+   * @param leftSpeed - speed of left motor.
+   * @param rightSpeed - speed of right motor.
+   */
   public void move(double leftSpeed, double rightSpeed) {
     drive.tankDrive(leftSpeed, rightSpeed);
   } 
+    /**
+     * 
+     * Projects the encoder values of the Master motors, and angles for the navX.
+     * 
+     */
   public void encoderTest(){
     SmartDashboard.putNumber("lMaster", lMaster.getSelectedSensorPosition());
     SmartDashboard.putNumber("rMaster", rMaster.getSelectedSensorPosition());
@@ -70,10 +80,16 @@ public class DriveTrain extends SubsystemBase {
   
   }
 
-
+  /**
+   * returns sensor position.
+   * @return
+   */
   public int getEncoderValue() {
     return lMaster.getSelectedSensorPosition();
   }
+  /**
+   * resets encoder value.
+   */
   public void resetEncoder(){
     lMaster.getSelectedSensorPosition(0);
     rMaster.getSelectedSensorPosition(0);
@@ -85,7 +101,11 @@ public class DriveTrain extends SubsystemBase {
    
     // This method will be called once per scheduler run
   }
-
+  /**
+   * 
+   * stops motors.
+   * 
+   */
   public void stop() {
     lMaster.stopMotor();
     rMaster.stopMotor();

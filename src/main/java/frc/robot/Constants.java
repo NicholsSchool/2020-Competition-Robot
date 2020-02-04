@@ -31,4 +31,8 @@ public final class Constants {
    public static final int CONFIG_TIMEOUT = 100;
 
    public static final int TICKS_PER_INCH = 68;
+	  public static final double QUEUE_MOVE_SPEED = 0.0;
+    public static final double DART_SPEED_MULTIPLIER = 1;
+    public static final double SHOOTER_SPEED = 0.5;
+    public static final double INTAKE_SPEED = 0.1;
 }
