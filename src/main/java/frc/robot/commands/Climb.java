@@ -11,27 +11,27 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 // creates class Climb; Contains methods which allow the robot to climb
 public class Climb extends CommandBase{ 
-// gives the requirements for the method Climb 
+/**  gives the requirements for the method Climb */
   public Climb() {
     addRequirements(RobotContainer.climb);     
   }
 
-  // Calls Climb to begin begins robot climb
+  /**  Calls Climb to begin begins robot climb */
   public void initialize() {
       
   }
 
-  // Called after initialize infinite times until end to make the robot climb
+  /**  Called after initialize infinite times until end to make the robot climb */
   public void execute() {
       RobotContainer.climb.climb();
   }
 
-  // ends robot climb when robot reaches its final point
+  /**  ends robot climb when robot reaches its final point */
   public void end(boolean interupted) {
     RobotContainer.climb.stop();
   }
 
-  // ends climb code
+  /**  ends climb code */
   public boolean isFinished() {
     return false;
   }
