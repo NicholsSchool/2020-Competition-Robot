@@ -25,17 +25,24 @@ public class Intake extends SubsystemBase {
     intake = new WPI_TalonSRX(RobotMap.INTAKE_ID);
     intake.configFactoryDefault();
   }
-
+/**
+ * Takes the ball into the Queuer
+ */
   public void takeIn() 
   {
     move(Constants.INTAKE_SPEED);
   }
-
+/**
+ * Takes the ball out of the Queuer
+ */
   public void takeOut() 
   {
     move(-Constants.INTAKE_SPEED);
   }
-
+/**
+ * moves the Intake.
+ * @param speed
+ */
   private void move(double speed) 
   {
     intake.set(speed);

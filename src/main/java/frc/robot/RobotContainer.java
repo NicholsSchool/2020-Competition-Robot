@@ -24,9 +24,9 @@ import edu.wpi.first.wpilibj2.command.Command;
  * (including subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  public static Shooter shooter;
-  // The robot's subsystems and commands are defined here...
+  // The robot's subsystems and commands are defined here.
 
+  public static Shooter shooter;
   public static Intake intake;
   public static Queuer queuer;
   public static Dart dart;
@@ -42,6 +42,7 @@ public class RobotContainer {
     j0 = new JoystickController(0);
     queuer = new Queuer();
     dart = new Dart();
+    shooter = new Shooter();
     // Configure the button bindings
     intake = new Intake();
     configureButtonBindings();
