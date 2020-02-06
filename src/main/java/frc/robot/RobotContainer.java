@@ -12,10 +12,10 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SPI;
-import frc.robot.autonomous.*
-import frc.robot.commands.*;
-import frc.robot.sensors.*;
-import frc.robot.subsystems.*
+import frc.robot.autonomous.*;
+import frc.robot.commands.*;	
+import frc.robot.sensors.*;	
+import frc.robot.subsystems.*;
 import frc.robot.util.JoystickController;
 import edu.wpi.first.wpilibj2.command.Command;
 
