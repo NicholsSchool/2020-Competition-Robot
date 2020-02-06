@@ -58,13 +58,9 @@ public class RobotContainer {
 
     dart.setDefaultCommand(new MoveDart());
 
-
     j0.b8.whenPressed(new TakeIn());
     j0.b9.whenPressed(new TakeOut());
-    
-    intake.setDefaultCommand(new TakeIn());
-  }
-
+ } 
 
 
   /**
