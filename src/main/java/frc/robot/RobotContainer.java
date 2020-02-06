@@ -12,23 +12,10 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.autonomous.BBDrive;
-import frc.robot.autonomous.BBTurn;
-import frc.robot.autonomous.PIDDrive;
-import frc.robot.autonomous.PIDTurn;
-import frc.robot.commands.ExampleCommand;
-import frc.robot.sensors.NavX;
-import frc.robot.subsystems.DriveTrain;
-import frc.robot.subsystems.ExampleSubsystem;
-import frc.robot.subsystems.Intake;
-import frc.robot.commands.MoveDart;
-import frc.robot.subsystems.Dart;
-import frc.robot.subsystems.Shooter;
-import frc.robot.commands.TakeIn;
-import frc.robot.commands.TakeOut;
-import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.Queuer;
+import frc.robot.autonomous.*
+import frc.robot.commands.*;
+import frc.robot.sensors.*;
+import frc.robot.subsystems.*
 import frc.robot.util.JoystickController;
 import edu.wpi.first.wpilibj2.command.Command;
 
@@ -39,7 +26,6 @@ import edu.wpi.first.wpilibj2.command.Command;
  * (including subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  public static Shooter shooter;
   // The robot's subsystems and commands are defined here...
   public static DriveTrain driveTrain;
   public static JoystickController j0;
@@ -47,13 +33,11 @@ public class RobotContainer {
   public static AHRS ahrs;
   public static NavX navX; 
 
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-
+  public static Shooter shooter;
   public static Intake intake;
   public static Queuer queuer;
   public static Dart dart;
 
-  private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
   public static JoystickController j2;
   
@@ -65,12 +49,7 @@ public class RobotContainer {
     navX = new NavX(new AHRS(SPI.Port.kMXP));
     driveTrain = new DriveTrain();
 
-    j0 = new JoystickController(0);
-    j1 = new JoystickController(1);
-    j0.b7.whenPressed(new BBTurn(90, 0.6));
-    j0.b5.whenPressed(new PIDTurn(90));
-    j0.b3.whenPressed(new PIDDrive(12));
-    j0.b6.whenPressed(new BBDrive(12, 0.5));
+
     // Configure the button bindings
 
 
@@ -78,6 +57,7 @@ public class RobotContainer {
     j0 = new JoystickController(0);
     queuer = new Queuer();
     dart = new Dart();
+    shooter = new Shooter();
     // Configure the button bindings
     intake = new Intake();
     configureButtonBindings();
@@ -91,15 +71,19 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
+    j0 = new JoystickController(0);
+    j1 = new JoystickController(1);
+    j2 = new JoystickController(2);
+    
+    j0.b7.whenPressed(new BBTurn(90, 0.6));
+    j0.b5.whenPressed(new PIDTurn(90));
+    j0.b3.whenPressed(new PIDDrive(12));
+    j0.b6.whenPressed(new BBDrive(12, 0.5));
     dart.setDefaultCommand(new MoveDart());
-
 
     j0.b8.whenPressed(new TakeIn());
     j0.b9.whenPressed(new TakeOut());
-    
-    intake.setDefaultCommand(new TakeIn());
-  }
-
+ } 
 
 
   /**
