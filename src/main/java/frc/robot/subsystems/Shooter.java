@@ -28,11 +28,19 @@ public class Shooter extends SubsystemBase{
  */
     public Shooter() {
 
+        
+
         shooter = new WPI_TalonFX(RobotMap.SHOOTER_ID);
         lock5 = new WPI_TalonSRX(RobotMap.LOCK_FIVE_MOTOR_ID);
         shooter.configOpenloopRamp(1);
+
+        shooter.configFactoryDefault();
+    
     
     }
+    
+    
+
     /**
      * starts the shooter
      */
@@ -41,7 +49,7 @@ public class Shooter extends SubsystemBase{
          move(Constants.SHOOTER_SPEED);
     }
     /**
-     * moves the shooter.
+     * moves the shooter.  
      * @param speed
      */
 
@@ -61,4 +69,8 @@ public class Shooter extends SubsystemBase{
 
     }
 }
+
+
+
+
 
