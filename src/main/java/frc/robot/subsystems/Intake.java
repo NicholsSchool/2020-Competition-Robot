@@ -9,10 +9,14 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
 
+/**
+ * This class controls the intake subsystem on the robot.
+ */
 public class Intake extends SubsystemBase {
 
   private WPI_TalonSRX intake;
@@ -26,28 +30,47 @@ public class Intake extends SubsystemBase {
     intake.configFactoryDefault();
   }
 
+  /**
+   * Sets the intake motor values to INTAKE_SPEED, located in the Constants class.
+   */
   public void takeIn() 
   {
     move(Constants.INTAKE_SPEED);
   }
-
+  /**
+   * Does the same thing as takeIn(), but in the other direction.
+   */
   public void takeOut() 
   {
     move(-Constants.INTAKE_SPEED);
   }
 
+  /**
+   * Moves the motors.
+   * 
+   * @param speed - How fast the intake motors will turn.
+   */
   private void move(double speed) 
   {
     intake.set(speed);
   }
 
+  /**
+   * Stops the motors.
+   */
   public void stop() 
   {
     intake.stopMotor();
   }
 
+  
+  /**
+   * Runs constantly while subsystem is in use.
+   */
   @Override
-  public void periodic() {
+  public void periodic() 
+  {
     // This method will be called once per scheduler run
+    SmartDashboard.putNumber("Intake Currant", intake.getStatorCurrent());
   }
 }

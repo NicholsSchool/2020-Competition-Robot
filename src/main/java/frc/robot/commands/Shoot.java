@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 
 /**
- * Command to start shooter.
+ * Command to start and end shooter.
  */
 public class Shoot extends CommandBase {
 
