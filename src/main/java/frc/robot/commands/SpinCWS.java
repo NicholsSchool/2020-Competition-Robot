@@ -25,11 +25,16 @@ public class SpinCWS extends CommandBase {
   }
 
   // Called every time the scheduler runs while the command is scheduled.
+  /**
+   * starts the spinner
+   */
   @Override
   public void execute() {
     RobotContainer.spinner.spin();
   }
-
+  /**
+   * calls stop method to stop spinner.
+   */
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {

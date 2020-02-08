@@ -24,17 +24,27 @@ public class ColorWheelSpinner extends SubsystemBase {
     cWSMotor = new WPI_TalonSRX(RobotMap.CWS_MOTOR_ID);
     cWSMotor.configFactoryDefault();
   }
+  /**
+   * sets speed to be used to spin the CWS.
+   * @param speed - speed of spinner
+   */
   public void move(double speed){
     cWSMotor.set(speed);
 
   }
+  /**
+   * spins Color Wheel Spinner.
+   */
   public void spin(){
     move(Constants.CWS_SPINNER_SPEED);
   }
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+    // This method will be called once per scheduler run.
   }
+  /**
+   * stops spinner
+   */
   public void stop(){
     cWSMotor.stopMotor();
   }
