@@ -35,4 +35,5 @@ public final class Constants {
     public static final double DART_SPEED_MULTIPLIER = 1;
     public static final double SHOOTER_SPEED = 0.5;
     public static final double INTAKE_SPEED = 0.1;
+    public static final double CWS_SPINNER_SPEED = 0.25;
 }
