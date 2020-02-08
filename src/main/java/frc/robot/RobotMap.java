@@ -22,4 +22,6 @@ public class RobotMap {
     public static final int LEFT_MASTER_ID = -1;
     public static final int LEFT_SLAVE_ID = -1;
 
+    public static final int CWS_MOTOR_ID = -1;
+
 }
