@@ -21,12 +21,12 @@ public class MoveDart extends CommandBase {
 
   }
 
-  // Called when the command is initially scheduled.
+  // this does nothing of my knowledge
   @Override
   public void initialize() {
   }
 
-  // Called every time the scheduler runs while the command is scheduled.
+  // this takes the joystickinput and sets the dart to that speed
   @Override
   public void execute() {
 
@@ -34,7 +34,7 @@ public class MoveDart extends CommandBase {
 
   }
 
-  // Called once the command ends or is interrupted.
+  // this stops the dart from moving
   @Override
   public void end(boolean interrupted) {
 
@@ -42,7 +42,7 @@ public class MoveDart extends CommandBase {
 
   }
 
-  // Returns true when the command should end.
+  // this does nothing of my knowledge
   @Override
   public boolean isFinished() {
     return false;
