@@ -35,6 +35,7 @@ public class Shooter extends SubsystemBase{
         shooter.configOpenloopRamp(1);
 
         shooter.configFactoryDefault();
+        lock5.configFactoryDefault();
     
     
     }
