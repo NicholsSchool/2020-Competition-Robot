@@ -32,10 +32,11 @@ public class Shooter extends SubsystemBase{
 
         shooter = new WPI_TalonFX(RobotMap.SHOOTER_ID);
         lock5 = new WPI_TalonSRX(RobotMap.LOCK_FIVE_MOTOR_ID);
-        shooter.configOpenloopRamp(1);
+     
 
         shooter.configFactoryDefault();
         lock5.configFactoryDefault();
+        shooter.configOpenloopRamp(1);
     
     
     }
