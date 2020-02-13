@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 //import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -21,6 +22,7 @@ import frc.robot.RobotMap;
 public class Shooter extends SubsystemBase{
     private WPI_TalonFX shooter;    
     private WPI_TalonSRX lock5; 
+    
 
     
 /**
@@ -32,11 +34,21 @@ public class Shooter extends SubsystemBase{
 
         shooter = new WPI_TalonFX(RobotMap.SHOOTER_ID);
         lock5 = new WPI_TalonSRX(RobotMap.LOCK_FIVE_MOTOR_ID);
+        
+        
      
 
         shooter.configFactoryDefault();
         lock5.configFactoryDefault();
-        shooter.configOpenloopRamp(1);
+        shooter.configOpenloopRamp(Constants.SHOOTER_RAMP_TIME);
+        shooter.configClosedloopRamp(Constants.SHOOTER_RAMP_TIME);
+
+        shooter.config_kF(0, Constants.SHOOTER_F);
+        shooter.config_kP(0, Constants.SHOOTER_P);
+        shooter.config_kI(0, Constants.SHOOTER_I);
+        shooter.config_kD(0, Constants.SHOOTER_D);
+        
+
     
     
     }
@@ -48,7 +60,9 @@ public class Shooter extends SubsystemBase{
      */
 
     public void shoot(){
-         move(Constants.SHOOTER_SPEED);
+       //  move(Constants.SHOOTER_SPEED);
+       setVelocity(Constants.SHOOT_VELOCITY);
+
     }
     /**
      * moves the shooter.  
@@ -70,7 +84,19 @@ public class Shooter extends SubsystemBase{
     public void periodic() {
 
     }
-}
+
+    private void setVelocity(double velocity){
+        shooter.set(ControlMode.Velocity, velocity);
+        
+
+    }
+
+   
+
+    }
+
+
+
 
 
 
