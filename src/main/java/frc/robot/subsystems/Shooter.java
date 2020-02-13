@@ -16,12 +16,16 @@ import frc.robot.Constants;
 import frc.robot.RobotMap;
 
 /**
- * .
+ * The Shooter contains motors that make the robot shoot.
  */
 public class Shooter extends SubsystemBase{
-    private WPI_TalonFX shooter;
+    private WPI_TalonFX shooter;    
     private WPI_TalonSRX lock5; 
 
+    
+/**
+ * Crestes a new Shooter.
+ */
     public Shooter() {
 
         shooter = new WPI_TalonFX(RobotMap.SHOOTER_ID);
@@ -29,14 +33,24 @@ public class Shooter extends SubsystemBase{
         shooter.configOpenloopRamp(1);
     
     }
+    /**
+     * starts the shooter
+     */
 
     public void shoot(){
          move(Constants.SHOOTER_SPEED);
     }
+    /**
+     * moves the shooter.
+     * @param speed
+     */
 
     private void move(double speed) {
         shooter.set(speed);
     }
+     /**
+         * stops the shooter's motor.
+         */
 
     public void stop(){
         shooter.stopMotor();

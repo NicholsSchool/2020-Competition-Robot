@@ -16,9 +16,26 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-    public static final double CLIMBER_SPEED = 0.5;
+   public static final double LEFT_MASTER_F = 0.2;
+   public static final double LEFT_MASTER_P = 0.2;
+   public static final double LEFT_MASTER_I = 0.0;
+   public static final double LEFT_MASTER_D = 0.0;
+
+   public static final double RIGHT_MASTER_F = 0.2;
+   public static final double RIGHT_MASTER_P = 0.2;
+   public static final double RIGHT_MASTER_I = 0.0;
+   public static final double RIGHT_MASTER_D = 0.0;
+
+   public static final int RAMP_TIME = 2;
+
+   public static final int CONFIG_TIMEOUT = 100;
+
+   public static final int TICKS_PER_INCH = 68;
 	  public static final double QUEUE_MOVE_SPEED = 0.0;
     public static final double DART_SPEED_MULTIPLIER = 1;
     public static final double SHOOTER_SPEED = 0.5;
     public static final double INTAKE_SPEED = 0.1;
+    public static final double CLIMBER_SPEED = 0.5;
+    public static final boolean BREAK_SWITCH_ENGAGE = true;
+    public static final boolean BREAK_SWITCH_DISENGAGE = !BREAK_SWITCH_ENGAGE;
 }

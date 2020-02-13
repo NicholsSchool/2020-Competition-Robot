@@ -1,7 +1,7 @@
 package frc.robot;
-
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-
+/**
+ * Robot Map contains the Robot Motor ID's for both sides of the DriveTrain.
+ */
 public class RobotMap {
     public static final int CLIMBER_MOTOR_ID = -1;
 
@@ -21,5 +21,5 @@ public class RobotMap {
 
     public static final int LEFT_MASTER_ID = -1;
     public static final int LEFT_SLAVE_ID = -1;
-
+    public static final int CLIMBER_SOLENOID_ID = -1; 
 }
