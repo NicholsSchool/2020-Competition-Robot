@@ -89,9 +89,9 @@ public class RobotContainer {
     j0.b8.whenPressed(new TakeIn());
     j0.b9.whenPressed(new TakeOut());
 
+    j1.b10.and(j2.b1).whenActive(new InstantCommand(()->climb.extend(), climb));
     j1.b10.and(j2.b10).whenActive(new InstantCommand(()->climb.engageBreak(), climb));
     j1.b8.and(j2.b8).whenActive(new InstantCommand(()->climb.disengageBreak(), climb));
-    j1.b4.and(j2.b4).whenActive(new InstantCommand(()->new MoveHookArm(), climb));
 
  } 
 

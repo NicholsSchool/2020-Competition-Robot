@@ -10,11 +10,11 @@ import frc.robot.RobotContainer;
 import frc.robot.RobotMap;
 
 public class Climber extends SubsystemBase {
-    public WPI_TalonSRX climber;
+    public Solenoid climber;
     public Solenoid climbBreak;
 
     public Climber() {
-        climber = new WPI_TalonSRX(RobotMap.CLIMBER_MOTOR_ID);
+        climber = new Solenoid(RobotMap.CLIMBER_SOLENOID_ID);
         climbBreak = new Solenoid(0);
     }
 
@@ -26,16 +26,11 @@ public class Climber extends SubsystemBase {
         climbBreak.set(Constants.BREAK_SWITCH_DISENGAGE);
     }
 
-    public void retract() {
-        move(-Constants.CLIMBER_SPEED);
-    }
-
-    public void move(double speed) {
-  
-        climber.set(speed);
+    public void  extend(){        
+        climber.set(Constants.CLIMBER_EXTEND);
     }
 
     public void stop() {
-        climber.stopMotor();
+        climber.set(Constants.CLIMBER_STOP);
     }
 }

@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import java.sql.ClientInfoStatus;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants.  This class should not be used for any other purpose.  All constants should be
@@ -35,7 +37,8 @@ public final class Constants {
     public static final double DART_SPEED_MULTIPLIER = 1;
     public static final double SHOOTER_SPEED = 0.5;
     public static final double INTAKE_SPEED = 0.1;
-    public static final double CLIMBER_SPEED = 0.5;
     public static final boolean BREAK_SWITCH_ENGAGE = true;
     public static final boolean BREAK_SWITCH_DISENGAGE = !BREAK_SWITCH_ENGAGE;
+    public static final boolean CLIMBER_EXTEND = true;
+    public static final boolean CLIMBER_STOP = !CLIMBER_EXTEND;
 }
