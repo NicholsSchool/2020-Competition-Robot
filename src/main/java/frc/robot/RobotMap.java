@@ -5,23 +5,24 @@ package frc.robot;
 public class RobotMap {
     public static final int CLIMBER_MOTOR_ID = -1;
 
-    public static final int LOCK_TWO_MOTOR_ID = -1;
-    public static final int LOCK_THREE_MOTOR_ID = -1;
-    public static final int LOCK_FOUR_MOTOR_ID = -1;
-    public static final int LOCK_FIVE_MOTOR_ID = -1;
+    public static final int LOCK_TWO_MOTOR_ID = 27;
+    public static final int LOCK_THREE_MOTOR_ID = 29;
+    public static final int LOCK_FOUR_MOTOR_ID = 31;
+    public static final int LOCK_FIVE_MOTOR_ID = 33;
    
-    public static final int INTAKE_ID = -1;
+    public static final int INTAKE_ID = 34;
    
-    public static final int SHOOTER_ID = -1;
+    public static final int SHOOTER_ID = 25;
 
-    public static final int DART = -1;
+    public static final int DART = 21;
 
-    public static final int RIGHT_MASTER_ID = -1;
-    public static final int RIGHT_SLAVE_ID = -1;
+    public static final int RIGHT_MASTER_ID = 26;
+    public static final int RIGHT_SLAVE_ID = 28;
 
-    public static final int LEFT_MASTER_ID = -1;
-    public static final int LEFT_SLAVE_ID = -1;
+    public static final int LEFT_MASTER_ID = 22;
+    public static final int LEFT_SLAVE_ID = 24;
 
-    public static final int CWS_MOTOR_ID = -1;
+    public static final int CWS_MOTOR_ID = 23;
 
+    //Spare Talons:  32 and 30
 }
