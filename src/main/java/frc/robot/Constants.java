@@ -28,7 +28,7 @@ public final class Constants {
    public static final double RIGHT_MASTER_I = 0.0;
    public static final double RIGHT_MASTER_D = 0.0;
 
-   public static final int RAMP_TIME = 2;
+   public static final double RAMP_TIME = 0.01;
 
    public static final int CONFIG_TIMEOUT = 100;
 

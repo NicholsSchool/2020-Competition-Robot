@@ -108,6 +108,11 @@ public class Queuer extends SubsystemBase {
         
     }
 
+    public void unload()
+    {
+        
+    }
+
     public void updateNumberOfBalls()
     {
         int totalBalls = 0;

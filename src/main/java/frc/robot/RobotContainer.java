@@ -93,7 +93,7 @@ public class RobotContainer {
      dart.setDefaultCommand(new MoveDart());
 
     driveTrain.setDefaultCommand(new Drive());
-    j2.b2.whileHeld(new TakeIn());
+    j2.b2.whileHeld(new TakeIn()).whenReleased(new Queue());
     j2.b3.whenPressed(new Queue());
     j2.b11.whileHeld(new MoveLock(2));
     j2.b9.whileHeld(new MoveLock(3));
