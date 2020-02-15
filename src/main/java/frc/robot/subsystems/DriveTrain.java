@@ -1,6 +1,5 @@
 package frc.robot.subsystems;
 
-import java.nio.Buffer;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
