@@ -45,5 +45,14 @@ public final class Constants {
     public static final double SHOOT_VELOCITY = 0.8 * SHOOTER_MAX_VELOCITY;
   
     public static final double CWS_SPINNER_SPEED = 0.25;
+	public static final int LENGTH = 0;
+	public static final int HEIGHT = 0;
+    public static final int FRAMES_PER_SECOND = 0;
+
+    //Camera
+
+    public static final int CAMERA_WIDTH = 640;
+    public static final int CAMERA_HEIGHT = 480;
+    public static final int FRAME_RATE = 30;
 
 }
