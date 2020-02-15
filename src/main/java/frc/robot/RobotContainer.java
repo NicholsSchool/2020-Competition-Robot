@@ -35,12 +35,13 @@ public class RobotContainer {
   public static JoystickController j1;
   public static AHRS ahrs;
   public static NavX navX; 
+  public static Climber climb;
 
   public static Shooter shooter;
   public static Intake intake;
   public static Queuer queuer;
   public static Dart dart;
-  public static Climber climb;
+  public static ColorWheelSpinner spinner;
 
 
   public static JoystickController j2;
@@ -52,12 +53,13 @@ public class RobotContainer {
   public RobotContainer() {
     navX = new NavX(new AHRS(SPI.Port.kMXP));
     driveTrain = new DriveTrain();
+    climb = new Climber();
 
 
     // Configure the button bindings
 
 
-
+    spinner= new ColorWheelSpinner();
     j0 = new JoystickController(0);
 
     queuer = new Queuer();
@@ -89,10 +91,7 @@ public class RobotContainer {
     j0.b8.whenPressed(new TakeIn());
     j0.b9.whenPressed(new TakeOut());
 
-    j1.b10.and(j2.b1).whenActive(new InstantCommand(()->climb.extend(), climb));
-    j1.b10.and(j2.b10).whenActive(new InstantCommand(()->climb.engageBreak(), climb));
-    j1.b8.and(j2.b8).whenActive(new InstantCommand(()->climb.disengageBreak(), climb));
-
+    j0.b11.whileHeld(new SpinCWS());
  } 
 
 
