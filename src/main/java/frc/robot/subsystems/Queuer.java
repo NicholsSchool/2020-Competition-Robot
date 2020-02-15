@@ -36,6 +36,10 @@ public class Queuer extends SubsystemBase {
         lock2.configFactoryDefault();
         lock3.configFactoryDefault();
         lock4.configFactoryDefault();
+
+        lock2.setInverted( true );
+        lock3.setInverted( true );
+        lock4.setInverted( true );
     }
 
     /**

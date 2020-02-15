@@ -35,7 +35,7 @@ public final class Constants {
     public static final double DART_SPEED_MULTIPLIER = 1;
     public static final double SHOOTER_SPEED = 0.5;
     public static final double INTAKE_SPEED = 0.1;
-
+  
     public static final double SHOOTER_F = 0;
     public static final double SHOOTER_P = 0;
     public static final double SHOOTER_I = 0;
@@ -43,5 +43,11 @@ public final class Constants {
     public static final double SHOOTER_RAMP_TIME = 1;
     public static final double SHOOTER_MAX_VELOCITY = 0;
     public static final double SHOOT_VELOCITY = 0.8 * SHOOTER_MAX_VELOCITY;
-    
+  
+    public static final double CWS_SPINNER_SPEED = 0.25;
+
+    public static final double DRIVE_FAST_MODE = 1.0;
+    public static final double DRIVE_SLOW_MODE = 0.5;
+
+
 }

@@ -10,7 +10,6 @@ package frc.robot;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SPI;
 import frc.robot.autonomous.*;
 import frc.robot.commands.*;	
@@ -37,6 +36,7 @@ public class RobotContainer {
   public static Intake intake;
   public static Queuer queuer;
   public static Dart dart;
+  public static ColorWheelSpinner spinner;
 
 
   public static JoystickController j2;
@@ -53,7 +53,7 @@ public class RobotContainer {
     // Configure the button bindings
 
 
-
+    spinner= new ColorWheelSpinner();
     j0 = new JoystickController(0);
     queuer = new Queuer();
     dart = new Dart();
@@ -83,6 +83,8 @@ public class RobotContainer {
 
     j0.b8.whenPressed(new TakeIn());
     j0.b9.whenPressed(new TakeOut());
+
+    j0.b11.whileHeld(new SpinCWS());
  } 
 
 
