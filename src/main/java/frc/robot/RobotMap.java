@@ -23,8 +23,8 @@ public class RobotMap {
 
     public static final int CWS_MOTOR_ID = 23;
 
-    public static final int CLIMBER_SOLENOID_CHANNEL = -1;
-    public static final int CLIMBBREAK_SOLENOID_CHANNEL = -1;
+    public static final int CLIMBER_SOLENOID_CHANNEL = 0;
+    public static final int CLIMBBREAK_SOLENOID_CHANNEL = 0;
 
     public static final int COMPRESSOR_ID = 50;
 

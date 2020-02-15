@@ -14,9 +14,17 @@ import frc.robot.subsystems.Queuer;
 
 public class MoveLock extends CommandBase {
 
-  int index;
+  private int index;
+  private boolean isReversed;
+
+  public MoveLock(int index, boolean isReversed)
+  {
+    this.index = index - 2;
+    this.isReversed = isReversed;
+  }
 
   public MoveLock(int index) {
+    this(index, false);
   }
 
   // Called when the command is initially scheduled.
@@ -27,7 +35,10 @@ public class MoveLock extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.queuer.move(Constants.QUEUE_MOVE_SPEED, index);
+    if(!isReversed)
+      RobotContainer.queuer.move(Constants.QUEUE_MOVE_SPEED, index);
+    else
+      RobotContainer.queuer.move(-Constants.QUEUE_MOVE_SPEED, index);
   }
 
   // Called once the command ends or is interrupted.
@@ -39,6 +50,6 @@ public class MoveLock extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return RobotContainer.queuer.checkQueuer();
   }
 }

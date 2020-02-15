@@ -14,8 +14,8 @@ public class Climber extends SubsystemBase {
     private Solenoid climbBreak;
 
     public Climber() {
-        climber = new Solenoid(RobotMap.CLIMBER_SOLENOID_CHANNEL);
-        climbBreak = new Solenoid(RobotMap.CLIMBBREAK_SOLENOID_CHANNEL);
+        // climber = new Solenoid(RobotMap.CLIMBER_SOLENOID_CHANNEL);
+        // climbBreak = new Solenoid(RobotMap.CLIMBBREAK_SOLENOID_CHANNEL);
     }
 
     public void engageBreak() {

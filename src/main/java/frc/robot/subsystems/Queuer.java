@@ -4,6 +4,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.RobotMap;
 
@@ -19,6 +20,8 @@ public class Queuer extends SubsystemBase {
     private WPI_TalonSRX lock4;
 
     private WPI_TalonSRX[] locks; 
+
+    private int numBalls;
 
     /**
      *  Constructor Method creating motors 
@@ -42,6 +45,7 @@ public class Queuer extends SubsystemBase {
         lock2.setInverted( true );
         lock3.setInverted( true );
         lock4.setInverted( true );
+        numBalls = 0;
     }
 
     /**
@@ -76,23 +80,45 @@ public class Queuer extends SubsystemBase {
 
     public boolean checkQueuer()
     {
-        boolean[] sensorValues = new boolean[locks.length];
+        boolean[] sensorValues = RobotContainer.irSystem.getValues();
         boolean falseFound = false;
-
-        for(int i = locks.length; i >= 0; i--)
+        for(int i = 0; i < sensorValues.length; i ++)
         {
-            if(sensorValues[i] == false)
+            if(!sensorValues[i])
             {
+                System.out.println("False found at spot: " + i);
                 falseFound = true;
             }
 
-            if(sensorValues[i] == true && falseFound == true)
-            {
+            if(falseFound && sensorValues[i])
                 return false;
-            }
         }
-
+        System.out.println("Queuer all good");
         return true;
+    }
+
+    public void queue() {
+        
+        updateNumberOfBalls();
+        for(int i = 0; i < locks.length - numBalls; i ++)
+            if (i == locks.length - 1)
+                move(Constants.LOCK_4_SPEED, i);
+            else
+                move(Constants.QUEUE_MOVE_SPEED, i);
+        
+    }
+
+    public void updateNumberOfBalls()
+    {
+        int totalBalls = 0;
+        boolean[] sensorValues = RobotContainer.irSystem.getValues();
+        for(int i = sensorValues.length - 1; i >= 0; i --)
+            if(!sensorValues[i])
+                totalBalls ++;
+            else
+                break;
+        numBalls = totalBalls;
+            
     }
 
     /**
@@ -115,7 +141,7 @@ public class Queuer extends SubsystemBase {
         lock2.getStatorCurrent();
         lock3.getStatorCurrent();
         lock4.getStatorCurrent();
-
+        SmartDashboard.putNumber("Number of Balls", numBalls);
         boolean[] beams = RobotContainer.irSystem.getValues();
         for(int i = 0; i < beams.length; i ++)
             SmartDashboard.putBoolean("Beam " + (i + 1), beams[i]);
