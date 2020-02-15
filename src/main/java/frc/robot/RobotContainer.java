@@ -31,6 +31,8 @@ public class RobotContainer {
   public static JoystickController j1;
   public static AHRS ahrs;
   public static NavX navX; 
+  public static IRSystem irSystem;
+
 
   public static Shooter shooter;
   public static Intake intake;
@@ -47,6 +49,8 @@ public class RobotContainer {
    */
   public RobotContainer() {
     navX = new NavX(new AHRS(SPI.Port.kMXP));
+    irSystem = new IRSystem();
+     
     driveTrain = new DriveTrain();
 
 
@@ -75,16 +79,19 @@ public class RobotContainer {
     j1 = new JoystickController(1);
     j2 = new JoystickController(2);
     
-    j0.b7.whenPressed(new BBTurn(90, 0.6));
-    j0.b5.whenPressed(new PIDTurn(90));
-    j0.b3.whenPressed(new PIDDrive(12));
-    j0.b6.whenPressed(new BBDrive(12, 0.5));
-    dart.setDefaultCommand(new MoveDart());
+    // j0.b7.whenPressed(new BBTurn(90, 0.6));
+    // j0.b5.whenPressed(new PIDTurn(90));
+    // j0.b3.whenPressed(new PIDDrive(12));
+    // j0.b6.whenPressed(new BBDrive(12, 0.5));
+    // dart.setDefaultCommand(new MoveDart());
+    driveTrain.setDefaultCommand(new Drive());
 
-    j0.b8.whenPressed(new TakeIn());
-    j0.b9.whenPressed(new TakeOut());
+    // j0.b8.whenPressed(new TakeIn());
+    // j0.b9.whenPressed(new TakeOut());
 
-    j0.b11.whileHeld(new SpinCWS());
+    // j0.b11.whileHeld(new SpinCWS());
+
+
  } 
 
 
