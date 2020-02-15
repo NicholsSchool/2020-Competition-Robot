@@ -9,8 +9,9 @@ package frc.robot.subsystems;
 
 import java.util.Arrays;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-//import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.music.Orchestra;
 
@@ -25,6 +26,8 @@ public class Shooter extends SubsystemBase {
     private WPI_TalonFX shooter;
     private WPI_TalonSRX lock5;
     private Orchestra orchestra;
+    private boolean isRunning;
+    private long startTime;
 
     /**
      * Crestes a new Shooter.
@@ -33,21 +36,37 @@ public class Shooter extends SubsystemBase {
 
         shooter = new WPI_TalonFX(RobotMap.SHOOTER_ID);
         lock5 = new WPI_TalonSRX(RobotMap.LOCK_FIVE_MOTOR_ID);
+        isRunning = false;
+        
 
         shooter.configFactoryDefault();
-        lock5.configFactoryDefault();
-        shooter.configOpenloopRamp(1);
+        lock5.configFactoryDefault(); 
+        lock5.setInverted(true);
+
+        shooter.config_kF(0, Constants.SHOOTER_F);
+        shooter.config_kP(0, Constants.SHOOTER_P);
+        shooter.config_kI(0, Constants.SHOOTER_I);
+        shooter.config_kD(0, Constants.SHOOTER_D);
+
+        shooter.configOpenloopRamp(Constants.SHOOTER_RAMP_TIME);
+        shooter.configClosedloopRamp(Constants.SHOOTER_RAMP_TIME);
+        shooter.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
 
         orchestra = new Orchestra(Arrays.asList(shooter), Constants.MUSIC_FILE);
+        
 
+    
+    
     }
 
     /**
      * starts the shooter
      */
 
-    public void shoot() {
-        move(Constants.SHOOTER_SPEED);
+    public void shoot(){
+       //  move(Constants.SHOOTER_SPEED);
+       setVelocity(Constants.SHOOT_VELOCITY);
+
     }
 
     /**
@@ -56,8 +75,17 @@ public class Shooter extends SubsystemBase {
      * @param speed
      */
 
-    private void move(double speed) {
+    public void move(double speed) {
+        if (! isRunning){
+            startTime = System.currentTimeMillis();
+            isRunning = true;
+        }
+
         shooter.set(speed);
+        if (System.currentTimeMillis() - startTime > Constants.SHOOTER_RAMP_TIME * 1000){
+            lock5.set (speed);
+        }
+
     }
 
     /**
@@ -66,12 +94,26 @@ public class Shooter extends SubsystemBase {
 
     public void stop() {
         shooter.stopMotor();
+        isRunning = false;
     }
 
     @Override
     public void periodic() {
 
     }
+
+    private void setVelocity(double velocity){
+        shooter.set(ControlMode.Velocity, velocity);
+        
+
+    }
+
+   
+
+    
+
+
+
 
     public void playMusic() {
 

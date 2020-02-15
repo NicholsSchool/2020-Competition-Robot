@@ -28,10 +28,11 @@ public class Intake extends SubsystemBase {
   {
     intake = new WPI_TalonSRX(RobotMap.INTAKE_ID);
     intake.configFactoryDefault();
+    intake.setInverted(true);
   }
 
   /**
-   * Sets the intake motor values to INTAKE_SPEED, located in the Constants class.
+   * Sets the intake motor values to INTAKE_SPEED,  a double value in the Constants class.
    */
   public void takeIn() 
   {

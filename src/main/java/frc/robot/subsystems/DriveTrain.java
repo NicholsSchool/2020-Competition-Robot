@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -14,6 +15,7 @@ import frc.robot.sensors.NavX;
 
 public class DriveTrain extends SubsystemBase {
 
+  private double govener;
   private WPI_TalonSRX lMaster;
   private WPI_TalonSRX lSlave;
   private WPI_TalonSRX rMaster;
@@ -58,49 +60,66 @@ public class DriveTrain extends SubsystemBase {
     lMaster.configOpenloopRamp(Constants.RAMP_TIME);
     rMaster.configOpenloopRamp(Constants.RAMP_TIME);
 
+    setFastMode(true);
+
   }
+
   /**
    * 
    * method used to move.
-   * @param leftSpeed - speed of left motor.
+   * 
+   * @param leftSpeed  - speed of left motor.
    * @param rightSpeed - speed of right motor.
    */
   public void move(double leftSpeed, double rightSpeed) {
-    drive.tankDrive(leftSpeed, rightSpeed);
-  } 
-    /**
-     * 
-     * Projects the encoder values of the Master motors, and angles for the navX.
-     * 
-     */
-  public void encoderTest(){
+    drive.tankDrive(leftSpeed * govener, rightSpeed * govener);
+
+  }
+
+  public void setFastMode(boolean setFast) {
+    if (setFast) {
+      govener = Constants.DRIVE_FAST_MODE;
+    } else {
+      govener = Constants.DRIVE_SLOW_MODE;
+    }
+  }
+
+  /**
+   * 
+   * Projects the encoder values of the Master motors, and angles for the navX.
+   * 
+   */
+  public void encoderTest() {
     SmartDashboard.putNumber("lMaster", lMaster.getSelectedSensorPosition());
     SmartDashboard.putNumber("rMaster", rMaster.getSelectedSensorPosition());
     SmartDashboard.putNumber("NavX Angle: ", RobotContainer.navX.getAngle());
-  
+
   }
 
   /**
    * returns sensor position.
+   * 
    * @return
    */
   public int getEncoderValue() {
     return lMaster.getSelectedSensorPosition();
   }
+
   /**
    * resets encoder value.
    */
-  public void resetEncoder(){
+  public void resetEncoder() {
     lMaster.getSelectedSensorPosition(0);
     rMaster.getSelectedSensorPosition(0);
   }
+
   @Override
   public void periodic() {
-    RobotContainer.navX.getAngle();
     encoderTest();
-   
+
     // This method will be called once per scheduler run
   }
+
   /**
    * 
    * stops motors.
