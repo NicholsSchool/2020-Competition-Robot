@@ -57,7 +57,6 @@ public class RobotContainer {
 
     // Configure the button bindings
 
-
     spinner= new ColorWheelSpinner();
     j0 = new JoystickController(0);
 
