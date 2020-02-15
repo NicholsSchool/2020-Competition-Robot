@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.music.Orchestra;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.Compressor;
@@ -57,8 +58,9 @@ public class RobotContainer {
     irSystem = new IRSystem();
      
     driveTrain = new DriveTrain();
-    climber = new Climber();
-//    compressor = new Compressor(RobotMap.COMPRESSOR_ID);
+    //climber = new Climber();
+   // compressor = new Compressor(RobotMap.COMPRESSOR_ID);
+
 
 
     // Configure the button bindings
@@ -71,6 +73,7 @@ public class RobotContainer {
     shooter = new Shooter();
     // Configure the button bindings
     intake = new Intake();
+    
     configureButtonBindings();
   }
 
@@ -106,7 +109,7 @@ public class RobotContainer {
     // j1.b7.whileHeld(new MoveLock(4, true));
 
     // j2.b2.whileHeld(new TakeIn());
-     
+
 
     // j0.b8.whenPressed(new TakeIn());
     // j0.b9.whenPressed(new TakeOut());
@@ -117,7 +120,10 @@ public class RobotContainer {
     // j1.b8.and(j2.b8).whenActive(new InstantCommand(() -> climber.engageBreak(), climber));
     // j1.b9.and(j2.b9).whenActive(new InstantCommand(() -> climber.disengageBreak(), climber));
 
-    
+    //j0.b11.whileHeld(new SpinCWS());
+
+    j0.b12.whenPressed(new PlayMusic());
+
  } 
 
 

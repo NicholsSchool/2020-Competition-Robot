@@ -49,6 +49,7 @@ public final class Constants {
   
     public static final double CWS_SPINNER_SPEED = 0.25;
 
+    public static final String MUSIC_FILE = "megalovania.chrp";
     public static final boolean BREAK_SWITCH_ENGAGE = true;
     public static final boolean BREAK_SWITCH_DISENGAGE = !BREAK_SWITCH_ENGAGE;
     public static final boolean CLIMBER_EXTEND = true;
