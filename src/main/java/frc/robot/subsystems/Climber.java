@@ -10,13 +10,12 @@ import frc.robot.RobotContainer;
 import frc.robot.RobotMap;
 
 public class Climber extends SubsystemBase {
-    public Solenoid climber;
-    public Solenoid climbBreak;
+    private Solenoid climber;
+    private Solenoid climbBreak;
 
     public Climber() {
         climber = new Solenoid(RobotMap.CLIMBER_SOLENOID_CHANNEL);
         climbBreak = new Solenoid(RobotMap.CLIMBBREAK_SOLENOID_CHANNEL);
-
     }
 
     public void engageBreak() {
@@ -27,7 +26,7 @@ public class Climber extends SubsystemBase {
         climbBreak.set(Constants.BREAK_SWITCH_DISENGAGE);
     }
 
-    public void  extend(){        
+    public void extend(){        
         climber.set(Constants.CLIMBER_EXTEND);
     }
 

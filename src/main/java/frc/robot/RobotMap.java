@@ -26,5 +26,7 @@ public class RobotMap {
     public static final int CLIMBER_SOLENOID_CHANNEL = -1;
     public static final int CLIMBBREAK_SOLENOID_CHANNEL = -1;
 
+    public static final int COMPRESSOR_ID = 50;
+
     // Spare Talons: 32 and 30
 }
