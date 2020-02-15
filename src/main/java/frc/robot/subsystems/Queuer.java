@@ -2,7 +2,9 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.RobotContainer;
 import frc.robot.RobotMap;
 
 /**
@@ -113,5 +115,9 @@ public class Queuer extends SubsystemBase {
         lock2.getStatorCurrent();
         lock3.getStatorCurrent();
         lock4.getStatorCurrent();
+
+        boolean[] beams = RobotContainer.irSystem.getValues();
+        for(int i = 0; i < beams.length; i ++)
+            SmartDashboard.putBoolean("Beam " + (i + 1), beams[i]);
     }
 }
