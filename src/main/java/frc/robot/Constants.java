@@ -46,4 +46,8 @@ public final class Constants {
   
     public static final double CWS_SPINNER_SPEED = 0.25;
 
+    public static final double DRIVE_FAST_MODE = 1.0;
+    public static final double DRIVE_SLOW_MODE = 0.5;
+
+
 }
