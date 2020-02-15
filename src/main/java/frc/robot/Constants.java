@@ -52,5 +52,8 @@ public final class Constants {
     public static final boolean BREAK_SWITCH_DISENGAGE = !BREAK_SWITCH_ENGAGE;
     public static final boolean CLIMBER_EXTEND = true;
     public static final boolean CLIMBER_STOP = !CLIMBER_EXTEND;
+    public static final double DRIVE_FAST_MODE = 1.0;
+    public static final double DRIVE_SLOW_MODE = 0.5;
+
 
 }
