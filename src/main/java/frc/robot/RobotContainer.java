@@ -89,6 +89,9 @@ public class RobotContainer {
     j0.b9.whenPressed(new TakeOut());
 
     j0.b11.whileHeld(new SpinCWS());
+
+    j0.b12.whenPressed(new PlayMusic());
+
  } 
 
 

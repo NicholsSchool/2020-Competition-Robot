@@ -32,6 +32,6 @@ public class PlayMusic extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }
