@@ -7,13 +7,15 @@
 
 package frc.robot;
 
-import frc.robot.commands.MoveDart;
-import frc.robot.subsystems.Dart;
-import frc.robot.subsystems.Shooter;
-import frc.robot.commands.TakeIn;
-import frc.robot.commands.TakeOut;
-import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.Queuer;
+import com.kauailabs.navx.frc.AHRS;
+
+import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.SPI;
+import frc.robot.autonomous.*;
+import frc.robot.commands.*;	
+import frc.robot.sensors.*;	
+import frc.robot.subsystems.*;
 import frc.robot.util.JoystickController;
 import edu.wpi.first.wpilibj2.command.Command;
 
@@ -24,24 +26,38 @@ import edu.wpi.first.wpilibj2.command.Command;
  * (including subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  public static Shooter shooter;
   // The robot's subsystems and commands are defined here...
+  public static DriveTrain driveTrain;
+  public static JoystickController j0;
+  public static JoystickController j1;
+  public static AHRS ahrs;
+  public static NavX navX; 
 
+  public static Shooter shooter;
   public static Intake intake;
   public static Queuer queuer;
   public static Dart dart;
+  public static ColorWheelSpinner spinner;
+
 
   public static JoystickController j2;
-  public static JoystickController j0;
+  
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
+    navX = new NavX(new AHRS(SPI.Port.kMXP));
+    driveTrain = new DriveTrain();
 
+
+    // Configure the button bindings
+
+    spinner= new ColorWheelSpinner();
     j0 = new JoystickController(0);
     queuer = new Queuer();
     dart = new Dart();
+    shooter = new Shooter();
     // Configure the button bindings
     intake = new Intake();
     configureButtonBindings();
@@ -55,12 +71,20 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
+    j0 = new JoystickController(0);
+    j1 = new JoystickController(1);
+    j2 = new JoystickController(2);
+    
+    j0.b7.whenPressed(new BBTurn(90, 0.6));
+    j0.b5.whenPressed(new PIDTurn(90));
+    j0.b3.whenPressed(new PIDDrive(12));
+    j0.b6.whenPressed(new BBDrive(12, 0.5));
     dart.setDefaultCommand(new MoveDart());
 
     j0.b8.whenPressed(new TakeIn());
     j0.b9.whenPressed(new TakeOut());
 
-
+    j0.b11.whileHeld(new SpinCWS());
  } 
 
 

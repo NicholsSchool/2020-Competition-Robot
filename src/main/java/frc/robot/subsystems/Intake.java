@@ -37,7 +37,6 @@ public class Intake extends SubsystemBase {
   {
     move(Constants.INTAKE_SPEED);
   }
-
   /**
    * Does the same thing as takeIn(), but in the other direction.
    */
@@ -64,10 +63,11 @@ public class Intake extends SubsystemBase {
     intake.stopMotor();
   }
 
-  @Override
+  
   /**
    * Runs constantly while subsystem is in use.
    */
+  @Override
   public void periodic() 
   {
     // This method will be called once per scheduler run
