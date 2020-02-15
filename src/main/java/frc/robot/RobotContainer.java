@@ -9,6 +9,7 @@ package frc.robot;
 
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.SPI;
 import frc.robot.autonomous.*;
@@ -17,6 +18,10 @@ import frc.robot.sensors.*;
 import frc.robot.subsystems.*;
 import frc.robot.util.JoystickController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.button.Button;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -31,13 +36,14 @@ public class RobotContainer {
   public static JoystickController j1;
   public static AHRS ahrs;
   public static NavX navX; 
+  public static Climber climber;
 
   public static Shooter shooter;
   public static Intake intake;
   public static Queuer queuer;
   public static Dart dart;
   public static ColorWheelSpinner spinner;
-
+  public static Compressor compressor;
 
   public static JoystickController j2;
   
@@ -48,12 +54,15 @@ public class RobotContainer {
   public RobotContainer() {
     navX = new NavX(new AHRS(SPI.Port.kMXP));
     driveTrain = new DriveTrain();
+    climber = new Climber();
+    compressor = new Compressor(RobotMap.COMPRESSOR_ID);
 
 
     // Configure the button bindings
 
     spinner= new ColorWheelSpinner();
     j0 = new JoystickController(0);
+
     queuer = new Queuer();
     dart = new Dart();
     shooter = new Shooter();
@@ -69,7 +78,7 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-
+    
     j0 = new JoystickController(0);
     j1 = new JoystickController(1);
     j2 = new JoystickController(2);
@@ -84,6 +93,14 @@ public class RobotContainer {
     j0.b9.whenPressed(new TakeOut());
 
     j0.b11.whileHeld(new SpinCWS());
+    
+    j1.b3.and(j2.b3).whenActive(new InstantCommand(() -> climber.extend(), climber));
+    j1.b8.and(j2.b8).whenActive(new InstantCommand(() -> climber.engageBreak(), climber));
+    j1.b9.and(j2.b9).whenActive(new InstantCommand(() -> climber.disengageBreak(), climber));
+    
+    
+
+    
  } 
 
 
