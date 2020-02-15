@@ -15,6 +15,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.music.Orchestra;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
@@ -42,20 +43,14 @@ public class Shooter extends SubsystemBase {
         shooter.configFactoryDefault();
         lock5.configFactoryDefault(); 
         lock5.setInverted(true);
-
+        shooter.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
         shooter.config_kF(0, Constants.SHOOTER_F);
         shooter.config_kP(0, Constants.SHOOTER_P);
         shooter.config_kI(0, Constants.SHOOTER_I);
         shooter.config_kD(0, Constants.SHOOTER_D);
-
         shooter.configOpenloopRamp(Constants.SHOOTER_RAMP_TIME);
         shooter.configClosedloopRamp(Constants.SHOOTER_RAMP_TIME);
-        shooter.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
-
         orchestra = new Orchestra(Arrays.asList(shooter), Constants.MUSIC_FILE);
-        
-
-    
     
     }
 
@@ -64,8 +59,13 @@ public class Shooter extends SubsystemBase {
      */
 
     public void shoot(){
-       //  move(Constants.SHOOTER_SPEED);
-       setVelocity(Constants.SHOOT_VELOCITY);
+    //  move(Constants.SHOOTER_SPEED);
+
+  //  move(1.0); //For testing
+
+    setVelocity(Constants.SHOOT_VELOCITY);
+    if (Math.abs(shooter.getSelectedSensorVelocity()- Constants.SHOOT_VELOCITY)< 200)
+        lock5.set(Constants.SHOOTER_SPEED);
 
     }
 
@@ -94,12 +94,15 @@ public class Shooter extends SubsystemBase {
 
     public void stop() {
         shooter.stopMotor();
+        lock5.stopMotor();
         isRunning = false;
     }
 
     @Override
     public void periodic() {
-
+        SmartDashboard.putNumber("Desired Velocity", Constants.SHOOT_VELOCITY);
+        SmartDashboard.putNumber("Shooter Velocity", shooter.getSelectedSensorVelocity());
+        SmartDashboard.putNumber("Difference In Velocity", Constants.SHOOT_VELOCITY - shooter.getSelectedSensorVelocity());
     }
 
     private void setVelocity(double velocity){

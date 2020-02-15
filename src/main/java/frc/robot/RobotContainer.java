@@ -62,6 +62,7 @@ public class RobotContainer {
    // compressor = new Compressor(RobotMap.COMPRESSOR_ID);
 
 
+
     // Configure the button bindings
 
     spinner= new ColorWheelSpinner();
@@ -92,8 +93,23 @@ public class RobotContainer {
     // j0.b5.whenPressed(new PIDTurn(90));
     // j0.b3.whenPressed(new PIDDrive(12));
     // j0.b6.whenPressed(new BBDrive(12, 0.5));
-    // dart.setDefaultCommand(new MoveDart());
-    //driveTrain.setDefaultCommand(new Drive());
+     dart.setDefaultCommand(new MoveDart());
+
+    driveTrain.setDefaultCommand(new Drive());
+    j2.b2.whileHeld(new TakeIn()).whenReleased(new Queue());
+    j2.b3.whenPressed(new Queue());
+    j2.b11.whileHeld(new MoveLock(2));
+    j2.b9.whileHeld(new MoveLock(3));
+    j2.b7.whileHeld(new MoveLock(4));
+     j2.b1.whileHeld(new Shoot());
+
+    // j1.b2.whileHeld(new TakeOut());
+    // j1.b11.whileHeld(new MoveLock(2, true));
+    // j1.b9.whileHeld(new MoveLock(3, true));
+    // j1.b7.whileHeld(new MoveLock(4, true));
+
+    // j2.b2.whileHeld(new TakeIn());
+
 
     // j0.b8.whenPressed(new TakeIn());
     // j0.b9.whenPressed(new TakeOut());
