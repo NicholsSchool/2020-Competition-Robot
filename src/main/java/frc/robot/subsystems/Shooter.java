@@ -8,6 +8,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
@@ -21,7 +22,8 @@ import frc.robot.RobotMap;
 public class Shooter extends SubsystemBase{
     private WPI_TalonFX shooter;    
     private WPI_TalonSRX lock5; 
-    
+    private boolean isRunning;
+    private long startTime;
 
     
 /**
@@ -33,19 +35,21 @@ public class Shooter extends SubsystemBase{
 
         shooter = new WPI_TalonFX(RobotMap.SHOOTER_ID);
         lock5 = new WPI_TalonSRX(RobotMap.LOCK_FIVE_MOTOR_ID);
+        isRunning = false;
         
-        
-     
 
         shooter.configFactoryDefault();
-        lock5.configFactoryDefault();
-        shooter.configOpenloopRamp(Constants.SHOOTER_RAMP_TIME);
-        shooter.configClosedloopRamp(Constants.SHOOTER_RAMP_TIME);
+        lock5.configFactoryDefault(); 
+        lock5.setInverted(true);
 
         shooter.config_kF(0, Constants.SHOOTER_F);
         shooter.config_kP(0, Constants.SHOOTER_P);
         shooter.config_kI(0, Constants.SHOOTER_I);
         shooter.config_kD(0, Constants.SHOOTER_D);
+
+        shooter.configOpenloopRamp(Constants.SHOOTER_RAMP_TIME);
+        shooter.configClosedloopRamp(Constants.SHOOTER_RAMP_TIME);
+        shooter.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
         
 
     
@@ -68,8 +72,17 @@ public class Shooter extends SubsystemBase{
      * @param speed
      */
 
-    private void move(double speed) {
+    public void move(double speed) {
+        if (! isRunning){
+            startTime = System.currentTimeMillis();
+            isRunning = true;
+        }
+
         shooter.set(speed);
+        if (System.currentTimeMillis() - startTime > Constants.SHOOTER_RAMP_TIME * 1000){
+            lock5.set (speed);
+        }
+
     }
      /**
          * stops the shooter's motor.
@@ -77,6 +90,7 @@ public class Shooter extends SubsystemBase{
 
     public void stop(){
         shooter.stopMotor();
+        isRunning = false;
     }
 
     @Override 
