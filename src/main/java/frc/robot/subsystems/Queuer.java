@@ -104,9 +104,6 @@ public class Queuer extends SubsystemBase {
         
         updateNumberOfBalls();
         for(int i = 0; i < locks.length - numBalls; i ++)
-            if (i == locks.length - 1)
-                move(Constants.LOCK_4_SPEED, i);
-            else
                 move(Constants.QUEUE_MOVE_SPEED, i);
         
     }
