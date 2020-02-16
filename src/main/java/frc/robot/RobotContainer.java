@@ -131,7 +131,7 @@ public class RobotContainer {
 
     j0.b12.whenPressed(new PlayMusic());
 
-    controller0.rTrigger.whenHeld(new TakeIn());
+    controller0.rTrigger.whileHeld(new TakeIn());
 
     controller1.lTrigger.whileHeld(new TakeIn());
 
@@ -151,7 +151,7 @@ public class RobotContainer {
 
     controller1.b.whileHeld( new SpinCWS());
 
-    //Need: auto align, arm up and down, control pannel pos, rumble
+    //Need: auto align, arm up and down, control pannel pos
 
   }
 
