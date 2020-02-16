@@ -9,7 +9,6 @@ package frc.robot.commands;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.RobotContainer;
@@ -24,11 +23,22 @@ public class VisionPIDTurn extends PIDCommand {
   public VisionPIDTurn() {
     super(
         // The controller that the command will use
-        new PIDController(2.5, 0, -0.001),
+        new PIDController(2, 0, -0.001),
         // This should return the measurement
         () -> {
           NetworkTable table = NetworkTableInstance.getDefault().getTable("Vision");
-          return table.getEntry("x").getDouble(0) / Math.max(1, table.getEntry("z").getDouble(0));
+
+          double x = table.getEntry("x").getDouble(0);
+          double z = table.getEntry("z").getDouble(0);
+          double theta = 0;
+
+          if (x != 0 && z != 0) {
+              x += 9; // account for shooter offset
+              z += 12;
+              theta = Math.toDegrees(Math.atan(x / z));
+          }
+  
+          return theta;
         },
         // This should return the setpoint (can also be a constant)
         () -> 0,
@@ -36,7 +46,6 @@ public class VisionPIDTurn extends PIDCommand {
         output -> {
           // Use the output here
           System.out.println("Turning Output: " + output);
-          System.out.println("X: " + NetworkTableInstance.getDefault().getTable("Vision").getEntry("x").getDouble(0));
           RobotContainer.driveTrain.move(-output, output);
         });
     // Use addRequirements() here to declare subsystem dependencies.
