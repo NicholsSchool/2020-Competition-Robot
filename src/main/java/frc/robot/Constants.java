@@ -9,6 +9,8 @@ package frc.robot;
 
 import java.sql.ClientInfoStatus;
 
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants.  This class should not be used for any other purpose.  All constants should be
@@ -35,7 +37,6 @@ public final class Constants {
    public static final int TICKS_PER_INCH = 68;
       public static final double QUEUE_MOVE_SPEED = 1;
     public static final double DEQUEUE_WAIT_TIME = 2;
-      public static final double LOCK_4_SPEED = 1;
     public static final double DART_SPEED_MULTIPLIER = 1;
     public static final double SHOOTER_SPEED = 1;
     public static final double INTAKE_SPEED = 1;
@@ -58,5 +59,25 @@ public final class Constants {
     public static final double DRIVE_FAST_MODE = 1.0;
     public static final double DRIVE_SLOW_MODE = 0.5;
 
+
+
+
+    // values for your robot.
+    public static final double ksVolts = 1.17;
+    public static final double kvVoltSecondsPerMeter = 0.0733;
+    public static final double kaVoltSecondsSquaredPerMeter = 0.0202;
+
+    // Example value only - as above, this must be tuned for your drive!
+    public static final double kPDriveVel = 0.973;
+
+    public static final double kTrackwidthMeters = 60.974;
+    public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(
+            kTrackwidthMeters);
+
+    public static final double kMaxSpeedMetersPerSecond = 3;
+    public static final double kMaxAccelerationMetersPerSecondSquared = 3;
+
+    public static final double kRamseteB = 2;
+    public static final double kRamseteZeta = 0.7;
 
 }
