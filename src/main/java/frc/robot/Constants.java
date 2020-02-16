@@ -34,10 +34,11 @@ public final class Constants {
 
    public static final int TICKS_PER_INCH = 68;
       public static final double QUEUE_MOVE_SPEED = 1;
+    public static final double DEQUEUE_WAIT_TIME = 2;
       public static final double LOCK_4_SPEED = 1;
     public static final double DART_SPEED_MULTIPLIER = 1;
-    public static final double SHOOTER_SPEED = 0.5;
-    public static final double INTAKE_SPEED = 0.5;
+    public static final double SHOOTER_SPEED = 1;
+    public static final double INTAKE_SPEED = 1;
   
     public static final double SHOOTER_F = 0.055;
     public static final double SHOOTER_P = 0.14;

@@ -30,6 +30,8 @@ public class Shooter extends SubsystemBase {
     private boolean isRunning;
     private long startTime;
 
+    private boolean isAtVelocity;
+
     /**
      * Crestes a new Shooter.
      */
@@ -38,6 +40,7 @@ public class Shooter extends SubsystemBase {
         shooter = new WPI_TalonFX(RobotMap.SHOOTER_ID);
         lock5 = new WPI_TalonSRX(RobotMap.LOCK_FIVE_MOTOR_ID);
         isRunning = false;
+        isAtVelocity = false;
         
 
         shooter.configFactoryDefault();
@@ -54,19 +57,22 @@ public class Shooter extends SubsystemBase {
     
     }
 
+    public boolean isAtVelocity()
+    {
+        return isAtVelocity;
+    }
+
     /**
      * starts the shooter
      */
 
     public void shoot(){
-    //  move(Constants.SHOOTER_SPEED);
 
-  //  move(1.0); //For testing
 
     setVelocity(Constants.SHOOT_VELOCITY);
     if (Math.abs(shooter.getSelectedSensorVelocity()- Constants.SHOOT_VELOCITY)< 200)
         lock5.set(Constants.SHOOTER_SPEED);
-
+        isAtVelocity = true;
     }
 
     /**
@@ -96,6 +102,7 @@ public class Shooter extends SubsystemBase {
         shooter.stopMotor();
         lock5.stopMotor();
         isRunning = false;
+        isAtVelocity = false;
     }
 
     @Override
@@ -110,13 +117,6 @@ public class Shooter extends SubsystemBase {
         
 
     }
-
-   
-
-    
-
-
-
 
     public void playMusic() {
 
