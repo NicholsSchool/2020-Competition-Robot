@@ -67,14 +67,15 @@ public class Shooter extends SubsystemBase {
      */
 
     public void shoot(){
-
-
-    setVelocity(Constants.SHOOT_VELOCITY);
-    if (Math.abs(shooter.getSelectedSensorVelocity()- Constants.SHOOT_VELOCITY)< 200)
-        lock5.set(Constants.SHOOTER_SPEED);
-        isAtVelocity = true;
+        setVelocity(Constants.SHOOT_VELOCITY);
+        if (Math.abs(shooter.getSelectedSensorVelocity()- Constants.SHOOT_VELOCITY)< 200)
+        {
+            lock5.set(Constants.SHOOTER_SPEED);
+            isAtVelocity = true;
+        }
+        else 
+            isAtVelocity = false;
     }
-
     /**
      * moves the shooter.
      * 

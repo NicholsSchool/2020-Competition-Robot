@@ -113,18 +113,28 @@ public class Queuer extends SubsystemBase {
 
     public void unload()
     {
-        if(!dequeueStarted)
+        boolean[] sensorValues = RobotContainer.irSystem.getValues();
+        if(sensorValues[4])
         {
-            dequeueStartTime = System.currentTimeMillis();
-            dequeueStarted = true;
+            lock4.set(Constants.QUEUE_MOVE_SPEED);
         }
-        
-        for(int i = locks.length - 1; i >= locks.length - numBalls; i --)
-            if(System.currentTimeMillis() - dequeueStartTime > ((locks.length - i) * Constants.DEQUEUE_WAIT_TIME * 1000))
-            {
-                System.out.println("Shooting: " + i);
-                move(Constants.QUEUE_MOVE_SPEED, i);
-            }
+        if(sensorValues[4] && !sensorValues[3])
+        {
+            lock4.set(Constants.QUEUE_MOVE_SPEED);
+            lock3.set(Constants.QUEUE_MOVE_SPEED);
+        }
+        if(sensorValues[3] && !sensorValues[2])
+        {
+            lock3.set(Constants.QUEUE_MOVE_SPEED);
+            lock2.set(Constants.QUEUE_MOVE_SPEED);
+        }
+        if(sensorValues[2] && !sensorValues[1])
+        {
+            lock2.set(Constants.QUEUE_MOVE_SPEED);
+            RobotContainer.intake.takeIn();
+        }
+        if(sensorValues[1] && !sensorValues[0])
+            RobotContainer.intake.takeIn();
     }
 
     public void updateNumberOfBalls()
