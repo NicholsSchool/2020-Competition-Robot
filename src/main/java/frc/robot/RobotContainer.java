@@ -20,6 +20,8 @@ import frc.robot.subsystems.*;
 import frc.robot.util.JoystickController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -101,7 +103,8 @@ public class RobotContainer {
     j2.b11.whileHeld(new MoveLock(2));
     j2.b9.whileHeld(new MoveLock(3));
     j2.b7.whileHeld(new MoveLock(4));
-     j2.b1.whileHeld(new Shoot());
+
+     j2.b1.whileHeld(new Shoot().alongWith(new UnloadQueuer()));
 
     // j1.b2.whileHeld(new TakeOut());
     // j1.b11.whileHeld(new MoveLock(2, true));
@@ -123,7 +126,7 @@ public class RobotContainer {
     //j0.b11.whileHeld(new SpinCWS());
 
     j0.b12.whenPressed(new PlayMusic());
-
+    j0.b11.whenPressed(new InstantCommand(() -> driveTrain.resetEncoders(), driveTrain));
  } 
 
 

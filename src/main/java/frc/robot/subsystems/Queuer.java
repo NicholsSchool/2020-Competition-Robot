@@ -22,6 +22,8 @@ public class Queuer extends SubsystemBase {
     private WPI_TalonSRX[] locks; 
 
     private int numBalls;
+    private boolean dequeueStarted;
+    private long dequeueStartTime;
 
     /**
      *  Constructor Method creating motors 
@@ -46,6 +48,7 @@ public class Queuer extends SubsystemBase {
         lock3.setInverted( true );
         lock4.setInverted( true );
         numBalls = 0;
+        dequeueStarted = false;
     }
 
     /**
@@ -110,7 +113,28 @@ public class Queuer extends SubsystemBase {
 
     public void unload()
     {
-        
+        boolean[] sensorValues = RobotContainer.irSystem.getValues();
+        if(sensorValues[4])
+        {
+            lock4.set(Constants.QUEUE_MOVE_SPEED);
+        }
+        if(sensorValues[4] && !sensorValues[3])
+        {
+            lock4.set(Constants.QUEUE_MOVE_SPEED);
+            lock3.set(Constants.QUEUE_MOVE_SPEED);
+        }
+        if(sensorValues[3] && !sensorValues[2])
+        {
+            lock3.set(Constants.QUEUE_MOVE_SPEED);
+            lock2.set(Constants.QUEUE_MOVE_SPEED);
+        }
+        if(sensorValues[2] && !sensorValues[1])
+        {
+            lock2.set(Constants.QUEUE_MOVE_SPEED);
+            RobotContainer.intake.takeIn();
+        }
+        if(sensorValues[1] && !sensorValues[0])
+            RobotContainer.intake.takeIn();
     }
 
     public void updateNumberOfBalls()
@@ -126,6 +150,11 @@ public class Queuer extends SubsystemBase {
             
     }
 
+    public int getNumberBalls()
+    {
+        return numBalls;
+    }
+
     /**
      *  Method stopping each lock motor
      */
@@ -135,6 +164,7 @@ public class Queuer extends SubsystemBase {
         lock2.stopMotor();
         lock3.stopMotor();
         lock4.stopMotor();
+        dequeueStarted = false;
     }
 
     /**

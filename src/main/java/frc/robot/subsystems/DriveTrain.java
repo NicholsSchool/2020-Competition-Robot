@@ -98,6 +98,12 @@ public class DriveTrain extends SubsystemBase {
     SmartDashboard.putNumber("Drive Governor", govener);
   }
 
+  public void resetEncoders()
+  {
+    lMaster.setSelectedSensorPosition(0);
+    rMaster.setSelectedSensorPosition(0);
+  }
+
   /**
    * returns sensor position.
    * 
