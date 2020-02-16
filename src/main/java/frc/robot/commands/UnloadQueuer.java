@@ -9,38 +9,45 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
-import frc.robot.subsystems.DriveTrain;
 
-public class Drive extends CommandBase {
+public class UnloadQueuer extends CommandBase {
   /**
-   * Creates a new Drive.
+   * Creates a new UnloadQueuer.
    */
-  public Drive() {
-    addRequirements(RobotContainer.driveTrain);
+  public UnloadQueuer() {
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(RobotContainer.queuer);
+    addRequirements(RobotContainer.intake);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.driveTrain.move(-RobotContainer.j0.getY(), -RobotContainer.j1.getY());
+    if(RobotContainer.shooter.isAtVelocity())
+        RobotContainer.queuer.unload();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    RobotContainer.driveTrain.stop();
+    RobotContainer.queuer.stop();
+    RobotContainer.intake.stop();
   }
 
-  
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    boolean isEmpty = true;
+    boolean[] sensorValues = RobotContainer.irSystem.getValues();
+    for(boolean b : sensorValues)
+      if(!b)
+        isEmpty = false;
+      return isEmpty;
   }
 }

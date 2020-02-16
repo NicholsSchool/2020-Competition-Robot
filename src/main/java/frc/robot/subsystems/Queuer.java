@@ -2,7 +2,10 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
+import frc.robot.RobotContainer;
 import frc.robot.RobotMap;
 
 /**
@@ -17,6 +20,10 @@ public class Queuer extends SubsystemBase {
     private WPI_TalonSRX lock4;
 
     private WPI_TalonSRX[] locks; 
+
+    private int numBalls;
+    private boolean dequeueStarted;
+    private long dequeueStartTime;
 
     /**
      *  Constructor Method creating motors 
@@ -36,6 +43,12 @@ public class Queuer extends SubsystemBase {
         lock2.configFactoryDefault();
         lock3.configFactoryDefault();
         lock4.configFactoryDefault();
+
+        lock2.setInverted( true );
+        lock3.setInverted( true );
+        lock4.setInverted( true );
+        numBalls = 0;
+        dequeueStarted = false;
     }
 
     /**
@@ -70,23 +83,73 @@ public class Queuer extends SubsystemBase {
 
     public boolean checkQueuer()
     {
-        boolean[] sensorValues = new boolean[locks.length];
+        boolean[] sensorValues = RobotContainer.irSystem.getValues();
         boolean falseFound = false;
-
-        for(int i = locks.length; i >= 0; i--)
+        for(int i = 0; i < sensorValues.length; i ++)
         {
-            if(sensorValues[i] == false)
+            if(!sensorValues[i])
             {
+                System.out.println("False found at spot: " + i);
                 falseFound = true;
             }
 
-            if(sensorValues[i] == true && falseFound == true)
-            {
+            if(falseFound && sensorValues[i])
                 return false;
-            }
         }
-
+        System.out.println("Queuer all good");
         return true;
+    }
+
+    public void queue() {
+        
+        updateNumberOfBalls();
+        for(int i = 0; i < locks.length - numBalls; i ++)
+                move(Constants.QUEUE_MOVE_SPEED, i);
+        
+    }
+
+    public void unload()
+    {
+        boolean[] sensorValues = RobotContainer.irSystem.getValues();
+        if(sensorValues[4])
+        {
+            lock4.set(Constants.QUEUE_MOVE_SPEED);
+        }
+        if(sensorValues[4] && !sensorValues[3])
+        {
+            lock4.set(Constants.QUEUE_MOVE_SPEED);
+            lock3.set(Constants.QUEUE_MOVE_SPEED);
+        }
+        if(sensorValues[3] && !sensorValues[2])
+        {
+            lock3.set(Constants.QUEUE_MOVE_SPEED);
+            lock2.set(Constants.QUEUE_MOVE_SPEED);
+        }
+        if(sensorValues[2] && !sensorValues[1])
+        {
+            lock2.set(Constants.QUEUE_MOVE_SPEED);
+            RobotContainer.intake.takeIn();
+        }
+        if(sensorValues[1] && !sensorValues[0])
+            RobotContainer.intake.takeIn();
+    }
+
+    public void updateNumberOfBalls()
+    {
+        int totalBalls = 0;
+        boolean[] sensorValues = RobotContainer.irSystem.getValues();
+        for(int i = sensorValues.length - 1; i >= 0; i --)
+            if(!sensorValues[i])
+                totalBalls ++;
+            else
+                break;
+        numBalls = totalBalls;
+            
+    }
+
+    public int getNumberBalls()
+    {
+        return numBalls;
     }
 
     /**
@@ -98,6 +161,7 @@ public class Queuer extends SubsystemBase {
         lock2.stopMotor();
         lock3.stopMotor();
         lock4.stopMotor();
+        dequeueStarted = false;
     }
 
     /**
@@ -109,5 +173,9 @@ public class Queuer extends SubsystemBase {
         lock2.getStatorCurrent();
         lock3.getStatorCurrent();
         lock4.getStatorCurrent();
+        SmartDashboard.putNumber("Number of Balls", numBalls);
+        boolean[] beams = RobotContainer.irSystem.getValues();
+        for(int i = 0; i < beams.length; i ++)
+            SmartDashboard.putBoolean("Beam " + (i + 1), beams[i]);
     }
 }

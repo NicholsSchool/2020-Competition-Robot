@@ -7,6 +7,10 @@
 
 package frc.robot;
 
+import java.sql.ClientInfoStatus;
+
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants.  This class should not be used for any other purpose.  All constants should be
@@ -26,14 +30,54 @@ public final class Constants {
    public static final double RIGHT_MASTER_I = 0.0;
    public static final double RIGHT_MASTER_D = 0.0;
 
-   public static final int RAMP_TIME = 2;
+   public static final double RAMP_TIME = 0.01;
 
    public static final int CONFIG_TIMEOUT = 100;
 
    public static final int TICKS_PER_INCH = 68;
-	  public static final double QUEUE_MOVE_SPEED = 0.0;
+      public static final double QUEUE_MOVE_SPEED = 1;
+    public static final double DEQUEUE_WAIT_TIME = 2;
     public static final double DART_SPEED_MULTIPLIER = 1;
-    public static final double SHOOTER_SPEED = 0.5;
-    public static final double INTAKE_SPEED = 0.1;
+    public static final double SHOOTER_SPEED = 1;
+    public static final double INTAKE_SPEED = 1;
+  
+    public static final double SHOOTER_F = 0.055;
+    public static final double SHOOTER_P = 0.14;
+    public static final double SHOOTER_I = 0;
+    public static final double SHOOTER_D = 0;
+    public static final double SHOOTER_RAMP_TIME = 1;
+    public static final double SHOOTER_MAX_VELOCITY = 16300;
+    public static final double SHOOT_VELOCITY = 0.8 * SHOOTER_MAX_VELOCITY;
+  
     public static final double CWS_SPINNER_SPEED = 0.25;
+
+    public static final String MUSIC_FILE = "megalovania.chrp";
+    public static final boolean BREAK_SWITCH_ENGAGE = true;
+    public static final boolean BREAK_SWITCH_DISENGAGE = !BREAK_SWITCH_ENGAGE;
+    public static final boolean CLIMBER_EXTEND = true;
+    public static final boolean CLIMBER_STOP = !CLIMBER_EXTEND;
+    public static final double DRIVE_FAST_MODE = 1.0;
+    public static final double DRIVE_SLOW_MODE = 0.5;
+
+
+
+
+    // values for your robot.
+    public static final double ksVolts = 1.17;
+    public static final double kvVoltSecondsPerMeter = 0.0733;
+    public static final double kaVoltSecondsSquaredPerMeter = 0.0202;
+
+    // Example value only - as above, this must be tuned for your drive!
+    public static final double kPDriveVel = 0.973;
+
+    public static final double kTrackwidthMeters = 60.974;
+    public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(
+            kTrackwidthMeters);
+
+    public static final double kMaxSpeedMetersPerSecond = 3;
+    public static final double kMaxAccelerationMetersPerSecondSquared = 3;
+
+    public static final double kRamseteB = 2;
+    public static final double kRamseteZeta = 0.7;
+
 }

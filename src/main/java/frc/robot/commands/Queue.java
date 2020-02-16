@@ -8,43 +8,39 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
 import frc.robot.RobotContainer;
 
-public class MoveDart extends CommandBase {
+public class Queue extends CommandBase {
   /**
-   * Creates a new MoveDart.
+   * Creates a new Queue.
    */
-  public MoveDart() {
-
-    addRequirements(RobotContainer.dart);
-
+  public Queue() {
+    // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(RobotContainer.queuer);
   }
 
-  // this does nothing of my knowledge
+  // Called when the command is initially scheduled.
   @Override
   public void initialize() {
   }
 
-  // this takes the joystickinput and sets the dart to that speed
+  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
-    RobotContainer.dart.move(-RobotContainer.j2.getY() * Constants.DART_SPEED_MULTIPLIER);
-
+    System.out.println("Queueing ball");
+    RobotContainer.queuer.queue();
   }
 
-  // this stops the dart from moving
+  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-
-    RobotContainer.dart.stop();
-
+    System.out.println("Stopping Queue");
+    RobotContainer.queuer.stop();
   }
 
-  // this does nothing of my knowledge
+  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return RobotContainer.queuer.checkQueuer();
   }
 }

@@ -8,41 +8,28 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
 import frc.robot.RobotContainer;
 
-public class MoveDart extends CommandBase {
-  /**
-   * Creates a new MoveDart.
-   */
-  public MoveDart() {
+public class PlayMusic extends CommandBase {
 
-    addRequirements(RobotContainer.dart);
-
+  public PlayMusic() {
+    addRequirements(RobotContainer.shooter);
   }
 
-  // this does nothing of my knowledge
   @Override
   public void initialize() {
+    RobotContainer.shooter.playMusic();
   }
 
-  // this takes the joystickinput and sets the dart to that speed
   @Override
   public void execute() {
-
-    RobotContainer.dart.move(-RobotContainer.j2.getY() * Constants.DART_SPEED_MULTIPLIER);
-
   }
 
-  // this stops the dart from moving
   @Override
   public void end(boolean interrupted) {
-
-    RobotContainer.dart.stop();
-
+    RobotContainer.shooter.stopMusic();
   }
 
-  // this does nothing of my knowledge
   @Override
   public boolean isFinished() {
     return false;
