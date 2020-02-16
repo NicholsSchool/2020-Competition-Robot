@@ -10,15 +10,14 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 
-public class TakeIn extends CommandBase {
+public class Outtake extends CommandBase {
   /**
-   * Creates a new TakeIn.
+   * Creates a new TakeOut.
    */
-  public TakeIn() 
+  public Outtake() 
   {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotContainer.intake);
-    
+    addRequirements(RobotContainer.queuer);
   }
 
   // Called when the command is initially scheduled.
@@ -30,14 +29,14 @@ public class TakeIn extends CommandBase {
   @Override
   public void execute() 
   {
-    RobotContainer.intake.takeIn();
+    RobotContainer.queuer.outtake();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) 
   {
-    RobotContainer.intake.stop();
+    RobotContainer.queuer.stopIntake();
   }
 
   // Returns true when the command should end.

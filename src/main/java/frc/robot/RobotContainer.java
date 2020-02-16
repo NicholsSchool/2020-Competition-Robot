@@ -56,7 +56,6 @@ public class RobotContainer {
   public static Climber climber;
 
   public static Shooter shooter;
-  public static Intake intake;
   public static Queuer queuer;
   public static Dart dart;
   public static ColorWheelSpinner spinner;
@@ -87,7 +86,6 @@ public class RobotContainer {
     dart = new Dart();
     shooter = new Shooter();
     // Configure the button bindings
-    intake = new Intake();
     
     configureButtonBindings();
   }
@@ -111,7 +109,8 @@ public class RobotContainer {
      dart.setDefaultCommand(new MoveDart());
 
     driveTrain.setDefaultCommand(new Drive());
-    j2.b2.whileHeld(new TakeIn()).whenReleased(new Queue());
+    
+    j2.b2.whileHeld(new Intake()).whenReleased(new Queue());
     j2.b3.whenPressed(new Queue());
     j2.b11.whileHeld(new MoveLock(2));
     j2.b9.whileHeld(new MoveLock(3));

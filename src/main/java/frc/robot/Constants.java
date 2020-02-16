@@ -7,8 +7,6 @@
 
 package frc.robot;
 
-import java.sql.ClientInfoStatus;
-
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 
 /**
@@ -30,15 +28,15 @@ public final class Constants {
    public static final double RIGHT_MASTER_I = 0.0;
    public static final double RIGHT_MASTER_D = 0.0;
 
-   public static final double RAMP_TIME = 0.01;
+    public static final int TICKS_PER_INCH = 68;
 
-   public static final int CONFIG_TIMEOUT = 100;
+    public static final double RAMP_TIME = 0.01;
 
-   public static final int TICKS_PER_INCH = 68;
-      public static final double QUEUE_MOVE_SPEED = 1;
+    public static final int CONFIG_TIMEOUT = 100;
+  
+    public static final double QUEUE_MOVE_SPEED = 1;
     public static final double DEQUEUE_WAIT_TIME = 2;
     public static final double DART_SPEED_MULTIPLIER = 1;
-    public static final double SHOOTER_SPEED = 1;
     public static final double INTAKE_SPEED = 1;
   
     public static final double SHOOTER_F = 0.055;
@@ -48,6 +46,7 @@ public final class Constants {
     public static final double SHOOTER_RAMP_TIME = 1;
     public static final double SHOOTER_MAX_VELOCITY = 16300;
     public static final double SHOOT_VELOCITY = 0.8 * SHOOTER_MAX_VELOCITY;
+	public static final double SHOOTER_VELOCITY_THRESHOLD = 200;
   
     public static final double CWS_SPINNER_SPEED = 0.25;
 
