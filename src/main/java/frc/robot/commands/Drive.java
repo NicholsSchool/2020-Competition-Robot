@@ -29,6 +29,7 @@ public class Drive extends CommandBase {
   @Override
   public void execute() {
     RobotContainer.driveTrain.move(-RobotContainer.j0.getY(), -RobotContainer.j1.getY());
+    RobotContainer.driveTrain.move(RobotContainer.controller0.getLeftY(), RobotContainer.controller0.getRightY());
   }
 
   // Called once the command ends or is interrupted.

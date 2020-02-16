@@ -14,10 +14,11 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.SPI;
 import frc.robot.autonomous.*;
-import frc.robot.commands.*;	
-import frc.robot.sensors.*;	
+import frc.robot.commands.*;
+import frc.robot.sensors.*;
 import frc.robot.subsystems.*;
 import frc.robot.util.JoystickController;
+import frc.robot.util.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.Subsystem;
@@ -25,10 +26,11 @@ import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
- * This class is where the bulk of the robot should be declared.  Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
- * periodic methods (other than the scheduler calls).  Instead, the structure of the robot
- * (including subsystems, commands, and button mappings) should be declared here.
+ * This class is where the bulk of the robot should be declared. Since
+ * Command-based is a "declarative" paradigm, very little robot logic should
+ * actually be handled in the {@link Robot} periodic methods (other than the
+ * scheduler calls). Instead, the structure of the robot (including subsystems,
+ * commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
@@ -36,7 +38,7 @@ public class RobotContainer {
   public static JoystickController j0;
   public static JoystickController j1;
   public static AHRS ahrs;
-  public static NavX navX; 
+  public static NavX navX;
   public static IRSystem irSystem;
   public static Climber climber;
 
@@ -47,25 +49,25 @@ public class RobotContainer {
   public static ColorWheelSpinner spinner;
   public static Compressor compressor;
 
+  public static XboxController controller0;
+  public static XboxController controller1;
+
   public static JoystickController j2;
-  
 
   /**
-   * The container for the robot.  Contains subsystems, OI devices, and commands.
+   * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
     navX = new NavX(new AHRS(SPI.Port.kMXP));
     irSystem = new IRSystem();
-     
+
     driveTrain = new DriveTrain();
-    //climber = new Climber();
-   // compressor = new Compressor(RobotMap.COMPRESSOR_ID);
-
-
+    // climber = new Climber();
+    // compressor = new Compressor(RobotMap.COMPRESSOR_ID);
 
     // Configure the button bindings
 
-    spinner= new ColorWheelSpinner();
+    spinner = new ColorWheelSpinner();
     j0 = new JoystickController(0);
 
     queuer = new Queuer();
@@ -73,27 +75,30 @@ public class RobotContainer {
     shooter = new Shooter();
     // Configure the button bindings
     intake = new Intake();
-    
+
     configureButtonBindings();
   }
 
   /**
-   * Use this method to define your button->command mappings.  Buttons can be created by
-   * instantiating a {@link GenericHID} or one of its subclasses ({@link
-   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a
-   * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
+   * Use this method to define your button->command mappings. Buttons can be
+   * created by instantiating a {@link GenericHID} or one of its subclasses
+   * ({@link edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then
+   * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    
+
     j0 = new JoystickController(0);
     j1 = new JoystickController(1);
     j2 = new JoystickController(2);
-    
+
+    controller0 = new XboxController(0);
+    controller1 = new XboxController(1);
+
     // j0.b7.whenPressed(new BBTurn(90, 0.6));
     // j0.b5.whenPressed(new PIDTurn(90));
     // j0.b3.whenPressed(new PIDDrive(12));
     // j0.b6.whenPressed(new BBDrive(12, 0.5));
-     dart.setDefaultCommand(new MoveDart());
+    dart.setDefaultCommand(new MoveDart());
 
     driveTrain.setDefaultCommand(new Drive());
     j2.b2.whileHeld(new TakeIn()).whenReleased(new Queue());
@@ -101,7 +106,7 @@ public class RobotContainer {
     j2.b11.whileHeld(new MoveLock(2));
     j2.b9.whileHeld(new MoveLock(3));
     j2.b7.whileHeld(new MoveLock(4));
-     j2.b1.whileHeld(new Shoot());
+    j2.b1.whileHeld(new Shoot());
 
     // j1.b2.whileHeld(new TakeOut());
     // j1.b11.whileHeld(new MoveLock(2, true));
@@ -110,22 +115,45 @@ public class RobotContainer {
 
     // j2.b2.whileHeld(new TakeIn());
 
-
     // j0.b8.whenPressed(new TakeIn());
     // j0.b9.whenPressed(new TakeOut());
 
     // j0.b11.whileHeld(new SpinCWS());
-    
-    // j1.b3.and(j2.b3).whenActive(new InstantCommand(() -> climber.extend(), climber));
-    // j1.b8.and(j2.b8).whenActive(new InstantCommand(() -> climber.engageBreak(), climber));
-    // j1.b9.and(j2.b9).whenActive(new InstantCommand(() -> climber.disengageBreak(), climber));
 
-    //j0.b11.whileHeld(new SpinCWS());
+    // j1.b3.and(j2.b3).whenActive(new InstantCommand(() -> climber.extend(),
+    // climber));
+    // j1.b8.and(j2.b8).whenActive(new InstantCommand(() -> climber.engageBreak(),
+    // climber));
+    // j1.b9.and(j2.b9).whenActive(new InstantCommand(() ->
+    // climber.disengageBreak(), climber));
+
+    // j0.b11.whileHeld(new SpinCWS());
 
     j0.b12.whenPressed(new PlayMusic());
 
- } 
+    controller0.rTrigger.whenHeld(new TakeIn());
 
+    controller1.lTrigger.whileHeld(new TakeIn());
+
+    controller1.rTrigger.whileHeld(new Queue());
+    controller1.rTrigger.whileHeld(new Shoot()); // 5
+
+    controller1.rBumper.whileHeld(new Queue());
+    controller1.rBumper.whileHeld(new Shoot()); // 1
+
+    controller1.start.and(controller1.select).whenActive(new InstantCommand(() -> climber.extend(), climber));
+    controller0.y.and(controller1.y).whenActive(new InstantCommand(() -> climber.engageBreak(), climber));
+    controller0.x.and(controller1.x).whenActive(new InstantCommand(() -> climber.disengageBreak(), climber));
+
+    controller0.a.whenPressed( new InstantCommand(() -> driveTrain.setFastMode(true)));
+    controller0.b.whenPressed( new InstantCommand(() -> driveTrain.setFastMode(false)));
+
+
+    controller1.b.whileHeld( new SpinCWS());
+
+    //Need: auto align, arm up and down, control pannel pos, rumble
+
+  }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
