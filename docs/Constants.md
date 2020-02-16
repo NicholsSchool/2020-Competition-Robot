@@ -15,8 +15,9 @@ Every Robot has its own set of tuned values. For example, subsystem speeds, PID 
     	}
     }
     
--
-	//Good Practice
+--
+
+    //Good Practice
     public Shooter() {
         /*Other methods and objects*/	
     	public void shoot() {
