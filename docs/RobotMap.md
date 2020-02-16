@@ -14,7 +14,8 @@ If you look through our code of any year prior to the 2020 season, you will see 
     }
     
 --
-	//Good Practice
+
+    //Good Practice
     public DriveTrain() {
     	WPI_TalonSRX lFMotor = new WPI_TalonSRX(RobotMap.LEFT_FRONT_MASTER_ID);
     }
