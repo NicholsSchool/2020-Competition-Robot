@@ -140,7 +140,7 @@ public class RobotContainer {
 
     j0.b12.whenPressed(new PlayMusic());
     j0.b11.whenPressed(new InstantCommand(() -> driveTrain.resetEncoders(), driveTrain));
-    j0.b1.whileHeld(new VisionTurn());
+    j0.b1.whileHeld(new VisionTurn(1000));
     j1.b1.whileHeld(new TakeIn()).whenReleased(new Queue());
 
  } 

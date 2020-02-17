@@ -10,23 +10,28 @@ package frc.robot.commands;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.RobotContainer;
 
 public class VisionTurn extends CommandBase {
     private NetworkTable table;
+    private long timeout;
+    private long timeWhenLastAligned;
 
     /**
      * Creates a new VisionTurn.
      */
-    public VisionTurn() {
+    public VisionTurn(long timeoutMillis) {
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(RobotContainer.driveTrain);
+        timeout = timeoutMillis;
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
         table = NetworkTableInstance.getDefault().getTable("Vision");
+        timeWhenLastAligned = System.currentTimeMillis();
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -41,14 +46,18 @@ public class VisionTurn extends CommandBase {
             theta = Math.toDegrees(Math.atan(x / z));
         }
 
-        if (theta > 10) {
+        if (theta > 10 * Constants.VISION_THETA_TOLERANCE) {
             RobotContainer.driveTrain.move(0.5, -0.5);
-        } else if (theta > 1) {
+            timeWhenLastAligned = System.currentTimeMillis();
+        } else if (theta > Constants.VISION_THETA_TOLERANCE) {
             RobotContainer.driveTrain.move(0.35, -0.35);
-        } else if (theta < -10) {
+            timeWhenLastAligned = System.currentTimeMillis();
+        } else if (theta < -10 * Constants.VISION_THETA_TOLERANCE) {
             RobotContainer.driveTrain.move(-0.5, 0.5);
-        } else if (theta < -1) {
+            timeWhenLastAligned = System.currentTimeMillis();
+        } else if (theta < -Constants.VISION_THETA_TOLERANCE) {
             RobotContainer.driveTrain.move(-0.35, 0.35);
+            timeWhenLastAligned = System.currentTimeMillis();
         } else {
             RobotContainer.driveTrain.stop();
         }
@@ -63,6 +72,6 @@ public class VisionTurn extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return false;
+        return System.currentTimeMillis() - timeWhenLastAligned > timeout;
     }
 }

@@ -11,6 +11,7 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
+import frc.robot.Constants;
 import frc.robot.RobotContainer;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -52,6 +53,7 @@ public class VisionPIDTurn extends PIDCommand {
     // Configure additional PID options by calling `getController` here.
 
     addRequirements(RobotContainer.driveTrain);
+    getController().setTolerance(Constants.VISION_THETA_TOLERANCE);
   }
 
   @Override
@@ -61,6 +63,6 @@ public class VisionPIDTurn extends PIDCommand {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return getController().atSetpoint();
   }
 }
