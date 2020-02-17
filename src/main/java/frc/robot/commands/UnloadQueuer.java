@@ -17,7 +17,6 @@ public class UnloadQueuer extends CommandBase {
   public UnloadQueuer() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.queuer);
-    addRequirements(RobotContainer.intake);
   }
 
   // Called when the command is initially scheduled.
@@ -37,17 +36,15 @@ public class UnloadQueuer extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     RobotContainer.queuer.stop();
-    RobotContainer.intake.stop();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    boolean isEmpty = true;
     boolean[] sensorValues = RobotContainer.irSystem.getValues();
     for(boolean b : sensorValues)
       if(!b)
-        isEmpty = false;
-      return isEmpty;
+        return false;
+      return true;
   }
 }

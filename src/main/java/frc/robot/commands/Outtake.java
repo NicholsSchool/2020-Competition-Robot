@@ -10,11 +10,12 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 
-public class Queue extends CommandBase {
+public class Outtake extends CommandBase {
   /**
-   * Creates a new Queue.
+   * Creates a new TakeOut.
    */
-  public Queue() {
+  public Outtake() 
+  {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.queuer);
   }
@@ -26,19 +27,21 @@ public class Queue extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    RobotContainer.queuer.queue();
+  public void execute() 
+  {
+    RobotContainer.queuer.outtake();
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    RobotContainer.queuer.stop();
+  public void end(boolean interrupted) 
+  {
+    RobotContainer.queuer.stopIntake();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return RobotContainer.queuer.checkQueuer();
+    return false;
   }
 }
