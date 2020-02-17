@@ -24,6 +24,7 @@ public class Queuer extends SubsystemBase {
     private WPI_TalonSRX[] locks; 
 
     private int numBallsInCorrectPos;
+    private long lastUpdateTime;
     private boolean dequeueStarted;
     private long dequeueStartTime;
 
@@ -137,7 +138,7 @@ public class Queuer extends SubsystemBase {
         // Testing Process: If it doesn't work, remove else statement, if still doesn't work,
         // remove condition after &&, if still issues, rethink process. 
     }
-    private long lastUpdateTime;
+
 
     public void updateNumberOfBalls()
     {
