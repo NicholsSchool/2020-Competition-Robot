@@ -68,7 +68,7 @@ public class Shooter extends SubsystemBase {
 
     public void shoot() {
         setVelocity(Constants.SHOOT_VELOCITY);
-        isAtVelocity = Math.abs( shooter.getSelectedSensorVelocity() - Constants.SHOOT_VELOCITY ) < Constants.SHOOTER_VELOCITY_THRESHOLD;
+        isAtVelocity =  shooter.getSelectedSensorVelocity() - Constants.SHOOT_VELOCITY  > Constants.SHOOTER_VELOCITY_THRESHOLD;
     }
     /**
      * stops the shooter's motor.
@@ -84,6 +84,7 @@ public class Shooter extends SubsystemBase {
         SmartDashboard.putNumber("Desired Velocity", Constants.SHOOT_VELOCITY);
         SmartDashboard.putNumber("Shooter Velocity", shooter.getSelectedSensorVelocity());
         SmartDashboard.putNumber("Difference In Velocity", Constants.SHOOT_VELOCITY - shooter.getSelectedSensorVelocity());
+        SmartDashboard.putBoolean("SHOOTER AT VELOCITY", isAtVelocity);
     }
 
     private void setVelocity(double velocity) {

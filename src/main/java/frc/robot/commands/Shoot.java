@@ -8,13 +8,14 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.RobotContainer;
 
 /**
  * Command to start and end shooter.
  */
 public class Shoot extends CommandBase {
-
+    private long timeStarted;
     public Shoot(){
         addRequirements(RobotContainer.shooter);
         addRequirements(RobotContainer.queuer);
@@ -22,14 +23,19 @@ public class Shoot extends CommandBase {
 
     @Override
     public void initialize(){
-
+        timeStarted = System.currentTimeMillis();
     }
 
     @Override
     public void execute() {
       RobotContainer.shooter.shoot();
-      if (RobotContainer.shooter.isAtVelocity())
+      if (RobotContainer.shooter.isAtVelocity() || System.currentTimeMillis() - timeStarted > Constants.SHOOT_TIMEOUT * 1000)
+      {
+        timeStarted = System.currentTimeMillis();
         RobotContainer.queuer.unload();
+      }
+      else 
+        RobotContainer.queuer.stop();
     }
 
     @Override

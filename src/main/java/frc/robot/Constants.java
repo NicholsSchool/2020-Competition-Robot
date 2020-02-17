@@ -49,9 +49,10 @@ public final class Constants {
     public static final double SHOOTER_D = 0;
     public static final double SHOOTER_RAMP_TIME = 1;
     public static final double SHOOTER_MAX_VELOCITY = 16300;
-    public static final double SHOOT_VELOCITY = 0.8 * SHOOTER_MAX_VELOCITY;
+    public static final double SHOOT_VELOCITY = 0.95 * SHOOTER_MAX_VELOCITY;
     public static final double SHOOTER_VELOCITY_THRESHOLD = 200;
     public static final double SHOOTER_REVERSE_SPEED = -0.5;
+    public static final double SHOOT_TIMEOUT = 3;
   
     public static final double CWS_SPINNER_SPEED = 0.25;
 
@@ -91,8 +92,8 @@ public final class Constants {
 
 
     public static final double VISION_THETA_TOLERANCE = 1.0;
-    public static final double VISION_kF = 0.3;
-    public static final double SHOOTER_X_OFFSET = 9.0;
+    public static final double VISION_kF = 0.35;
+    public static final double SHOOTER_X_OFFSET = -10.0;
     public static final double SHOOTER_Y_OFFSET = 0.0;
     public static final double SHOOTER_Z_OFFSET = 12.0;
 }
