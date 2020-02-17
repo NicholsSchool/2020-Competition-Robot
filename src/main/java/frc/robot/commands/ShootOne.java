@@ -10,15 +10,14 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 
-public class TakeIn extends CommandBase {
+public class ShootOne extends CommandBase {
   /**
-   * Creates a new TakeIn.
+   * Creates a new ShootOne.
    */
-  public TakeIn() 
-  {
+  public ShootOne() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotContainer.intake);
-    
+    addRequirements(RobotContainer.shooter);
+    addRequirements(RobotContainer.queuer);
   }
 
   // Called when the command is initially scheduled.
@@ -28,21 +27,23 @@ public class TakeIn extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() 
-  {
-    RobotContainer.intake.takeIn();
+  public void execute() {
+    RobotContainer.shooter.shoot();
+    if(RobotContainer.shooter.isAtVelocity())
+      RobotContainer.queuer.unloadOne();
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) 
-  {
-    RobotContainer.intake.stop();
+  public void end(boolean interrupted) {
+    RobotContainer.shooter.stop();
+    RobotContainer.queuer.stop();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    boolean[] values = RobotContainer.irSystem.getValues();
+    return values[values.length - 1];
   }
 }
