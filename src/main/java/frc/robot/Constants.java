@@ -87,4 +87,5 @@ public final class Constants {
 
 
     public static final double VISION_THETA_TOLERANCE = 1.0;
+    public static final double VISION_kF = 0.3;
 }

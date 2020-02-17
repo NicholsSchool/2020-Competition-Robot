@@ -24,7 +24,7 @@ public class VisionPIDTurn extends PIDCommand {
   public VisionPIDTurn() {
     super(
         // The controller that the command will use
-        new PIDController(0.1, 0, 0),
+        new PIDController(0.015, 0, 0),
         // This should return the measurement
         () -> {
           NetworkTable table = NetworkTableInstance.getDefault().getTable("Vision");
@@ -39,6 +39,7 @@ public class VisionPIDTurn extends PIDCommand {
               theta = Math.toDegrees(Math.atan(x / z));
           }
   
+          System.out.println("Theta: " + theta);
           return theta;
         },
         // This should return the setpoint (can also be a constant)
@@ -46,7 +47,7 @@ public class VisionPIDTurn extends PIDCommand {
         // This uses the output
         output -> {
           // Use the output here
-          System.out.println("Turning Output: " + output);
+          output += Math.copySign(0.3, output); // Feed forward
           RobotContainer.driveTrain.move(-output, output);
         });
     // Use addRequirements() here to declare subsystem dependencies.
