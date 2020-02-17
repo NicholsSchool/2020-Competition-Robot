@@ -29,9 +29,7 @@ public class MoveDart extends CommandBase {
   // this takes the joystickinput and sets the dart to that speed
   @Override
   public void execute() {
-
-    RobotContainer.dart.move(-RobotContainer.j2.getY() * Constants.DART_SPEED_MULTIPLIER);
-
+    RobotContainer.dart.control(RobotContainer.c1.getPOV());
   }
 
   // this stops the dart from moving

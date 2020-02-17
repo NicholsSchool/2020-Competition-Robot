@@ -17,8 +17,14 @@ public class XboxController extends Joystick{
         rBumper = new JoystickButton(this, 6);
         select = new JoystickButton(this, 7);
         start = new JoystickButton(this, 8);
-        lStickDown = new JoystickButton(this, 9);
-        rStickDown = new JoystickButton(this, 10);
+        lStick = new JoystickButton(this, 9);
+        rStick= new JoystickButton(this, 10);
+        dpadUp = new POVButton(this, 0);
+        dpadRight = new POVButton(this, 2);
+        dpadDown = new POVButton(this, 4);
+        dpadLeft = new POVButton(this, 6);
+        lTrigger = new Trigger(this, 2);
+        rTrigger = new Trigger(this, 3);
 		
     }
     
@@ -30,10 +36,12 @@ public class XboxController extends Joystick{
     public JoystickButton rBumper;
     public JoystickButton select;
     public JoystickButton start;
-    public JoystickButton lStickDown;
-    public JoystickButton rStickDown;
+    public JoystickButton lStick;
+    public JoystickButton rStick;
     public Trigger rTrigger;
     public Trigger lTrigger;
+
+    public POVButton dpadUp, dpadDown, dpadRight, dpadLeft;
 
     public double getLeftX()
     {
@@ -42,15 +50,15 @@ public class XboxController extends Joystick{
 
     public double getLeftY()
     {
-        return getRawAxis(1);
+        return -getRawAxis(1);
     }
 
-    public double getTriggerX()
+    public double getLeftTrigger()
     {
         return getRawAxis(2);
     }
 
-    public double getTriggerY()
+    public double getRightTrigger()
     {
         return getRawAxis(3);
     }
@@ -62,7 +70,7 @@ public class XboxController extends Joystick{
 
     public double getRightY()
     {
-        return getRawAxis(5);
+        return -getRawAxis(5);
     }
 
 }

@@ -31,14 +31,15 @@ public final class Constants {
    public static final double RAMP_TIME = 0.05;
     public static final int TICKS_PER_INCH = 68;
 
-    public static final double RAMP_TIME = 0.01;
-
     public static final int CONFIG_TIMEOUT = 100;
   
     public static final double QUEUE_MOVE_SPEED = 1;
     public static final double QUEUE_DELAY_TIME = 1;
     public static final double DEQUEUE_WAIT_TIME = 2;
-    public static final double DART_SPEED_MULTIPLIER = 1;
+
+    public static final double DART_SPEED = 0.4;
+    public static final double DART_RAMP_TIME = 0.5;
+    
     public static final double INTAKE_SPEED = 1;
   
     public static final double SHOOTER_F = 0.055;

@@ -63,8 +63,8 @@ public class RobotContainer {
   public static ColorWheelSpinner spinner;
   public static Compressor compressor;
 
-  public static XboxController controller0;
-  public static XboxController controller1;
+  public static XboxController c0;
+  public static XboxController c1;
 
   public static JoystickController j2;
 
@@ -95,75 +95,35 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
-    j0 = new JoystickController(0);
-    j1 = new JoystickController(1);
-    j2 = new JoystickController(2);
+    c0 = new XboxController(0);
+    c1 = new XboxController(1);
 
-    controller0 = new XboxController(0);
-    controller1 = new XboxController(1);
-
-    // j0.b7.whenPressed(new BBTurn(90, 0.6));
-    // j0.b5.whenPressed(new PIDTurn(90));
-    // j0.b3.whenPressed(new PIDDrive(12));
-    // j0.b6.whenPressed(new BBDrive(12, 0.5));
     dart.setDefaultCommand(new MoveDart());
 
     driveTrain.setDefaultCommand(new Drive());
     
-    j2.b2.whileHeld(new Intake()).whenReleased(new Queue());
-    j2.b3.whenPressed(new Queue());
-    j2.b11.whileHeld(new MoveLock(2));
-    j2.b9.whileHeld(new MoveLock(3));
-    j2.b7.whileHeld(new MoveLock(4));
-     j2.b1.whileHeld(new Shoot());
-     j2.b4.whileHeld(new ShootOne());
+ 
+    c0.select.whenPressed(new VisionTurn(1000));
+    c0.start.whileHeld(new VisionPIDTurn());
+    c0.rBumper.whenPressed(new PlayMusic());
 
-    // j1.b2.whileHeld(new TakeOut());
-    // j1.b11.whileHeld(new MoveLock(2, true));
-    // j1.b9.whileHeld(new MoveLock(3, true));
-    // j1.b7.whileHeld(new MoveLock(4, true));
+    c0.rTrigger.whileHeld (new Intake() ).whenReleased( new Queue() );
 
-    // j2.b2.whileHeld(new TakeIn());
+    c1.lTrigger.whileHeld( new Intake() ).whenReleased( new Queue() );
 
-    // j0.b8.whenPressed(new TakeIn());
-    // j0.b9.whenPressed(new TakeOut());
+    c1.rTrigger.whileHeld(new Shoot()); // 5
 
-    // j0.b11.whileHeld(new SpinCWS());
+    c1.rBumper.whileHeld(new ShootOne()); // 1
 
-    // j1.b3.and(j2.b3).whenActive(new InstantCommand(() -> climber.extend(),
-    // climber));
-    // j1.b8.and(j2.b8).whenActive(new InstantCommand(() -> climber.engageBreak(),
-    // climber));
-    // j1.b9.and(j2.b9).whenActive(new InstantCommand(() ->
-    // climber.disengageBreak(), climber));
+    // c1.start.and(c1.select).whenActive(new InstantCommand(() -> climber.extend(), climber));
+    // c0.y.and(c1.y).whenActive(new InstantCommand(() -> climber.engageBreak(), climber));
+    // c0.x.and(c1.x).whenActive(new InstantCommand(() -> climber.disengageBreak(), climber));
 
-    // j0.b11.whileHeld(new SpinCWS());
-
-    j0.b12.whenPressed(new PlayMusic());
-    j0.b11.whenPressed(new InstantCommand(() -> driveTrain.resetEncoders(), driveTrain));
-    j0.b1.whileHeld(new VisionPIDTurn());
-    j0.b10.whenPressed(new VisionTurn(1000));
-    j1.b1.whileHeld(new TakeIn()).whenReleased(new Queue());
-
-    controller0.rTrigger.whileHeld(new TakeIn());
-
-    controller1.lTrigger.whileHeld(new TakeIn());
-
-    controller1.rTrigger.whileHeld(new Queue());
-    controller1.rTrigger.whileHeld(new Shoot()); // 5
-
-    controller1.rBumper.whileHeld(new Queue());
-    controller1.rBumper.whileHeld(new Shoot()); // 1
-
-    controller1.start.and(controller1.select).whenActive(new InstantCommand(() -> climber.extend(), climber));
-    controller0.y.and(controller1.y).whenActive(new InstantCommand(() -> climber.engageBreak(), climber));
-    controller0.x.and(controller1.x).whenActive(new InstantCommand(() -> climber.disengageBreak(), climber));
-
-    controller0.a.whenPressed( new InstantCommand(() -> driveTrain.setFastMode(true)));
-    controller0.b.whenPressed( new InstantCommand(() -> driveTrain.setFastMode(false)));
+    c0.a.whenPressed( new InstantCommand(() -> driveTrain.setFastMode(true)));
+    c0.b.whenPressed( new InstantCommand(() -> driveTrain.setFastMode(false)));
 
 
-    controller1.b.whileHeld( new SpinCWS());
+    c1.b.whileHeld( new SpinCWS());
 
     //Need: auto align, arm up and down, control pannel pos
 
