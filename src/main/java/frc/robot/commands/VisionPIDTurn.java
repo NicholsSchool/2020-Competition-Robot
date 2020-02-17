@@ -24,7 +24,7 @@ public class VisionPIDTurn extends PIDCommand {
   public VisionPIDTurn() {
     super(
         // The controller that the command will use
-        new PIDController(2, 0, -0.001),
+        new PIDController(0.1, 0, 0),
         // This should return the measurement
         () -> {
           NetworkTable table = NetworkTableInstance.getDefault().getTable("Vision");
