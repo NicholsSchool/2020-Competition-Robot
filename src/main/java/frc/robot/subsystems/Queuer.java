@@ -106,14 +106,10 @@ public class Queuer extends SubsystemBase {
         
         updateNumberOfBalls();
         for(int i = 0; i < locks.length - 1; i ++) // -1 because lock5 should not spin
-        {
             if(i >= locks.length - numBallsInCorrectPos - 1)
                 move(0, i);
             else
                 move(Constants.QUEUE_MOVE_SPEED, i);
-        }
-        
-        
     }
     
     public void unloadOne()
@@ -129,20 +125,17 @@ public class Queuer extends SubsystemBase {
         {
             if(i + 1 >= sensorValues.length) // lock5 should always move when shooting
                 move(Constants.QUEUE_MOVE_SPEED, i); 
-            else if(sensorValues[i + 1] && !sensorValues[i]) // Not sure if the condition after the && is neccesary. 
-                                                            // Thought process is, without that condition all motors will run regardless. 
+            else if(sensorValues[i + 1] && !sensorValues[i])  
             {
                 move(Constants.QUEUE_MOVE_SPEED, i + 1);
                 move(Constants.QUEUE_MOVE_SPEED, i);
             }
             else 
                 move(0, i);
-            //Don't know if this else is necessary either.
         }
+        //If the top sensor isn't broken, the ball must stuck at the fourth lock as well, so move that
         if(!sensorValues[sensorValues.length - 1])
             move(Constants.QUEUE_MOVE_SPEED, 3);
-        // Testing Process: If it doesn't work, remove else statement, if still doesn't work,
-        // remove condition after &&, if still issues, rethink process. 
     }
 
 
