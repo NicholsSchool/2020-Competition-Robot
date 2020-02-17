@@ -108,24 +108,42 @@ public class Queuer extends SubsystemBase {
                 move(Constants.QUEUE_MOVE_SPEED, i);
         
     }
+    
+    public void unloadOne()
+    {
+        move(Constants.QUEUE_MOVE_SPEED, locks.length - 1);
+        move(Constants.QUEUE_MOVE_SPEED, locks.length - 2);
+    }
 
     public void unload()
     {
         boolean[] sensorValues = RobotContainer.irSystem.getValues();
         for(int i = locks.length - 1; i >= 0; i--)
         {
-            if(i + 1 >= sensorValues.length)
-                move(Constants.QUEUE_MOVE_SPEED, i);
-            else if(sensorValues[i + 1])
+            if(i + 1 >= sensorValues.length) // lock5 should always move when shooting
+                move(Constants.QUEUE_MOVE_SPEED, i); 
+            else if(sensorValues[i + 1] && !sensorValues[i]) // Not sure if the condition after the && is neccesary. 
+                                                            // Thought process is, without that condition all motors will run regardless. 
             {
                 move(Constants.QUEUE_MOVE_SPEED, i + 1);
                 move(Constants.QUEUE_MOVE_SPEED, i);
             }
+            else 
+                move(0, i);
+            //Don't know if this else is necessary either.
         }
+        if(!sensorValues[sensorValues.length - 1])
+            move(Constants.QUEUE_MOVE_SPEED, 3);
+        // Testing Process: If it doesn't work, remove else statement, if still doesn't work,
+        // remove condition after &&, if still issues, rethink process. 
     }
+    private long lastUpdateTime;
 
     public void updateNumberOfBalls()
     {
+        if(System.currentTimeMillis() - lastUpdateTime < Constants.QUEUE_DELAY_TIME * 1000)
+            return;
+     
         int totalBalls = 0;
         boolean[] sensorValues = RobotContainer.irSystem.getValues();
         for(int i = sensorValues.length - 1; i >= 0; i --)
@@ -134,6 +152,7 @@ public class Queuer extends SubsystemBase {
             else
                 break;
         numBallsInCorrectPos = totalBalls;
+        lastUpdateTime = System.currentTimeMillis();
             
     }
 

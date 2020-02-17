@@ -9,12 +9,12 @@ package frc.robot;
 
 import java.util.List;
 
-import com.ctre.phoenix.music.Orchestra;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.controller.RamseteController;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
@@ -73,8 +73,8 @@ public class RobotContainer {
      
     driveTrain = new DriveTrain();
     //climber = new Climber();
-    compressor = new Compressor(RobotMap.COMPRESSOR_ID);
-
+    // compressor = new Compressor(RobotMap.COMPRESSOR_ID);
+    // Solenoid test = new Solenoid(1);
 
 
     // Configure the button bindings
@@ -116,7 +116,8 @@ public class RobotContainer {
     j2.b9.whileHeld(new MoveLock(3));
     j2.b7.whileHeld(new MoveLock(4));
 
-     j2.b1.whileHeld(new Shoot().alongWith(new UnloadQueuer()));
+     j2.b1.whileHeld(new Shoot());
+     j2.b4.whileHeld(new ShootOne());
 
     // j1.b2.whileHeld(new TakeOut());
     // j1.b11.whileHeld(new MoveLock(2, true));

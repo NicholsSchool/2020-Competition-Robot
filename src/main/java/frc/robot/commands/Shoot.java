@@ -17,6 +17,7 @@ public class Shoot extends CommandBase {
 
     public Shoot(){
         addRequirements(RobotContainer.shooter);
+        addRequirements(RobotContainer.queuer);
     }
 
     @Override
@@ -27,16 +28,23 @@ public class Shoot extends CommandBase {
     @Override
     public void execute() {
       RobotContainer.shooter.shoot();
+      if (RobotContainer.shooter.isAtVelocity())
+        RobotContainer.queuer.unload();
     }
 
     @Override
     public void end(boolean interrupted) {
       RobotContainer.shooter.stop();
+      RobotContainer.queuer.stop();
     }
 
     @Override
     public boolean isFinished() {
-      return false;
+      boolean[] sensorValues = RobotContainer.irSystem.getValues();
+      for (boolean b : sensorValues)
+        if (!b)
+          return false;
+      return true;
     }
 
 

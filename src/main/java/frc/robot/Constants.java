@@ -35,6 +35,7 @@ public final class Constants {
     public static final int CONFIG_TIMEOUT = 100;
   
     public static final double QUEUE_MOVE_SPEED = 1;
+    public static final double QUEUE_DELAY_TIME = 1;
     public static final double DEQUEUE_WAIT_TIME = 2;
     public static final double DART_SPEED_MULTIPLIER = 1;
     public static final double INTAKE_SPEED = 1;
