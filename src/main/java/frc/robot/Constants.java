@@ -92,4 +92,7 @@ public final class Constants {
 
     public static final double VISION_THETA_TOLERANCE = 1.0;
     public static final double VISION_kF = 0.3;
+    public static final double SHOOTER_X_OFFSET = 9.0;
+    public static final double SHOOTER_Y_OFFSET = 0.0;
+    public static final double SHOOTER_Z_OFFSET = 12.0;
 }
