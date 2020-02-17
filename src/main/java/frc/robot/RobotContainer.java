@@ -114,6 +114,8 @@ public class RobotContainer {
     c1.rTrigger.whileHeld(new Shoot()); // 5
 
     c1.rBumper.whileHeld(new ShootOne()); // 1
+    double agitateTime = 0.05;
+    c1.lBumper.whenPressed(new Agitate().withTimeout(agitateTime).andThen(new ReverseAgitate().withTimeout(agitateTime)));
 
     // c1.start.and(c1.select).whenActive(new InstantCommand(() -> climber.extend(), climber));
     // c0.y.and(c1.y).whenActive(new InstantCommand(() -> climber.engageBreak(), climber));
@@ -124,6 +126,7 @@ public class RobotContainer {
 
 
     c1.b.whileHeld( new SpinCWS());
+    c1.lStick.and(c1.rStick).whileActiveContinuous(new Outtake());
 
     //Need: auto align, arm up and down, control pannel pos
 

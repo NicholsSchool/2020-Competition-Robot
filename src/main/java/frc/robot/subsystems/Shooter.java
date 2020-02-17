@@ -52,6 +52,15 @@ public class Shooter extends SubsystemBase {
     public boolean isAtVelocity() {
         return isAtVelocity;
     }
+    public void reverse()
+    {
+        move(-Math.abs(Constants.SHOOTER_REVERSE_SPEED));
+    }
+
+    private void move(double speed)
+    {
+        shooter.set(speed);
+    }
 
     /**
      * starts the shooter

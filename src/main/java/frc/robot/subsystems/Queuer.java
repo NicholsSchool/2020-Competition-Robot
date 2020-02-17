@@ -105,8 +105,14 @@ public class Queuer extends SubsystemBase {
     public void queue() {
         
         updateNumberOfBalls();
-        for(int i = 0; i < locks.length - numBallsInCorrectPos - 1; i ++) // -1 because lock5 should not spin
+        for(int i = 0; i < locks.length - 1; i ++) // -1 because lock5 should not spin
+        {
+            if(i >= locks.length - numBallsInCorrectPos - 1)
+                move(0, i);
+            else
                 move(Constants.QUEUE_MOVE_SPEED, i);
+        }
+        
         
     }
     
@@ -160,6 +166,18 @@ public class Queuer extends SubsystemBase {
     public int getNumberBallsInCorrectPosition()
     {
         return numBallsInCorrectPos;
+    }
+
+    public void agitate()
+    {
+        for(int i = 0; i < locks.length; i ++)
+            move(Constants.QUEUER_AGITATE_SPEED, i);
+    }
+
+    public void reverseAgitate()
+    {
+        for (int i = 0; i < locks.length; i++)
+            move(-Constants.QUEUER_AGITATE_SPEED, i);
     }
 
     /**

@@ -18,6 +18,7 @@ public class Outtake extends CommandBase {
   {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.queuer);
+    addRequirements(RobotContainer.shooter);
   }
 
   // Called when the command is initially scheduled.
@@ -29,14 +30,16 @@ public class Outtake extends CommandBase {
   @Override
   public void execute() 
   {
-    RobotContainer.queuer.outtake();
+    RobotContainer.queuer.agitate();
+    RobotContainer.shooter.reverse();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) 
   {
-    RobotContainer.queuer.stopIntake();
+    RobotContainer.queuer.stop();
+    RobotContainer.shooter.stop();
   }
 
   // Returns true when the command should end.

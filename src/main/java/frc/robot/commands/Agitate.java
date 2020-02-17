@@ -10,15 +10,13 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 
-public class Intake extends CommandBase {
+public class Agitate extends CommandBase {
   /**
-   * Creates a new TakeIn.
+   * Creates a new Agitate.
    */
-  public Intake() 
-  {
+  public Agitate() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.queuer);
-    
   }
 
   // Called when the command is initially scheduled.
@@ -28,18 +26,13 @@ public class Intake extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() 
-  {
-    System.out.println("Intaking");
-    RobotContainer.queuer.queue();
-    RobotContainer.queuer.intake();
-
+  public void execute() {
+    RobotContainer.queuer.agitate();
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) 
-  {
+  public void end(boolean interrupted) {
     RobotContainer.queuer.stop();
   }
 

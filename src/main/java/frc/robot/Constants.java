@@ -33,9 +33,10 @@ public final class Constants {
 
     public static final int CONFIG_TIMEOUT = 100;
   
-    public static final double QUEUE_MOVE_SPEED = 1;
-    public static final double QUEUE_DELAY_TIME = 1;
-    public static final double DEQUEUE_WAIT_TIME = 2;
+    public static final double QUEUE_MOVE_SPEED = 0.8;
+    public static final double QUEUE_DELAY_TIME = 0.0;
+    public static final double QUEUER_AGITATE_SPEED = -0.5;
+    
 
     public static final double DART_SPEED = 0.4;
     public static final double DART_RAMP_TIME = 0.5;
@@ -49,7 +50,8 @@ public final class Constants {
     public static final double SHOOTER_RAMP_TIME = 1;
     public static final double SHOOTER_MAX_VELOCITY = 16300;
     public static final double SHOOT_VELOCITY = 0.8 * SHOOTER_MAX_VELOCITY;
-	public static final double SHOOTER_VELOCITY_THRESHOLD = 200;
+    public static final double SHOOTER_VELOCITY_THRESHOLD = 200;
+    public static final double SHOOTER_REVERSE_SPEED = -0.5;
   
     public static final double CWS_SPINNER_SPEED = 0.25;
 
