@@ -77,6 +77,9 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
+    RobotContainer.navX.reset();
+    RobotContainer.driveTrain.resetEncoders();
+
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
@@ -90,6 +93,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
+    RobotContainer.driveTrain.encoderTest();
   }
 
   @Override

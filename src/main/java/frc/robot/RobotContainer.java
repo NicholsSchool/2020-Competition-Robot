@@ -140,6 +140,10 @@ public class RobotContainer {
 
     j0.b12.whenPressed(new PlayMusic());
     j0.b11.whenPressed(new InstantCommand(() -> driveTrain.resetEncoders(), driveTrain));
+    j0.b1.whileHeld(new VisionPIDTurn());
+    j0.b10.whenPressed(new VisionTurn(1000));
+    j1.b1.whileHeld(new TakeIn()).whenReleased(new Queue());
+
  } 
 
 
@@ -169,9 +173,9 @@ public class RobotContainer {
     //     // Start at the origin facing the +X direction
     //     new Pose2d(0, 0, new Rotation2d(0)),
     //     // Pass through these two interior waypoints, making an 's' curve path
-    //     List.of(new Translation2d(2, 0)),
+    //     List.of(),
     //     // End 3 meters straight ahead of where we started, facing forward
-    //     new Pose2d(0, 0, new Rotation2d(180)),
+    //     new Pose2d(3, 0, new Rotation2d(90)),
     //     // Pass config
     //     config);
 

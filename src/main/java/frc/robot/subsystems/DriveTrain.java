@@ -100,7 +100,7 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public DifferentialDriveWheelSpeeds getWheelSpeeds() {
-    return new DifferentialDriveWheelSpeeds(lMaster.getSelectedSensorVelocity(), rMaster.getSelectedSensorVelocity());
+    return new DifferentialDriveWheelSpeeds(lMaster.getSelectedSensorVelocity() * Constants.METERS_PER_TICK, rMaster.getSelectedSensorVelocity() * Constants.METERS_PER_TICK);
   }
 
   public void tankDriveVolts(double leftVolts, double rightVolts) {
@@ -147,7 +147,7 @@ public class DriveTrain extends SubsystemBase {
   @Override
   public void periodic() {
     encoderTest();
-    m_odometry.update(Rotation2d.fromDegrees(RobotContainer.navX.getAngle()), lMaster.getSelectedSensorPosition(), rMaster.getSelectedSensorPosition());
+    m_odometry.update(Rotation2d.fromDegrees(RobotContainer.navX.getAngle()), lMaster.getSelectedSensorPosition() * Constants.METERS_PER_TICK, rMaster.getSelectedSensorPosition() * Constants.METERS_PER_TICK);
     // This method will be called once per scheduler run
   }
 
