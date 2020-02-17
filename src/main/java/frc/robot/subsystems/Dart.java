@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -24,11 +25,8 @@ public class Dart extends SubsystemBase {
    * this instantiates the dart object
    */
   public Dart() {
-
     dart = new WPI_TalonSRX(RobotMap.DART);
-
     dart.configFactoryDefault();
-
   }
 
   
@@ -37,18 +35,14 @@ public class Dart extends SubsystemBase {
  * @param speed dart movement speed
  */
   public void move(double speed) {
-
     dart.set(speed);
-
   }
 
   /**
    * this can be called apon to stop the dart object from moving
    */
   public void stop() {
-
     dart.stopMotor();
-
   }
 
   /**
@@ -56,9 +50,7 @@ public class Dart extends SubsystemBase {
    */
   @Override
   public void periodic() {
-
     SmartDashboard.putNumber("Dart Eletrical Current: ", dart.getStatorCurrent());
     SmartDashboard.putNumber("Battery Voltage: ", dart.getBusVoltage());
-    
   }
 }

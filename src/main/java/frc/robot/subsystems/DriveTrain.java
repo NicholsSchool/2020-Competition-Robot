@@ -1,6 +1,5 @@
 package frc.robot.subsystems;
 
-
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -8,6 +7,10 @@ import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -24,6 +27,8 @@ public class DriveTrain extends SubsystemBase {
   private WPI_VictorSPX rSlave;
 
   private DifferentialDrive drive;
+  // Odometry class for tracking robot pose
+  private final DifferentialDriveOdometry m_odometry;
 
   /**
    * Creates a new DriveTrain.
@@ -46,6 +51,8 @@ public class DriveTrain extends SubsystemBase {
 
     drive = new DifferentialDrive(new SpeedControllerGroup(lMaster), new SpeedControllerGroup(rMaster));
 
+    rMaster.setSensorPhase(true);
+
     lMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
     rMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
 
@@ -63,6 +70,8 @@ public class DriveTrain extends SubsystemBase {
     rMaster.configOpenloopRamp(Constants.RAMP_TIME);
 
     setFastMode(true);
+
+    m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(RobotContainer.navX.getAngle()));
 
   }
 
@@ -86,6 +95,20 @@ public class DriveTrain extends SubsystemBase {
     }
   }
 
+  public Pose2d getPose() {
+    return m_odometry.getPoseMeters();
+  }
+
+  public DifferentialDriveWheelSpeeds getWheelSpeeds() {
+    return new DifferentialDriveWheelSpeeds(lMaster.getSelectedSensorVelocity() * Constants.METERS_PER_TICK, rMaster.getSelectedSensorVelocity() * Constants.METERS_PER_TICK);
+  }
+
+  public void tankDriveVolts(double leftVolts, double rightVolts) {
+    lMaster.setVoltage(leftVolts);
+    rMaster.setVoltage(-rightVolts);
+    drive.feed();
+  }
+
   /**
    * 
    * Projects the encoder values of the Master motors, and angles for the navX.
@@ -96,6 +119,12 @@ public class DriveTrain extends SubsystemBase {
     SmartDashboard.putNumber("rMaster", rMaster.getSelectedSensorPosition());
     SmartDashboard.putNumber("NavX Angle: ", RobotContainer.navX.getAngle());
     SmartDashboard.putNumber("Drive Governor", govener);
+  }
+
+  public void resetEncoders()
+  {
+    lMaster.setSelectedSensorPosition(0);
+    rMaster.setSelectedSensorPosition(0);
   }
 
   /**
@@ -118,7 +147,7 @@ public class DriveTrain extends SubsystemBase {
   @Override
   public void periodic() {
     encoderTest();
-
+    m_odometry.update(Rotation2d.fromDegrees(RobotContainer.navX.getAngle()), lMaster.getSelectedSensorPosition() * Constants.METERS_PER_TICK, rMaster.getSelectedSensorPosition() * Constants.METERS_PER_TICK);
     // This method will be called once per scheduler run
   }
 

@@ -10,12 +10,13 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 
-public class Queue extends CommandBase {
+public class ShootOne extends CommandBase {
   /**
-   * Creates a new Queue.
+   * Creates a new ShootOne.
    */
-  public Queue() {
+  public ShootOne() {
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(RobotContainer.shooter);
     addRequirements(RobotContainer.queuer);
   }
 
@@ -27,18 +28,22 @@ public class Queue extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.queuer.queue();
+    RobotContainer.shooter.shoot();
+    if(RobotContainer.shooter.isAtVelocity())
+      RobotContainer.queuer.unloadOne();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    RobotContainer.shooter.stop();
     RobotContainer.queuer.stop();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return RobotContainer.queuer.checkQueuer();
+    boolean[] values = RobotContainer.irSystem.getValues();
+    return values[values.length - 1];
   }
 }
