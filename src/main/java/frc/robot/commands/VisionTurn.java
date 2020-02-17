@@ -13,10 +13,9 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 
+@Deprecated
 public class VisionTurn extends CommandBase {
     private NetworkTable table;
-    private long timeout;
-    private long timeWhenLastAligned;
 
     /**
      * Creates a new VisionTurn.
@@ -24,14 +23,12 @@ public class VisionTurn extends CommandBase {
     public VisionTurn(long timeoutMillis) {
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(RobotContainer.driveTrain);
-        timeout = timeoutMillis;
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
         table = NetworkTableInstance.getDefault().getTable("Vision");
-        timeWhenLastAligned = System.currentTimeMillis();
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -41,23 +38,19 @@ public class VisionTurn extends CommandBase {
         double z = table.getEntry("z").getDouble(0);
         double theta = 0;
         if (x != 0 && z != 0) {
-            x += 9; // account for shooter offset
-            z += 12;
+            x += Constants.SHOOTER_X_OFFSET; // account for shooter offset
+            z += Constants.SHOOTER_Z_OFFSET;
             theta = Math.toDegrees(Math.atan(x / z));
         }
 
-        if (theta > 10 * Constants.VISION_THETA_TOLERANCE) {
+        if (theta > 10 + Constants.VISION_THETA_TOLERANCE) {
             RobotContainer.driveTrain.move(0.5, -0.5);
-            timeWhenLastAligned = System.currentTimeMillis();
         } else if (theta > Constants.VISION_THETA_TOLERANCE) {
             RobotContainer.driveTrain.move(0.35, -0.35);
-            timeWhenLastAligned = System.currentTimeMillis();
-        } else if (theta < -10 * Constants.VISION_THETA_TOLERANCE) {
+        } else if (theta < -10 - Constants.VISION_THETA_TOLERANCE) {
             RobotContainer.driveTrain.move(-0.5, 0.5);
-            timeWhenLastAligned = System.currentTimeMillis();
         } else if (theta < -Constants.VISION_THETA_TOLERANCE) {
             RobotContainer.driveTrain.move(-0.35, 0.35);
-            timeWhenLastAligned = System.currentTimeMillis();
         } else {
             RobotContainer.driveTrain.stop();
         }
@@ -72,6 +65,6 @@ public class VisionTurn extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return System.currentTimeMillis() - timeWhenLastAligned > timeout;
+        return false;
     }
 }

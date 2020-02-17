@@ -24,7 +24,7 @@ public class VisionPIDTurn extends PIDCommand {
   public VisionPIDTurn() {
     super(
         // The controller that the command will use
-        new PIDController(0.015, 0, 0),
+        new PIDController(0.015, 0, 0.0015),
         // This should return the measurement
         () -> {
           NetworkTable table = NetworkTableInstance.getDefault().getTable("Vision");
@@ -34,8 +34,8 @@ public class VisionPIDTurn extends PIDCommand {
           double theta = 0;
 
           if (x != 0 && z != 0) {
-              x += 9; // account for shooter offset
-              z += 12;
+              x += Constants.SHOOTER_X_OFFSET; // account for shooter offset
+              z += Constants.SHOOTER_Z_OFFSET;
               theta = Math.toDegrees(Math.atan(x / z));
           }
   
@@ -47,14 +47,13 @@ public class VisionPIDTurn extends PIDCommand {
         // This uses the output
         output -> {
           // Use the output here
-          output += Math.copySign(0.3, output); // Feed forward
+          output += Math.copySign(Constants.VISION_kF, output); // Feed forward
           RobotContainer.driveTrain.move(-output, output);
         });
     // Use addRequirements() here to declare subsystem dependencies.
     // Configure additional PID options by calling `getController` here.
 
     addRequirements(RobotContainer.driveTrain);
-    getController().setTolerance(Constants.VISION_THETA_TOLERANCE);
   }
 
   @Override
@@ -64,6 +63,6 @@ public class VisionPIDTurn extends PIDCommand {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return getController().atSetpoint();
+    return false;
   }
 }
