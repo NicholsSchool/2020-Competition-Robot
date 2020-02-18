@@ -16,35 +16,36 @@ import frc.robot.RobotContainer;
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
 public class PIDDrive extends PIDCommand {
-  /**
-   * Creates a new PIDDrive.
-   */
-  public PIDDrive(double inches) {
-    super(
-        // The controller that the command will use
-        new PIDController(0.0005, 0, 0),
-        // This should return the measurement
-        () -> RobotContainer.driveTrain.getEncoderValue(),
-        // This should return the setpoint (can also be a constant)
-        () -> inches * Constants.TICKS_PER_INCH,
-        // This uses the output
-        output -> {
-          System.out.println("PID Output:" + output);
-          RobotContainer.driveTrain.move(output, output);
-          // Use the output here
-        });
+    /**
+     * Creates a new PIDDrive.
+     */
+    public PIDDrive(double inches) {
+        super(
+                // The controller that the command will use
+                new PIDController(0.0005, 0, 0),
+                // This should return the measurement
+                () -> RobotContainer.driveTrain.getEncoderValue(),
+                // This should return the setpoint (can also be a constant)
+                () -> inches * Constants.TICKS_PER_INCH,
+                // This uses the output
+                output -> {
+                    RobotContainer.driveTrain.move(output, output);
+                    // Use the output here
+                });
         addRequirements(RobotContainer.driveTrain);
-        getController().setTolerance(0.5 * Constants.TICKS_PER_INCH);
-    // Use addRequirements() here to declare subsystem dependencies.
-    // Configure additional PID options by calling `getController` here.
-  }
-  public void initialize(){
-    super.initialize();
-    RobotContainer.driveTrain.resetEncoder();
-  }
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return getController().atSetpoint();
-  }
+        getController().setTolerance(Constants.AUTO_DRIVE_TOLERANCE);
+        // Use addRequirements() here to declare subsystem dependencies.
+        // Configure additional PID options by calling `getController` here.
+    }
+
+    public void initialize() {
+        super.initialize();
+        RobotContainer.driveTrain.resetEncoder();
+    }
+
+    // Returns true when the command should end.
+    @Override
+    public boolean isFinished() {
+        return getController().atSetpoint();
+    }
 }

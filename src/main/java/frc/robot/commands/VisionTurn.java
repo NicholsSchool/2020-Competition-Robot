@@ -13,6 +13,9 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 
+/**
+ * Bang-bang turn with vision, use of {@link VisionPIDTurn} is preferred.
+ */
 @Deprecated
 public class VisionTurn extends CommandBase {
     private NetworkTable table;

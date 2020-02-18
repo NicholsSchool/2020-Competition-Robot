@@ -25,8 +25,6 @@ public class Queuer extends SubsystemBase {
 
     private int numBallsInCorrectPos;
     private long lastUpdateTime;
-    private boolean dequeueStarted;
-    private long dequeueStartTime;
 
     /**
      *  Constructor Method creating motors 
@@ -54,7 +52,6 @@ public class Queuer extends SubsystemBase {
         lock4.setInverted( true );
         lock5.setInverted( true );
         numBallsInCorrectPos = 0;
-        dequeueStarted = false;
     }
 
     /**
@@ -199,7 +196,6 @@ public class Queuer extends SubsystemBase {
         lock3.stopMotor();
         lock4.stopMotor();
         lock5.stopMotor();
-        dequeueStarted = false;
     }
 
     public void stopIntake()
@@ -213,7 +209,7 @@ public class Queuer extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("Number of Balls In Correct Position", numBallsInCorrectPos);
+        SmartDashboard.putNumber("Balls in Correct Position", numBallsInCorrectPos);
         boolean[] beams = RobotContainer.irSystem.getValues();
         for(int i = 0; i < beams.length; i ++)
             SmartDashboard.putBoolean("Beam " + (i + 1), beams[i]);
