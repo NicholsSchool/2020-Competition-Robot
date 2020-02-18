@@ -127,7 +127,7 @@ public class RobotContainer {
 
     c1.b.whileHeld( new SpinCWS());
     c1.lStick.and(c1.rStick).whileActiveContinuous(new Outtake());
-
+    c0.b.whileHeld(new AutoPath());
     //Need: auto align, arm up and down, control pannel pos
 
   }
