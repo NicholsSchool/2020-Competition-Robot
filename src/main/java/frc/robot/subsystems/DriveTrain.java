@@ -1,6 +1,5 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
@@ -16,149 +15,150 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.RobotMap;
-import frc.robot.sensors.NavX;
 
 public class DriveTrain extends SubsystemBase {
 
-  private double govener;
-  private WPI_TalonSRX lMaster;
-  private WPI_VictorSPX lSlave;
-  private WPI_TalonSRX rMaster;
-  private WPI_VictorSPX rSlave;
+    private double govener;
+    private WPI_TalonSRX lMaster;
+    private WPI_VictorSPX lSlave;
+    private WPI_TalonSRX rMaster;
+    private WPI_VictorSPX rSlave;
 
-  private DifferentialDrive drive;
-  // Odometry class for tracking robot pose
-  private final DifferentialDriveOdometry m_odometry;
+    private DifferentialDrive drive;
+    // Odometry class for tracking robot pose
+    private final DifferentialDriveOdometry m_odometry;
 
-  /**
-   * Creates a new DriveTrain.
-   */
-  public DriveTrain() {
-    lMaster = new WPI_TalonSRX(RobotMap.LEFT_MASTER_ID);
-    lSlave = new WPI_VictorSPX(RobotMap.LEFT_SLAVE_ID);
+    /**
+     * Creates a new DriveTrain.
+     */
+    public DriveTrain() {
+        lMaster = new WPI_TalonSRX(RobotMap.LEFT_MASTER_ID);
+        lSlave = new WPI_VictorSPX(RobotMap.LEFT_SLAVE_ID);
 
-    rMaster = new WPI_TalonSRX(RobotMap.RIGHT_MASTER_ID);
-    rSlave = new WPI_VictorSPX(RobotMap.RIGHT_SLAVE_ID);
+        rMaster = new WPI_TalonSRX(RobotMap.RIGHT_MASTER_ID);
+        rSlave = new WPI_VictorSPX(RobotMap.RIGHT_SLAVE_ID);
 
-    lMaster.configFactoryDefault();
-    lSlave.configFactoryDefault();
+        lMaster.configFactoryDefault();
+        lSlave.configFactoryDefault();
 
-    rMaster.configFactoryDefault();
-    rSlave.configFactoryDefault();
-    
-    lSlave.follow(lMaster);
-    rSlave.follow(rMaster);
+        rMaster.configFactoryDefault();
+        rSlave.configFactoryDefault();
 
-    drive = new DifferentialDrive(new SpeedControllerGroup(lMaster), new SpeedControllerGroup(rMaster));
+        lSlave.follow(lMaster);
+        rSlave.follow(rMaster);
 
-    rMaster.setSensorPhase(true);
+        drive = new DifferentialDrive(new SpeedControllerGroup(lMaster), new SpeedControllerGroup(rMaster));
 
-    lMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
-    rMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+        rMaster.setSensorPhase(true);
 
-    lMaster.config_kF(0, Constants.LEFT_MASTER_F, Constants.CONFIG_TIMEOUT);
-    lMaster.config_kP(0, Constants.LEFT_MASTER_P, Constants.CONFIG_TIMEOUT);
-    lMaster.config_kI(0, Constants.LEFT_MASTER_I, Constants.CONFIG_TIMEOUT);
-    lMaster.config_kD(0, Constants.LEFT_MASTER_D, Constants.CONFIG_TIMEOUT);
+        lMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+        rMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
 
-    rMaster.config_kF(0, Constants.RIGHT_MASTER_F, Constants.CONFIG_TIMEOUT);
-    rMaster.config_kP(0, Constants.RIGHT_MASTER_P, Constants.CONFIG_TIMEOUT);
-    rMaster.config_kI(0, Constants.RIGHT_MASTER_I, Constants.CONFIG_TIMEOUT);
-    rMaster.config_kD(0, Constants.RIGHT_MASTER_D, Constants.CONFIG_TIMEOUT);
+        lMaster.config_kF(0, Constants.LEFT_MASTER_F, Constants.CONFIG_TIMEOUT);
+        lMaster.config_kP(0, Constants.LEFT_MASTER_P, Constants.CONFIG_TIMEOUT);
+        lMaster.config_kI(0, Constants.LEFT_MASTER_I, Constants.CONFIG_TIMEOUT);
+        lMaster.config_kD(0, Constants.LEFT_MASTER_D, Constants.CONFIG_TIMEOUT);
 
-    lMaster.configOpenloopRamp(Constants.RAMP_TIME);
-    rMaster.configOpenloopRamp(Constants.RAMP_TIME);
+        rMaster.config_kF(0, Constants.RIGHT_MASTER_F, Constants.CONFIG_TIMEOUT);
+        rMaster.config_kP(0, Constants.RIGHT_MASTER_P, Constants.CONFIG_TIMEOUT);
+        rMaster.config_kI(0, Constants.RIGHT_MASTER_I, Constants.CONFIG_TIMEOUT);
+        rMaster.config_kD(0, Constants.RIGHT_MASTER_D, Constants.CONFIG_TIMEOUT);
 
-    setFastMode(true);
+        lMaster.configOpenloopRamp(Constants.RAMP_TIME);
+        rMaster.configOpenloopRamp(Constants.RAMP_TIME);
 
-    m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(RobotContainer.navX.getAngle()));
+        setFastMode(true);
 
-  }
+        m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(RobotContainer.navX.getAngle()));
 
-  /**
-   * 
-   * method used to move.
-   * 
-   * @param leftSpeed  - speed of left motor.
-   * @param rightSpeed - speed of right motor.
-   */
-  public void move(double leftSpeed, double rightSpeed) {
-    drive.tankDrive(leftSpeed * govener, rightSpeed * govener);
-
-  }
-
-  public void setFastMode(boolean setFast) {
-    if (setFast) {
-      govener = Constants.DRIVE_FAST_MODE;
-    } else {
-      govener = Constants.DRIVE_SLOW_MODE;
     }
-  }
 
-  public Pose2d getPose() {
-    return m_odometry.getPoseMeters();
-  }
+    /**
+     * 
+     * method used to move.
+     * 
+     * @param leftSpeed  - speed of left motor.
+     * @param rightSpeed - speed of right motor.
+     */
+    public void move(double leftSpeed, double rightSpeed) {
+        drive.tankDrive(leftSpeed * govener, rightSpeed * govener);
 
-  public DifferentialDriveWheelSpeeds getWheelSpeeds() {
-    return new DifferentialDriveWheelSpeeds(lMaster.getSelectedSensorVelocity() * Constants.METERS_PER_TICK, rMaster.getSelectedSensorVelocity() * Constants.METERS_PER_TICK);
-  }
+    }
 
-  public void tankDriveVolts(double leftVolts, double rightVolts) {
-    lMaster.setVoltage(leftVolts);
-    rMaster.setVoltage(-rightVolts);
-    drive.feed();
-  }
+    public void setFastMode(boolean setFast) {
+        if (setFast) {
+            govener = Constants.DRIVE_FAST_MODE;
+        } else {
+            govener = Constants.DRIVE_SLOW_MODE;
+        }
+    }
 
-  /**
-   * 
-   * Projects the encoder values of the Master motors, and angles for the navX.
-   * 
-   */
-  public void encoderTest() {
-    SmartDashboard.putNumber("lMaster", lMaster.getSelectedSensorPosition());
-    SmartDashboard.putNumber("rMaster", rMaster.getSelectedSensorPosition());
-    SmartDashboard.putNumber("NavX Angle: ", RobotContainer.navX.getAngle());
-    SmartDashboard.putNumber("Drive Governor", govener);
-  }
+    public Pose2d getPose() {
+        return m_odometry.getPoseMeters();
+    }
 
-  public void resetEncoders()
-  {
-    lMaster.setSelectedSensorPosition(0);
-    rMaster.setSelectedSensorPosition(0);
-  }
+    public DifferentialDriveWheelSpeeds getWheelSpeeds() {
+        return new DifferentialDriveWheelSpeeds(lMaster.getSelectedSensorVelocity() * Constants.METERS_PER_TICK,
+                rMaster.getSelectedSensorVelocity() * Constants.METERS_PER_TICK);
+    }
 
-  /**
-   * returns sensor position.
-   * 
-   * @return
-   */
-  public int getEncoderValue() {
-    return lMaster.getSelectedSensorPosition();
-  }
+    public void tankDriveVolts(double leftVolts, double rightVolts) {
+        lMaster.setVoltage(leftVolts);
+        rMaster.setVoltage(-rightVolts);
+        drive.feed();
+    }
 
-  /**
-   * resets encoder value.
-   */
-  public void resetEncoder() {
-    lMaster.getSelectedSensorPosition(0);
-    rMaster.getSelectedSensorPosition(0);
-  }
+    /**
+     * 
+     * Projects the encoder values of the Master motors, and angles for the navX.
+     * 
+     */
+    public void encoderTest() {
+        SmartDashboard.putNumber("lMaster", lMaster.getSelectedSensorPosition());
+        SmartDashboard.putNumber("rMaster", rMaster.getSelectedSensorPosition());
+        SmartDashboard.putNumber("NavX", RobotContainer.navX.getAngle());
+        SmartDashboard.putNumber("Drive Governor", govener);
+    }
 
-  @Override
-  public void periodic() {
-    encoderTest();
-    m_odometry.update(Rotation2d.fromDegrees(RobotContainer.navX.getAngle()), lMaster.getSelectedSensorPosition() * Constants.METERS_PER_TICK, rMaster.getSelectedSensorPosition() * Constants.METERS_PER_TICK);
-    // This method will be called once per scheduler run
-  }
+    public void resetEncoders() {
+        lMaster.setSelectedSensorPosition(0);
+        rMaster.setSelectedSensorPosition(0);
+    }
 
-  /**
-   * 
-   * stops motors.
-   * 
-   */
-  public void stop() {
-    lMaster.stopMotor();
-    rMaster.stopMotor();
-  }
+    /**
+     * returns sensor position.
+     * 
+     * @return
+     */
+    public int getEncoderValue() {
+        return lMaster.getSelectedSensorPosition();
+    }
+
+    /**
+     * resets encoder value.
+     */
+    public void resetEncoder() {
+        lMaster.getSelectedSensorPosition(0);
+        rMaster.getSelectedSensorPosition(0);
+    }
+
+    @Override
+    public void periodic() {
+        encoderTest();
+        m_odometry.update(Rotation2d.fromDegrees(RobotContainer.navX.getAngle()),
+                lMaster.getSelectedSensorPosition() * Constants.METERS_PER_TICK,
+                rMaster.getSelectedSensorPosition() * Constants.METERS_PER_TICK);
+        // This method will be called once per scheduler run
+    }
+
+    /**
+     * 
+     * stops motors.
+     * 
+     */
+    public void stop() {
+        lMaster.stopMotor();
+        rMaster.stopMotor();
+    }
 
 }

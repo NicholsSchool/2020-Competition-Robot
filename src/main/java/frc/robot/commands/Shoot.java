@@ -16,43 +16,41 @@ import frc.robot.RobotContainer;
  */
 public class Shoot extends CommandBase {
     private long timeStarted;
-    public Shoot(){
+
+    public Shoot() {
         addRequirements(RobotContainer.shooter);
         addRequirements(RobotContainer.queuer);
     }
 
     @Override
-    public void initialize(){
+    public void initialize() {
         timeStarted = System.currentTimeMillis();
     }
 
     @Override
     public void execute() {
-      RobotContainer.shooter.shoot();
-      if (RobotContainer.shooter.isAtVelocity() || System.currentTimeMillis() - timeStarted > Constants.SHOOT_TIMEOUT * 1000)
-      {
-        timeStarted = System.currentTimeMillis();
-        RobotContainer.queuer.unload();
-      }
-      else 
-        RobotContainer.queuer.stop();
+        RobotContainer.shooter.shoot();
+        if (RobotContainer.shooter.isAtVelocity()
+                || System.currentTimeMillis() - timeStarted > Constants.SHOOT_TIMEOUT * 1000) {
+            timeStarted = System.currentTimeMillis();
+            RobotContainer.queuer.unload();
+        } else
+            RobotContainer.queuer.stop();
     }
 
     @Override
     public void end(boolean interrupted) {
-      RobotContainer.shooter.stop();
-      RobotContainer.queuer.stop();
+        RobotContainer.shooter.stop();
+        RobotContainer.queuer.stop();
     }
 
     @Override
     public boolean isFinished() {
-      boolean[] sensorValues = RobotContainer.irSystem.getValues();
-      for (boolean b : sensorValues)
-        if (!b)
-          return false;
-      return true;
+        boolean[] sensorValues = RobotContainer.irSystem.getValues();
+        for (boolean b : sensorValues)
+            if (!b)
+                return false;
+        return true;
     }
-
-
 
 }

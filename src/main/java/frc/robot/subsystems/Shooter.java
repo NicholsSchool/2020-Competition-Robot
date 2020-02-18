@@ -12,7 +12,6 @@ import java.util.Arrays;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.music.Orchestra;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -81,10 +80,9 @@ public class Shooter extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("Desired Velocity", Constants.SHOOT_VELOCITY);
         SmartDashboard.putNumber("Shooter Velocity", shooter.getSelectedSensorVelocity());
-        SmartDashboard.putNumber("Difference In Velocity", Constants.SHOOT_VELOCITY - shooter.getSelectedSensorVelocity());
-        SmartDashboard.putBoolean("SHOOTER AT VELOCITY", isAtVelocity);
+        SmartDashboard.putNumber("Shooter Velocity Delta", Constants.SHOOT_VELOCITY - shooter.getSelectedSensorVelocity());
+        SmartDashboard.putBoolean("Shooter at Velocity", isAtVelocity);
     }
 
     private void setVelocity(double velocity) {
