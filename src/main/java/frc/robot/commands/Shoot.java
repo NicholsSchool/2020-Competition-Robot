@@ -46,6 +46,8 @@ public class Shoot extends CommandBase {
 
     @Override
     public boolean isFinished() {
+        if (RobotContainer.irSensorOveride)
+            return false;
         boolean[] sensorValues = RobotContainer.irSystem.getValues();
         for (boolean b : sensorValues)
             if (!b)

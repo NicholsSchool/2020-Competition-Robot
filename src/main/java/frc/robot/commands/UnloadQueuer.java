@@ -41,6 +41,8 @@ public class UnloadQueuer extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
+        if(RobotContainer.irSensorOveride)
+            return false;
         boolean[] sensorValues = RobotContainer.irSystem.getValues();
         for (boolean b : sensorValues)
             if (!b)

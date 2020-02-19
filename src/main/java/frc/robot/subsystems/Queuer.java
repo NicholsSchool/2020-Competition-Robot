@@ -118,6 +118,11 @@ public class Queuer extends SubsystemBase {
     public void unload()
     {
         boolean[] sensorValues = RobotContainer.irSystem.getValues();
+        if(RobotContainer.irSensorOveride)
+        {
+            moveAll(Constants.QUEUE_MOVE_SPEED);
+            return;
+        }
         for(int i = locks.length - 1; i >= 0; i--)
         {
             if(i + 1 >= sensorValues.length) // lock5 should always move when shooting
@@ -140,6 +145,11 @@ public class Queuer extends SubsystemBase {
     {
         if(System.currentTimeMillis() - lastUpdateTime < Constants.QUEUE_DELAY_TIME * 1000)
             return;
+        if (RobotContainer.irSensorOveride)
+        {
+            numBallsInCorrectPos = 0;
+            return;
+        }
      
         int totalBalls = 0;
         boolean[] sensorValues = RobotContainer.irSystem.getValues();
@@ -150,7 +160,7 @@ public class Queuer extends SubsystemBase {
                 break;
         numBallsInCorrectPos = totalBalls;
         lastUpdateTime = System.currentTimeMillis();
-            
+ 
     }
 
     public int getNumberBallsInCorrectPosition()
@@ -213,5 +223,6 @@ public class Queuer extends SubsystemBase {
         boolean[] beams = RobotContainer.irSystem.getValues();
         for(int i = 0; i < beams.length; i ++)
             SmartDashboard.putBoolean("Beam " + (i + 1), beams[i]);
+        SmartDashboard.putBoolean("IR Sensor Override", RobotContainer.irSensorOveride);
     }
 }

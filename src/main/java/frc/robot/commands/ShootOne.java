@@ -43,6 +43,8 @@ public class ShootOne extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
+        if (RobotContainer.irSensorOveride)
+            return false;
         boolean[] values = RobotContainer.irSystem.getValues();
         return values[values.length - 1];
     }

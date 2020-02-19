@@ -1,17 +1,17 @@
 package frc.robot.subsystems;
 
-
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.RobotMap;
 
 public class Climber extends SubsystemBase {
-    private Solenoid climber;
+    private Solenoid extender;
     private Solenoid climbBreak;
 
     public Climber() {
-        // climber = new Solenoid(RobotMap.CLIMBER_SOLENOID_CHANNEL);
-        // climbBreak = new Solenoid(RobotMap.CLIMBBREAK_SOLENOID_CHANNEL);
+        extender = new Solenoid(RobotMap.COMPRESSOR_ID, RobotMap.EXTENDER_SOLENOID_CHANNEL);
+        climbBreak = new Solenoid(RobotMap.COMPRESSOR_ID, RobotMap.CLIMBBREAK_SOLENOID_CHANNEL);
     }
 
     public void engageBreak() {
@@ -23,10 +23,10 @@ public class Climber extends SubsystemBase {
     }
 
     public void extend(){        
-        climber.set(Constants.CLIMBER_EXTEND);
+        extender.set(Constants.CLIMBER_EXTEND);
     }
 
-    public void stop() {
-        climber.set(Constants.CLIMBER_STOP);
+    public void lockExtender() {
+        extender.set(Constants.CLIMBER_LOCK_EXTENDER);
     }
 }

@@ -12,6 +12,7 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.Solenoid;
 import frc.robot.commands.*;
 import frc.robot.sensors.*;
 import frc.robot.subsystems.*;
@@ -48,16 +49,21 @@ public class RobotContainer {
 
     public static JoystickController j2;
 
+    public static boolean irSensorOveride;
+
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
      */
     public RobotContainer() {
+   
+
+
         navX = new NavX(new AHRS(SPI.Port.kMXP));
         irSystem = new IRSystem();
+        irSensorOveride = false;
+        compressor = new Compressor(RobotMap.COMPRESSOR_ID);
         driveTrain = new DriveTrain();
-        // climber = new Climber();
-        // compressor = new Compressor(RobotMap.COMPRESSOR_ID);
-        // Solenoid test = new Solenoid(1);
+        climber = new Climber();
 
         spinner = new ColorWheelSpinner();
         queuer = new Queuer();
@@ -95,13 +101,16 @@ public class RobotContainer {
         c1.rBumper.whileHeld(new ShootOne()); // 1
         c1.lBumper.whenPressed(new Agitate().withTimeout(Constants.QUEUER_AGITATE_TIME)
                 .andThen(new ReverseAgitate().withTimeout(Constants.QUEUER_AGITATE_TIME)));
+        
+        c1.b.whenPressed(new InstantCommand(() -> irSensorOveride = true))
+        .whenReleased(new InstantCommand(() -> irSensorOveride = false));
 
-        // c1.start.and(c1.select).whenActive(new InstantCommand(() -> climber.extend(),
-        // climber));
-        // c0.y.and(c1.y).whenActive(new InstantCommand(() -> climber.engageBreak(),
-        // climber));
-        // c0.x.and(c1.x).whenActive(new InstantCommand(() -> climber.disengageBreak(),
-        // climber));
+        c1.start.and(c1.select).whenActive(new InstantCommand(() -> climber.extend(),
+        climber));
+        c0.y.and(c1.y).whenActive(new InstantCommand(() -> climber.engageBreak(),
+        climber));
+        c0.x.and(c1.x).whenActive(new InstantCommand(() -> climber.disengageBreak(),
+        climber));
 
         c0.a.whenPressed(new InstantCommand(() -> driveTrain.setFastMode(true)));
         c0.b.whenPressed(new InstantCommand(() -> driveTrain.setFastMode(false)));

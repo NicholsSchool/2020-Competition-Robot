@@ -61,10 +61,15 @@ public final class Constants {
     private static final String MEGALOVANIA_FILE = "megalovania.chrp";
     private static final String ANTHEM_FILE = "anthem.chrp";
     public static final String MUSIC_FILE = ANTHEM_FILE;
-    public static final boolean BREAK_SWITCH_ENGAGE = true;
+
+
+    //Double check these values
+    public static final boolean BREAK_SWITCH_ENGAGE = false;
     public static final boolean BREAK_SWITCH_DISENGAGE = !BREAK_SWITCH_ENGAGE;
-    public static final boolean CLIMBER_EXTEND = true;
-    public static final boolean CLIMBER_STOP = !CLIMBER_EXTEND;
+    public static final boolean CLIMBER_EXTEND = false;
+    public static final boolean CLIMBER_LOCK_EXTENDER = !CLIMBER_EXTEND;
+
+
     public static final double DRIVE_FAST_MODE = 1.0;
     public static final double DRIVE_SLOW_MODE = 0.5;
 
@@ -99,5 +104,5 @@ public final class Constants {
     public static final double VISION_kF = 0.35;
     public static final double SHOOTER_X_OFFSET = -10.0;
     public static final double SHOOTER_Y_OFFSET = 0.0;
-    public static final double SHOOTER_Z_OFFSET = 12.0;
+    public static final double SHOOTER_Z_OFFSET = 8.0;
 }
