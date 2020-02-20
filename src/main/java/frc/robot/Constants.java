@@ -51,8 +51,8 @@ public final class Constants {
 
     //Camera
 
-    public static final int CAMERA_WIDTH = 640;
-    public static final int CAMERA_HEIGHT = 480;
-    public static final int FRAME_RATE = 30;
+    public static final int CAMERA_WIDTH = 320;
+    public static final int CAMERA_HEIGHT = 240;
+    public static final int FRAME_RATE = 60;
 
 }

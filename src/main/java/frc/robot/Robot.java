@@ -106,23 +106,23 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    new Thread (() -> {
-      UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
-      camera.setResolution(Constants.CAMERA_WIDTH, Constants.CAMERA_HEIGHT);
-      CvSink cvSink = CameraServer.getInstance().getVideo();
-      CvSource outputStream = CameraServer.getInstance().putVideo("Blur", Constants.CAMERA_WIDTH, Constants.CAMERA_HEIGHT);
-      Mat source = new Mat();
-      Mat output = new Mat();
-      while (!Thread.interrupted()){
-        if (cvSink.grabFrame(source) == 0){
-          continue;
+    // new Thread (() -> {
+    //   UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+    //   camera.setResolution(Constants.CAMERA_WIDTH, Constants.CAMERA_HEIGHT);
+    //   CvSink cvSink = CameraServer.getInstance().getVideo();
+    //   CvSource outputStream = CameraServer.getInstance().putVideo("Blur", Constants.CAMERA_WIDTH, Constants.CAMERA_HEIGHT);
+    //   Mat source = new Mat();
+    //   Mat output = new Mat();
+    //   while (!Thread.interrupted()){
+    //     if (cvSink.grabFrame(source) == 0){
+    //       continue;
 
-        }
-        Imgproc.cvtColor(source, output, Imgproc.COLOR_BGR2GRAY);
-        outputStream.putFrame(output);
-      }
+    //     }
+    //     Imgproc.cvtColor(source, output, Imgproc.COLOR_BGR2GRAY);
+    //     outputStream.putFrame(output);
+    //   }
       
-    }).start();
+    // }).start();
   }
 
   @Override
