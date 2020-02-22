@@ -10,13 +10,13 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 
-public class Drive extends CommandBase {
+public class ReverseAgitate extends CommandBase {
     /**
-     * Creates a new Drive.
+     * Creates a new ReverseAgitate.
      */
-    public Drive() {
-        addRequirements(RobotContainer.driveTrain);
+    public ReverseAgitate() {
         // Use addRequirements() here to declare subsystem dependencies.
+        addRequirements(RobotContainer.queuer);
     }
 
     // Called when the command is initially scheduled.
@@ -27,13 +27,13 @@ public class Drive extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        RobotContainer.driveTrain.move(RobotContainer.c0.getLeftY(), RobotContainer.c0.getRightY());
+        RobotContainer.queuer.reverseAgitate();
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        RobotContainer.driveTrain.stop();
+        RobotContainer.queuer.stop();
     }
 
     // Returns true when the command should end.

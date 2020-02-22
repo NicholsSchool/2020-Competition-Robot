@@ -2,7 +2,10 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
+import frc.robot.RobotContainer;
 import frc.robot.RobotMap;
 
 /**
@@ -12,11 +15,16 @@ import frc.robot.RobotMap;
 
 public class Queuer extends SubsystemBase {
 
+    private WPI_TalonSRX lock1;
     private WPI_TalonSRX lock2;
     private WPI_TalonSRX lock3;
     private WPI_TalonSRX lock4;
+    private WPI_TalonSRX lock5;
 
     private WPI_TalonSRX[] locks; 
+
+    private int numBallsInCorrectPos;
+    private long lastUpdateTime;
 
     /**
      *  Constructor Method creating motors 
@@ -24,18 +32,26 @@ public class Queuer extends SubsystemBase {
 
     public Queuer() {
 
+        lock1 = new WPI_TalonSRX(RobotMap.INTAKE_ID);
         lock2 = new WPI_TalonSRX(RobotMap.LOCK_TWO_MOTOR_ID);
         lock3 = new WPI_TalonSRX(RobotMap.LOCK_THREE_MOTOR_ID);
         lock4 = new WPI_TalonSRX(RobotMap.LOCK_FOUR_MOTOR_ID);
+        lock5 = new WPI_TalonSRX(RobotMap.LOCK_FIVE_MOTOR_ID);
 
-        locks = new WPI_TalonSRX[3];
-        locks[0] = lock2;
-        locks[1] = lock3;
-        locks[2] = lock4;
+        locks = new WPI_TalonSRX[]{lock1, lock2, lock3, lock4, lock5};
 
+        lock1.configFactoryDefault();
         lock2.configFactoryDefault();
         lock3.configFactoryDefault();
         lock4.configFactoryDefault();
+        lock5.configFactoryDefault();
+
+        lock1.setInverted( true );
+        lock2.setInverted( true );
+        lock3.setInverted( true );
+        lock4.setInverted( true );
+        lock5.setInverted( true );
+        numBallsInCorrectPos = 0;
     }
 
     /**
@@ -70,23 +86,113 @@ public class Queuer extends SubsystemBase {
 
     public boolean checkQueuer()
     {
-        boolean[] sensorValues = new boolean[locks.length];
+        boolean[] sensorValues = RobotContainer.irSystem.getValues();
         boolean falseFound = false;
-
-        for(int i = locks.length; i >= 0; i--)
+        for(int i = 0; i < sensorValues.length; i ++)
         {
-            if(sensorValues[i] == false)
-            {
+            if(!sensorValues[i])
                 falseFound = true;
-            }
 
-            if(sensorValues[i] == true && falseFound == true)
-            {
+            if(falseFound && sensorValues[i])
                 return false;
-            }
         }
-
         return true;
+    }
+
+    public void queue() {
+        
+        updateNumberOfBalls();
+        for(int i = 0; i < locks.length - 1; i ++) // -1 because lock5 should not spin
+            if(i >= locks.length - numBallsInCorrectPos - 1)
+                move(0, i);
+            else
+                move(Constants.QUEUE_MOVE_SPEED, i);
+    }
+    
+    public void unloadOne()
+    {
+        move(Constants.QUEUE_MOVE_SPEED, locks.length - 1);
+        move(Constants.QUEUE_MOVE_SPEED, locks.length - 2);
+    }
+
+    public void unload()
+    {
+        boolean[] sensorValues = RobotContainer.irSystem.getValues();
+        if(RobotContainer.irSensorOveride)
+        {
+            moveAll(Constants.QUEUE_MOVE_SPEED);
+            return;
+        }
+        for(int i = locks.length - 1; i >= 0; i--)
+        {
+            if(i + 1 >= sensorValues.length) // lock5 should always move when shooting
+                move(Constants.QUEUE_MOVE_SPEED, i); 
+            else if(sensorValues[i + 1] && !sensorValues[i])  
+            {
+                move(Constants.QUEUE_MOVE_SPEED, i + 1);
+                move(Constants.QUEUE_MOVE_SPEED, i);
+            }
+            else 
+                move(0, i);
+        }
+        //If the top sensor isn't broken, the ball must stuck at the fourth lock as well, so move that
+        if(!sensorValues[sensorValues.length - 1])
+            move(Constants.QUEUE_MOVE_SPEED, 3);
+    }
+
+
+    public void updateNumberOfBalls()
+    {
+        if(System.currentTimeMillis() - lastUpdateTime < Constants.QUEUE_DELAY_TIME * 1000)
+            return;
+        if (RobotContainer.irSensorOveride)
+        {
+            numBallsInCorrectPos = 0;
+            return;
+        }
+     
+        int totalBalls = 0;
+        boolean[] sensorValues = RobotContainer.irSystem.getValues();
+        for(int i = sensorValues.length - 1; i >= 0; i --)
+            if(!sensorValues[i])
+                totalBalls ++;
+            else
+                break;
+        numBallsInCorrectPos = totalBalls;
+        lastUpdateTime = System.currentTimeMillis();
+ 
+    }
+
+    public int getNumberBallsInCorrectPosition()
+    {
+        return numBallsInCorrectPos;
+    }
+
+    public void agitate()
+    {
+        for(int i = 0; i < locks.length; i ++)
+            move(Constants.QUEUER_AGITATE_SPEED, i);
+    }
+
+    public void reverseAgitate()
+    {
+        for (int i = 0; i < locks.length; i++)
+            move(-Constants.QUEUER_AGITATE_SPEED, i);
+    }
+
+    /**
+     * Sets the intake motor values to INTAKE_SPEED, a double value in the Constants
+     * class.
+     */
+    public void intake() {
+        move(Constants.INTAKE_SPEED, 0);
+    }
+
+    /**
+     * Does the same thing as intake(), but in the other direction.
+     */
+    public void outtake() {
+        move(-Constants.INTAKE_SPEED, 0);
     }
 
     /**
@@ -95,9 +201,16 @@ public class Queuer extends SubsystemBase {
 
     public void stop()
     {
+        lock1.stopMotor();
         lock2.stopMotor();
         lock3.stopMotor();
         lock4.stopMotor();
+        lock5.stopMotor();
+    }
+
+    public void stopIntake()
+    {
+        lock1.stopMotor();
     }
 
     /**
@@ -106,8 +219,10 @@ public class Queuer extends SubsystemBase {
 
     @Override
     public void periodic() {
-        lock2.getStatorCurrent();
-        lock3.getStatorCurrent();
-        lock4.getStatorCurrent();
+        SmartDashboard.putNumber("Balls in Correct Position", numBallsInCorrectPos);
+        boolean[] beams = RobotContainer.irSystem.getValues();
+        for(int i = 0; i < beams.length; i ++)
+            SmartDashboard.putBoolean("Beam " + (i + 1), beams[i]);
+        SmartDashboard.putBoolean("IR Sensor Override", RobotContainer.irSensorOveride);
     }
 }

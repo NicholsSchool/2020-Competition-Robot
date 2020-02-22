@@ -10,35 +10,44 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
-import frc.robot.subsystems.Queuer;
 
 public class MoveLock extends CommandBase {
 
-  int index;
+    private int index;
+    private boolean isReversed;
 
-  public MoveLock(int index) {
-  }
+    public MoveLock(int index, boolean isReversed) {
+        this.index = index - 2;
+        this.isReversed = isReversed;
+    }
 
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {
-  }
+    public MoveLock(int index) {
+        this(index, false);
+    }
 
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
-    RobotContainer.queuer.move(Constants.QUEUE_MOVE_SPEED, index);
-  }
+    // Called when the command is initially scheduled.
+    @Override
+    public void initialize() {
+    }
 
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {
-    RobotContainer.queuer.stop();
-  }
+    // Called every time the scheduler runs while the command is scheduled.
+    @Override
+    public void execute() {
+        if (!isReversed)
+            RobotContainer.queuer.move(Constants.QUEUE_MOVE_SPEED, index);
+        else
+            RobotContainer.queuer.move(-Constants.QUEUE_MOVE_SPEED, index);
+    }
 
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return false;
-  }
+    // Called once the command ends or is interrupted.
+    @Override
+    public void end(boolean interrupted) {
+        RobotContainer.queuer.stop();
+    }
+
+    // Returns true when the command should end.
+    @Override
+    public boolean isFinished() {
+        return RobotContainer.queuer.checkQueuer();
+    }
 }
