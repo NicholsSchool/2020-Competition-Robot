@@ -112,6 +112,10 @@ public class RobotContainer {
         c0.x.and(c1.x).whenActive(new InstantCommand(() -> climber.disengageBreak(),
         climber));
 
+        
+        c0.lTrigger.whenPressed(new InstantCommand(() -> driveTrain.engageBackOmnis()));
+        c0.lBumper.whenPressed(new InstantCommand(() -> driveTrain.disengageBackOmnis()));
+
         c0.a.whenPressed(new InstantCommand(() -> driveTrain.setFastMode(true)));
         c0.b.whenPressed(new InstantCommand(() -> driveTrain.setFastMode(false)));
 

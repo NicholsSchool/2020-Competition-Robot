@@ -25,6 +25,7 @@ public class RobotMap {
 
     public static final int EXTENDER_SOLENOID_CHANNEL = 1;
     public static final int CLIMBBREAK_SOLENOID_CHANNEL = 2;
+    public static final int BACK_OMNIS_SOLENOID_CHANNEL = 0;
 
     public static final int COMPRESSOR_ID = 50;
 

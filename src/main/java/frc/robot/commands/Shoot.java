@@ -30,9 +30,10 @@ public class Shoot extends CommandBase {
     @Override
     public void execute() {
         RobotContainer.shooter.shoot();
-        if (RobotContainer.shooter.isAtVelocity()
-                || System.currentTimeMillis() - timeStarted > Constants.SHOOT_TIMEOUT * 1000) {
-            timeStarted = System.currentTimeMillis();
+        System.out.println("Shooting Time: " + (System.currentTimeMillis() - timeStarted));
+        if (RobotContainer.shooter.isAtVelocity() || System.currentTimeMillis() - timeStarted > Constants.SHOOT_TIMEOUT * 1000) {
+            if(RobotContainer.shooter.isAtVelocity())
+                timeStarted = System.currentTimeMillis();
             RobotContainer.queuer.unload();
         } else
             RobotContainer.queuer.stop();

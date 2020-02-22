@@ -30,6 +30,9 @@ public final class Constants {
     public static final double RIGHT_MASTER_I = 0.0;
     public static final double RIGHT_MASTER_D = 0.0;
 
+    public static final boolean BACK_OMNIS_ENGAGED = true;
+    public static final boolean BACK_OMNIS_DISENGAGED = !BACK_OMNIS_ENGAGED;
+
     public static final double RAMP_TIME = 0.05;
     public static final int TICKS_PER_INCH = 68;
 
@@ -64,7 +67,7 @@ public final class Constants {
 
 
     //Double check these values
-    public static final boolean BREAK_SWITCH_ENGAGE = false;
+    public static final boolean BREAK_SWITCH_ENGAGE = true;
     public static final boolean BREAK_SWITCH_DISENGAGE = !BREAK_SWITCH_ENGAGE;
     public static final boolean CLIMBER_EXTEND = false;
     public static final boolean CLIMBER_LOCK_EXTENDER = !CLIMBER_EXTEND;
@@ -102,7 +105,7 @@ public final class Constants {
 
     public static final double VISION_THETA_TOLERANCE = 1.0;
     public static final double VISION_kF = 0.35;
-    public static final double SHOOTER_X_OFFSET = -10.0;
+    public static final double SHOOTER_X_OFFSET = -8.0;
     public static final double SHOOTER_Y_OFFSET = 0.0;
-    public static final double SHOOTER_Z_OFFSET = 8.0;
+    public static final double SHOOTER_Z_OFFSET = 9.0;
 }

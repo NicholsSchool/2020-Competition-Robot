@@ -4,6 +4,7 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
@@ -24,6 +25,8 @@ public class DriveTrain extends SubsystemBase {
     private WPI_TalonSRX rMaster;
     private WPI_VictorSPX rSlave;
 
+    public static Solenoid backOmnisSolenoid;
+
     private DifferentialDrive drive;
     // Odometry class for tracking robot pose
     private final DifferentialDriveOdometry m_odometry;
@@ -37,6 +40,8 @@ public class DriveTrain extends SubsystemBase {
 
         rMaster = new WPI_TalonSRX(RobotMap.RIGHT_MASTER_ID);
         rSlave = new WPI_VictorSPX(RobotMap.RIGHT_SLAVE_ID);
+
+        backOmnisSolenoid = new Solenoid(RobotMap.COMPRESSOR_ID, RobotMap.BACK_OMNIS_SOLENOID_CHANNEL);
 
         lMaster.configFactoryDefault();
         lSlave.configFactoryDefault();
@@ -140,6 +145,15 @@ public class DriveTrain extends SubsystemBase {
     public void resetEncoder() {
         lMaster.getSelectedSensorPosition(0);
         rMaster.getSelectedSensorPosition(0);
+    }
+
+    //Can't turn with them engaged
+    public void engageBackOmnis(){
+        backOmnisSolenoid.set(Constants.BACK_OMNIS_ENGAGED);
+    }
+
+    public void disengageBackOmnis() {
+        backOmnisSolenoid.set(Constants.BACK_OMNIS_DISENGAGED);
     }
 
     @Override
