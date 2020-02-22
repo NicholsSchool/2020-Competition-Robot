@@ -60,6 +60,15 @@ public final class Constants {
     public static final double SHOOT_TIMEOUT = 3;
 
     public static final double CWS_SPINNER_SPEED = 0.25;
+	public static final int LENGTH = 0;
+	public static final int HEIGHT = 0;
+    public static final int FRAMES_PER_SECOND = 0;
+
+    //Camera
+
+    public static final int CAMERA_WIDTH = 320;
+    public static final int CAMERA_HEIGHT = 240;
+    public static final int FRAME_RATE = 60;
 
     private static final String MEGALOVANIA_FILE = "megalovania.chrp";
     private static final String ANTHEM_FILE = "anthem.chrp";
