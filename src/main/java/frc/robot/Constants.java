@@ -78,7 +78,7 @@ public final class Constants {
     //Double check these values
     public static final boolean BREAK_SWITCH_ENGAGE = true;
     public static final boolean BREAK_SWITCH_DISENGAGE = !BREAK_SWITCH_ENGAGE;
-    public static final boolean CLIMBER_EXTEND = false;
+    public static final boolean CLIMBER_EXTEND = true;
     public static final boolean CLIMBER_LOCK_EXTENDER = !CLIMBER_EXTEND;
 
 

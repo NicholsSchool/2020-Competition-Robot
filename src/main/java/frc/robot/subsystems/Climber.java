@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
@@ -22,11 +23,31 @@ public class Climber extends SubsystemBase {
         climbBreak.set(Constants.BREAK_SWITCH_DISENGAGE);
     }
 
+    public void toggleExtender()
+    {
+        if(extender.get() == Constants.CLIMBER_EXTEND)
+            lockExtender();
+        else 
+            extend();
+    }
+
     public void extend(){        
         extender.set(Constants.CLIMBER_EXTEND);
     }
 
     public void lockExtender() {
         extender.set(Constants.CLIMBER_LOCK_EXTENDER);
+    }
+
+    public boolean isClimbEngaged()
+    {
+       return extender.get() == Constants.CLIMBER_EXTEND;
+    }
+
+    @Override
+    public void periodic()
+    {
+        SmartDashboard.putBoolean("Hook Solenoid", extender.get());
+        SmartDashboard.putBoolean("**CLIMB ENGAGED**", isClimbEngaged());
     }
 }

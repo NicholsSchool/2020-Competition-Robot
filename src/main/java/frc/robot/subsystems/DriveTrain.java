@@ -163,6 +163,7 @@ public class DriveTrain extends SubsystemBase {
                 lMaster.getSelectedSensorPosition() * Constants.METERS_PER_TICK,
                 rMaster.getSelectedSensorPosition() * Constants.METERS_PER_TICK);
         // This method will be called once per scheduler run
+        SmartDashboard.putBoolean("Rear Solenoids", backOmnisSolenoid.get());
     }
 
     /**

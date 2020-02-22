@@ -35,6 +35,7 @@ public class RobotContainer {
     public static JoystickController j1;
     public static AHRS ahrs;
     public static NavX navX;
+    public static Cameras camera;
     public static IRSystem irSystem;
     public static Climber climber;
 
@@ -60,6 +61,8 @@ public class RobotContainer {
 
         navX = new NavX(new AHRS(SPI.Port.kMXP));
         irSystem = new IRSystem();
+        camera = new Cameras();
+
         irSensorOveride = false;
         compressor = new Compressor(RobotMap.COMPRESSOR_ID);
         driveTrain = new DriveTrain();
@@ -105,14 +108,14 @@ public class RobotContainer {
         c1.b.whenPressed(new InstantCommand(() -> irSensorOveride = true))
         .whenReleased(new InstantCommand(() -> irSensorOveride = false));
 
-        c1.start.and(c1.select).whenActive(new InstantCommand(() -> climber.extend(),
+        c1.start.and(c1.select).whenActive(new InstantCommand(() -> climber.toggleExtender(),
         climber));
         c0.y.and(c1.y).whenActive(new InstantCommand(() -> climber.engageBreak(),
         climber));
         c0.x.and(c1.x).whenActive(new InstantCommand(() -> climber.disengageBreak(),
         climber));
 
-        
+
         c0.lTrigger.whenPressed(new InstantCommand(() -> driveTrain.engageBackOmnis()));
         c0.lBumper.whenPressed(new InstantCommand(() -> driveTrain.disengageBackOmnis()));
 
