@@ -41,13 +41,18 @@ public class Climber extends SubsystemBase {
 
     public boolean isClimbEngaged()
     {
-       return extender.get() == Constants.CLIMBER_EXTEND;
+       return climbBreak.get() == Constants.BREAK_SWITCH_ENGAGE;
+    }
+
+    public boolean isHookUnlocked() 
+    {
+        return extender.get() == Constants.CLIMBER_EXTEND;
     }
 
     @Override
     public void periodic()
     {
-        SmartDashboard.putBoolean("Hook Solenoid", extender.get());
+        SmartDashboard.putBoolean("**HOOK UNLOCKED**", isHookUnlocked());
         SmartDashboard.putBoolean("**CLIMB ENGAGED**", isClimbEngaged());
     }
 }

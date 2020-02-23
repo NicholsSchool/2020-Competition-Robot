@@ -86,6 +86,9 @@ public class DriveTrain extends SubsystemBase {
      * @param rightSpeed - speed of right motor.
      */
     public void move(double leftSpeed, double rightSpeed) {
+        if(RobotContainer.climber.isClimbEngaged())
+            leftSpeed = rightSpeed;
+
         drive.tankDrive(leftSpeed * govener, rightSpeed * govener);
 
     }
@@ -147,6 +150,10 @@ public class DriveTrain extends SubsystemBase {
         rMaster.getSelectedSensorPosition(0);
     }
 
+    public boolean areBackOminsEngaged() {
+        return backOmnisSolenoid.get() == Constants.BACK_OMNIS_ENGAGED;
+    }
+
     //Can't turn with them engaged
     public void engageBackOmnis(){
         backOmnisSolenoid.set(Constants.BACK_OMNIS_ENGAGED);
@@ -163,7 +170,7 @@ public class DriveTrain extends SubsystemBase {
                 lMaster.getSelectedSensorPosition() * Constants.METERS_PER_TICK,
                 rMaster.getSelectedSensorPosition() * Constants.METERS_PER_TICK);
         // This method will be called once per scheduler run
-        SmartDashboard.putBoolean("Rear Solenoids", backOmnisSolenoid.get());
+        SmartDashboard.putBoolean("BACK OMNIS ENGAGED", areBackOminsEngaged());
     }
 
     /**
