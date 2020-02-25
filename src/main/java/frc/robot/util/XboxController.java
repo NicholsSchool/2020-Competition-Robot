@@ -19,9 +19,9 @@ public class XboxController extends Joystick{
         lStick = new JoystickButton(this, 9);
         rStick= new JoystickButton(this, 10);
         dpadUp = new POVButton(this, 0);
-        dpadRight = new POVButton(this, 2);
-        dpadDown = new POVButton(this, 4);
-        dpadLeft = new POVButton(this, 6);
+        dpadRight = new POVButton(this, 90);
+        dpadDown = new POVButton(this, 180);
+        dpadLeft = new POVButton(this, 270);
         lTrigger = new Trigger(this, 2);
         rTrigger = new Trigger(this, 3);
 		

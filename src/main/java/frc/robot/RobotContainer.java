@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Solenoid;
+import frc.robot.autonomous.PIDDartMove;
 import frc.robot.commands.*;
 import frc.robot.sensors.*;
 import frc.robot.subsystems.*;
@@ -37,6 +38,7 @@ public class RobotContainer {
     public static NavX navX;
     public static Cameras camera;
     public static IRSystem irSystem;
+    public static DistanceSensor distanceSensor;
     public static Climber climber;
 
     public static Shooter shooter;
@@ -61,6 +63,7 @@ public class RobotContainer {
 
         navX = new NavX(new AHRS(SPI.Port.kMXP));
         irSystem = new IRSystem();
+        distanceSensor = new DistanceSensor();
         camera = new Cameras();
 
         irSensorOveride = false;
@@ -122,8 +125,9 @@ public class RobotContainer {
         c0.a.whenPressed(new InstantCommand(() -> driveTrain.setFastMode(true)));
         c0.b.whenPressed(new InstantCommand(() -> driveTrain.setFastMode(false)));
 
-        c1.b.whileHeld(new SpinCWS());
+        // c1.b.whileHeld(new SpinCWS());
         c1.lStick.and(c1.rStick).whileActiveContinuous(new Outtake());
+        c1.dpadRight.whenPressed(new PIDDartMove(345));
 
         // Need: auto align, arm up and down, control pannel pos
 
