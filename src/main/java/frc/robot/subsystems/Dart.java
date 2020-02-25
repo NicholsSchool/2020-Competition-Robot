@@ -10,7 +10,10 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
+import frc.robot.RobotContainer;
 import frc.robot.RobotMap;
 
 public class Dart extends SubsystemBase {
@@ -43,7 +46,7 @@ public class Dart extends SubsystemBase {
      * 
      * @param speed dart movement speed
      */
-    private void move(double speed) {
+    public void move(double speed) {
         dart.set(speed);
     }
 
@@ -59,5 +62,6 @@ public class Dart extends SubsystemBase {
      */
     @Override
     public void periodic() {
+        SmartDashboard.putNumber("Arm Sensor Distance", RobotContainer.distanceSensor.getDistance());
     }
 }

@@ -24,6 +24,6 @@ public class POVButton extends Button{
     
     @Override
     public boolean get() {
-        return controller.getPOV(povValue) != -1;
+        return controller.getPOV() == povValue;
     }
 }
