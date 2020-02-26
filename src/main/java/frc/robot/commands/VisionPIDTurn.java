@@ -48,7 +48,7 @@ public class VisionPIDTurn extends PIDCommand {
                 // This uses the output
                 output -> {
                     // Use the output here
-                    output += Math.copySign(Constants.DRIVE_TRAIN_kF, output); // Feed forward
+                    output += Math.copySign(Constants.DRIVE_TRAIN_TURN_kF, output); // Feed forward
                     RobotContainer.driveTrain.move(-output, output);
                 });
         // Use addRequirements() here to declare subsystem dependencies.

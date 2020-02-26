@@ -34,7 +34,8 @@ public final class Constants {
     public static final boolean BACK_OMNIS_DISENGAGED = !BACK_OMNIS_ENGAGED;
 
     public static final double RAMP_TIME = 0.05;
-    public static final int TICKS_PER_INCH = 68;
+
+    public static final double DRIVE_TRAIN_EQUALIZIER = 0.85;
 
     public static final int CONFIG_TIMEOUT = 100;
 
@@ -85,17 +86,18 @@ public final class Constants {
     public static final double DRIVE_FAST_MODE = 1.0;
     public static final double DRIVE_SLOW_MODE = 0.5;
 
-    public static final double AUTO_TURN_TOLERANCE = 5;
-    public static final double AUTO_DRIVE_TOLERANCE = 0.5 * TICKS_PER_INCH;
-
     public static final double METERS_PER_INCH = 0.023;
     public static final double DRIVE_TICKS_PER_REV = 4096;
     public static final double DRIVE_WHEEL_DIAMETER = 4.0; // inches
     public static final double INCHES_PER_TICK = Math.PI * DRIVE_WHEEL_DIAMETER / DRIVE_TICKS_PER_REV;
     public static final double METERS_PER_TICK = INCHES_PER_TICK * METERS_PER_INCH;
 
+    public static final double AUTO_TURN_TOLERANCE = 5;
+    public static final double AUTO_DRIVE_TOLERANCE = 3 / INCHES_PER_TICK;
+
     public static final double VISION_THETA_TOLERANCE = 1.0;
-    public static final double DRIVE_TRAIN_kF = 0.35;
+    public static final double DRIVE_TRAIN_TURN_kF = 0.35;
+    public static final double DRIVE_TRAIN_DRIVE_kF = 0.25;
     public static final double SHOOTER_X_OFFSET = -8.0;
     public static final double SHOOTER_Y_OFFSET = 0.0;
     public static final double SHOOTER_Z_OFFSET = 9.0;

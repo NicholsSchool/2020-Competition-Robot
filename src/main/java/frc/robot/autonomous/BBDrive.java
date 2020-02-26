@@ -19,8 +19,7 @@ public class BBDrive extends CommandBase {
      * Creates a new BBDrive.
      */
     public BBDrive(double dst, double spd) {
-
-        desiredDistance = dst;
+        desiredDistance = dst / Constants.INCHES_PER_TICK;
         speed = spd;
         addRequirements(RobotContainer.driveTrain);
         // Use addRequirements() here to declare subsystem dependencies.
@@ -30,15 +29,18 @@ public class BBDrive extends CommandBase {
     @Override
     public void initialize() {
         RobotContainer.driveTrain.resetEncoder();
+        System.out.println("Target distance: " + desiredDistance);
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        if (desiredDistance > 0) {
-            RobotContainer.driveTrain.move(speed, speed);
+        double delta = desiredDistance - RobotContainer.driveTrain.getEncoderValue();
+
+        if (delta > 0) {
+            RobotContainer.driveTrain.move(speed, speed * Constants.DRIVE_TRAIN_EQUALIZIER);
         } else {
-            RobotContainer.driveTrain.move(-speed, -speed);
+            RobotContainer.driveTrain.move(-speed, -speed * Constants.DRIVE_TRAIN_EQUALIZIER);
         }
 
     }
@@ -52,8 +54,7 @@ public class BBDrive extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        double currentDistance = RobotContainer.driveTrain.getEncoderValue();
-        return (currentDistance < desiredDistance + Constants.AUTO_DRIVE_TOLERANCE
-                && currentDistance > desiredDistance - Constants.AUTO_DRIVE_TOLERANCE);
+        double delta = desiredDistance - RobotContainer.driveTrain.getEncoderValue();
+        return Math.abs(delta) < Constants.AUTO_DRIVE_TOLERANCE;
     }
 }

@@ -22,15 +22,17 @@ public class PIDDrive extends PIDCommand {
     public PIDDrive(double inches) {
         super(
                 // The controller that the command will use
-                new PIDController(0.0005, 0, 0),
+                new PIDController(0.0001, 0, 0),
                 // This should return the measurement
                 () -> RobotContainer.driveTrain.getEncoderValue(),
                 // This should return the setpoint (can also be a constant)
-                () -> inches * Constants.TICKS_PER_INCH,
+                () -> inches / Constants.INCHES_PER_TICK,
                 // This uses the output
                 output -> {
-                    output += Math.copySign(Constants.DRIVE_TRAIN_kF, output); // Feed forward
-                    RobotContainer.driveTrain.move(output, output);
+                    output += Math.copySign(Constants.DRIVE_TRAIN_DRIVE_kF, output); // Feed forward
+                    RobotContainer.driveTrain.move(output, output * Constants.DRIVE_TRAIN_EQUALIZIER);
+                    System.out.println("Running PIDDrive at " + output);
+                    System.out.println("Target position: " + inches / Constants.INCHES_PER_TICK);
                     // Use the output here
                 });
         addRequirements(RobotContainer.driveTrain);
