@@ -29,15 +29,15 @@ public class PIDDrive extends PIDCommand {
                 () -> inches * Constants.TICKS_PER_INCH,
                 // This uses the output
                 output -> {
+                    output += Math.copySign(Constants.DRIVE_TRAIN_kF, output); // Feed forward
                     RobotContainer.driveTrain.move(output, output);
                     // Use the output here
                 });
         addRequirements(RobotContainer.driveTrain);
         getController().setTolerance(Constants.AUTO_DRIVE_TOLERANCE);
-        // Use addRequirements() here to declare subsystem dependencies.
-        // Configure additional PID options by calling `getController` here.
     }
 
+    @Override
     public void initialize() {
         super.initialize();
         RobotContainer.driveTrain.resetEncoder();

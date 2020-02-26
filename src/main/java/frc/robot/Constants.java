@@ -95,7 +95,7 @@ public final class Constants {
     public static final double METERS_PER_TICK = INCHES_PER_TICK * METERS_PER_INCH;
 
     public static final double VISION_THETA_TOLERANCE = 1.0;
-    public static final double VISION_kF = 0.35;
+    public static final double DRIVE_TRAIN_kF = 0.35;
     public static final double SHOOTER_X_OFFSET = -8.0;
     public static final double SHOOTER_Y_OFFSET = 0.0;
     public static final double SHOOTER_Z_OFFSET = 9.0;
