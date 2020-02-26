@@ -31,7 +31,7 @@ public class VisionPIDDartMove extends PIDCommand {
                 () -> {
                     double distance = NetworkTableInstance.getDefault().getTable("Vision").getEntry("distance")
                             .getDouble(0);
-                    if (distance == 0) {
+                    if (Math.abs(distance) < 0.01) {
                         return RobotContainer.distanceSensor.getDistance();
                     } else {
                         return EmpiricalShooterModel.get(distance);
