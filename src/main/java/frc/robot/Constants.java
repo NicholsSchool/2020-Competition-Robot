@@ -101,6 +101,8 @@ public final class Constants {
     public static final double SHOOTER_Z_OFFSET = 9.0;
 
     public static final double DART_kF = 0.06;
+    public static final int DART_MIN_POSITION = 270;
+    public static final int DART_MAX_POSITION = 360;
 
 
 

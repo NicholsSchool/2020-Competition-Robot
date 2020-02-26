@@ -7,6 +7,8 @@
 
 package frc.robot.util;
 
+import frc.robot.Constants;
+
 /**
  * Add your docs here.
  */
@@ -25,6 +27,10 @@ public class EmpiricalShooterModel {
      * @return the dart position in millimeters.
      */
     public static int get(double distance) {
-        return (int) (M * distance + B);
+        return clamp((int) (M * distance + B), Constants.DART_MIN_POSITION, Constants.DART_MAX_POSITION);
+    }
+
+    private static int clamp(int value, int min, int max) {
+        return Math.min(Math.max(value, min), max);
     }
 }
