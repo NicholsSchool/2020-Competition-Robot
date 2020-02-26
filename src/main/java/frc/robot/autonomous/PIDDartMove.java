@@ -10,6 +10,7 @@ package frc.robot.autonomous;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
+import frc.robot.Constants;
 import frc.robot.RobotContainer;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -30,7 +31,7 @@ public class PIDDartMove extends PIDCommand {
         // This uses the output
         output -> {
           // Use the output here
-              output += Math.copySign(0.06, output); // Feed forward
+              output += Math.copySign(Constants.DART_kF, output); // Feed forward
           System.out.println("Moving dart at " +  output);
           RobotContainer.dart.move(output);
         });

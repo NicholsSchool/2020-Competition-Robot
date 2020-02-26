@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Solenoid;
-import frc.robot.autonomous.PIDDartMove;
+import frc.robot.autonomous.*;
 import frc.robot.commands.*;
 import frc.robot.sensors.*;
 import frc.robot.subsystems.*;
@@ -141,6 +141,8 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        return null;
+        return new BBDrive(-36, 0.55)
+        .andThen(new VisionPIDTurn().withTimeout(2)).alongWith(new PIDDartMove(350))
+        .andThen(new Shoot().withTimeout(5));
     }
 }

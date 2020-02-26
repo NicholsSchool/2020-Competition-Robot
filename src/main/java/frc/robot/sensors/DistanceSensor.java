@@ -22,14 +22,15 @@ public class DistanceSensor {
     private Rev2mDistanceSensor distanceSensor;
     public DistanceSensor()
     {
-        distanceSensor = new Rev2mDistanceSensor(Port.kOnboard);
-        distanceSensor.setDistanceUnits(Unit.kMillimeters);
+        distanceSensor = new Rev2mDistanceSensor(Port.kOnboard, Unit.kMillimeters, RangeProfile.kHighAccuracy);
         distanceSensor.setAutomaticMode(true);
-        distanceSensor.setRangeProfile(RangeProfile.kHighAccuracy);
     } 
 
     public double getDistance()
     {
+        //This if is a test to avoid getting -1
+        if(!isRangeValid())
+            distanceSensor.setAutomaticMode(true);
         return distanceSensor.getRange();
     }
 

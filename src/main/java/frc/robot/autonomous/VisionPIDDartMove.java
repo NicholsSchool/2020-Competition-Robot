@@ -5,66 +5,52 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.autonomous;
 
-import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.controller.PIDController;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
+import frc.robot.util.EmpiricalShooterModel;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-public class VisionPIDTurn extends PIDCommand {
+public class VisionPIDDartMove extends PIDCommand {
     /**
-     * Creates a new PIDTurn.
+     * Creates a new PIDDartMove.
      */
-    public VisionPIDTurn() {
+    public VisionPIDDartMove(double position) {
         super(
                 // The controller that the command will use
-                new PIDController(0.015, 0, 0.0015),
+                new PIDController(0.007, 0, 0),
                 // This should return the measurement
-                () -> {
-                    NetworkTable table = NetworkTableInstance.getDefault().getTable("Vision");
-
-                    double x = table.getEntry("x").getDouble(0);
-                    double z = table.getEntry("z").getDouble(0);
-                    double theta = 0;
-
-                    if (x != 0 && z != 0) {
-                        x += Constants.SHOOTER_X_OFFSET; // account for shooter offset
-                        z += Constants.SHOOTER_Z_OFFSET;
-                        theta = Math.toDegrees(Math.atan(x / z));
-                    }
-
-                    SmartDashboard.putNumber("Vision Theta: ", theta);
-                    return theta;
-                },
+                () -> RobotContainer.distanceSensor.getDistance(),
                 // This should return the setpoint (can also be a constant)
-                () -> 0,
+                () -> {
+                    double distance = NetworkTableInstance.getDefault().getTable("Vision").getEntry("distance")
+                            .getDouble(0);
+                    if (Math.abs(distance) < 0.01) {
+                        return RobotContainer.distanceSensor.getDistance();
+                    } else {
+                        return EmpiricalShooterModel.get(distance);
+                    }
+                },
                 // This uses the output
                 output -> {
                     // Use the output here
-                    output += Math.copySign(Constants.DRIVE_TRAIN_TURN_kF, output); // Feed forward
-                    RobotContainer.driveTrain.move(-output, output);
+                    output += Math.copySign(Constants.DART_kF, output); // Feed forward
+                    RobotContainer.dart.move(output);
                 });
         // Use addRequirements() here to declare subsystem dependencies.
         // Configure additional PID options by calling `getController` here.
-
-        addRequirements(RobotContainer.driveTrain);
-    }
-
-    @Override
-    public void initialize() {
-        super.initialize();
+        addRequirements(RobotContainer.dart);
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return false;
+        return !RobotContainer.distanceSensor.isRangeValid();
     }
 }
