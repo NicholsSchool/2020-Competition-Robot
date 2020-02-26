@@ -67,7 +67,7 @@ public class Shooter extends SubsystemBase {
 
     public void shoot() {
         setVelocity(Constants.SHOOT_VELOCITY);
-        isAtVelocity =  shooter.getSelectedSensorVelocity() - Constants.SHOOT_VELOCITY  > Constants.SHOOTER_VELOCITY_THRESHOLD;
+        isAtVelocity =  shooter.getSelectedSensorVelocity() > Constants.SHOOT_VELOCITY  - Constants.SHOOTER_VELOCITY_THRESHOLD;
     }
     /**
      * stops the shooter's motor.

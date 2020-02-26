@@ -48,13 +48,13 @@ public final class Constants {
 
     public static final double INTAKE_SPEED = 1;
 
-    public static final double SHOOTER_F = 0.055;
-    public static final double SHOOTER_P = 0.14;
+    public static final double SHOOTER_F = 0.052; // 0.055
+    public static final double SHOOTER_P = 0.07; //0.14
     public static final double SHOOTER_I = 0;
     public static final double SHOOTER_D = 0;
     public static final double SHOOTER_RAMP_TIME = 1;
-    public static final double SHOOTER_MAX_VELOCITY = 16300;
-    public static final double SHOOT_VELOCITY = 0.95 * SHOOTER_MAX_VELOCITY;
+    public static final double SHOOTER_MAX_VELOCITY = 21000;
+    public static final double SHOOT_VELOCITY = 0.8 * SHOOTER_MAX_VELOCITY;
     public static final double SHOOTER_VELOCITY_THRESHOLD = 200;
     public static final double SHOOTER_REVERSE_SPEED = -0.5;
     public static final double SHOOT_TIMEOUT = 3;
