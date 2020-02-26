@@ -29,5 +29,8 @@ public class RobotMap {
 
     public static final int COMPRESSOR_ID = 50;
 
+    public static final int DIAL_PORT_ID = 0;
+    public static final int APP_SWITCH_PORT_ID = 9;
+
     // Spare Talons: 32 and 30
 }
