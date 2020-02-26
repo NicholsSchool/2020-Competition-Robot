@@ -37,6 +37,7 @@ public class RobotContainer {
     public static AHRS ahrs;
     public static NavX navX;
     public static Cameras camera;
+    public static APP app;
     public static IRSystem irSystem;
     public static DistanceSensor distanceSensor;
     public static Climber climber;
@@ -65,6 +66,7 @@ public class RobotContainer {
         irSystem = new IRSystem();
         distanceSensor = new DistanceSensor();
         camera = new Cameras();
+        app = new APP();
 
         irSensorOveride = false;
         compressor = new Compressor(RobotMap.COMPRESSOR_ID);

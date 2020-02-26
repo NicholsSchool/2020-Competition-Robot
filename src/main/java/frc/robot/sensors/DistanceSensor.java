@@ -32,4 +32,9 @@ public class DistanceSensor {
     {
         return distanceSensor.getRange();
     }
+
+    public boolean isRangeValid()
+    {
+        return distanceSensor.isRangeValid();
+    }
 }

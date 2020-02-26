@@ -171,6 +171,8 @@ public class DriveTrain extends SubsystemBase {
                 rMaster.getSelectedSensorPosition() * Constants.METERS_PER_TICK);
         // This method will be called once per scheduler run
         SmartDashboard.putBoolean("BACK OMNIS ENGAGED", areBackOminsEngaged());
+        SmartDashboard.putBoolean("APP Switch", RobotContainer.app.isSwitchPressed());
+        SmartDashboard.putNumber("App Dial", RobotContainer.app.getDialPosition());
     }
 
     /**
