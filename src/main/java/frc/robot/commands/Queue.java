@@ -27,6 +27,7 @@ public class Queue extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
+        System.out.println("In Queue Execute");
         RobotContainer.queuer.queue();
     }
 
@@ -39,6 +40,9 @@ public class Queue extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
+        System.out.println("In Queue Is Finshed");
+        if(RobotContainer.irSensorOveride)
+            return true;
         return RobotContainer.queuer.checkQueuer();
     }
 }

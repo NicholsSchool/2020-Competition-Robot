@@ -103,10 +103,12 @@ public class Queuer extends SubsystemBase {
         
         updateNumberOfBalls();
         for(int i = 0; i < locks.length - 1; i ++) // -1 because lock5 should not spin
+        {
             if(i >= locks.length - numBallsInCorrectPos - 1)
                 move(0, i);
             else
                 move(Constants.QUEUE_MOVE_SPEED, i);
+        }
     }
     
     public void unloadOne()
@@ -154,10 +156,12 @@ public class Queuer extends SubsystemBase {
         int totalBalls = 0;
         boolean[] sensorValues = RobotContainer.irSystem.getValues();
         for(int i = sensorValues.length - 1; i >= 0; i --)
+        {
             if(!sensorValues[i])
                 totalBalls ++;
             else
                 break;
+        }
         numBallsInCorrectPos = totalBalls;
         lastUpdateTime = System.currentTimeMillis();
  

@@ -7,25 +7,16 @@
 
 package frc.robot.sensors;
 
-import java.util.Arrays;
-
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.AnalogPotentiometer;
+import frc.robot.RobotMap;
 
 /**
  * Add your docs here.
  */
-public class IRSystem {
-    private NetworkTableEntry beamsEntry;
-    
-    public IRSystem()
+public class StringPot {
+    private AnalogPotentiometer pot;
+    public StringPot()
     {
-        beamsEntry = NetworkTableInstance.getDefault().getTable("SmartDashboard").getEntry("BeamArray");
-    }
-
-    public boolean[] getValues()
-    {
-        boolean[] values =  beamsEntry.getBooleanArray(new boolean[5]);
-        return values;
+        pot = new AnalogPotentiometer(RobotMap.STRING_POT_ID);
     }
 }

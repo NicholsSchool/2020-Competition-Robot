@@ -29,8 +29,8 @@ public class DistanceSensor {
     public double getDistance()
     {
         //This if is a test to avoid getting -1
-        if(!isRangeValid())
-            distanceSensor.setAutomaticMode(true);
+        if(!isRangeValid()) {
+        }
         return distanceSensor.getRange();
     }
 

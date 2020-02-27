@@ -35,7 +35,7 @@ public final class Constants {
 
     public static final double RAMP_TIME = 0.05;
 
-    public static final double DRIVE_TRAIN_EQUALIZIER = 0.85;
+    public static final double DRIVE_TRAIN_EQUALIZIER = 0.9;
 
     public static final int CONFIG_TIMEOUT = 100;
 

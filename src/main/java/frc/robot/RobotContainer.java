@@ -129,7 +129,8 @@ public class RobotContainer {
 
         // c1.b.whileHeld(new SpinCWS());
         c1.lStick.and(c1.rStick).whileActiveContinuous(new Outtake());
-        c1.dpadRight.whenPressed(new PIDDartMove(345));
+        c1.dpadLeft.whileHeld(new PIDDartMove(300));
+        c1.dpadRight.whileHeld(new PIDDartMove(370));
 
         // Need: auto align, arm up and down, control pannel pos
 
@@ -141,8 +142,6 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        return new BBDrive(-36, 0.55)
-        .andThen(new VisionPIDTurn().withTimeout(2)).alongWith(new PIDDartMove(350))
-        .andThen(new Shoot().withTimeout(5));
+        return AutoPathChooser.getPath();
     }
 }
