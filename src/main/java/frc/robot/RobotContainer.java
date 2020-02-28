@@ -66,6 +66,7 @@ public class RobotContainer {
         irSystem = new IRSystem();
         distanceSensor = new DistanceSensor();
         camera = new Cameras();
+        camera.start();
         app = new APP();
 
         irSensorOveride = false;

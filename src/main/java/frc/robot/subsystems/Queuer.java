@@ -167,6 +167,7 @@ public class Queuer extends SubsystemBase {
  
     }
 
+
     public int getNumberBallsInCorrectPosition()
     {
         return numBallsInCorrectPos;
