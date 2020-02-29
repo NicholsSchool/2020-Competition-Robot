@@ -185,6 +185,20 @@ public class Queuer extends SubsystemBase {
             move(-Constants.QUEUER_AGITATE_SPEED, i);
     }
 
+    public boolean isEmpty()
+    {
+        boolean[] values = RobotContainer.irSystem.getValues();
+        for(boolean b : values)
+            if(!b)
+                return false;
+        return true;
+    }
+
+    public boolean isFull()
+    {
+        return numBallsInCorrectPos == locks.length;
+    }
+
     /**
      * Sets the intake motor values to INTAKE_SPEED, a double value in the Constants
      * class.
@@ -224,7 +238,7 @@ public class Queuer extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("Balls in Correct Position", numBallsInCorrectPos);
+      //  SmartDashboard.putNumber("Balls in Correct Position", numBallsInCorrectPos);
         boolean[] beams = RobotContainer.irSystem.getValues();
         for(int i = 0; i < beams.length; i ++)
             SmartDashboard.putBoolean("Beam " + (i + 1), beams[i]);

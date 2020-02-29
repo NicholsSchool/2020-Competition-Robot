@@ -43,7 +43,7 @@ public final class Constants {
     public static final double QUEUE_DELAY_TIME = 0.0;
     public static final double QUEUER_AGITATE_SPEED = -0.5;
     public static final double QUEUER_AGITATE_TIME = 0.05;
-    public static final double TIMED_SHOOT_GAP = 1;
+    public static final double TIMED_SHOOT_GAP = 1.5;
 
     public static final double DART_SPEED = 0.5;
     public static final double DART_RAMP_TIME = 0.5;

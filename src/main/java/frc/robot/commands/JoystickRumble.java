@@ -7,46 +7,58 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
+import frc.robot.util.Condition;
 
-public class Queue extends CommandBase {
-    private String key = "Queuing";
+public class JoystickRumble extends CommandBase {
+    private double duration;
+    private int joysticks;
+    private long startTime;
+    private Condition condition;
+
     /**
-     * Creates a new Queue.
+     * Creates a new JoystickRumble.
      */
-    public Queue() {
+    public JoystickRumble(double time, int joystick, Condition c ) {
+        this.duration = time;
+        this.condition = c;
         // Use addRequirements() here to declare subsystem dependencies.
-        addRequirements(RobotContainer.queuer);
+
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        SmartDashboard.putBoolean(key, true);
+        if (condition.isReady()) {
+            startTime = System.currentTimeMillis();
+            if (joysticks == 0)
+                RobotContainer.c0.setRumble(RumbleType.kRightRumble, 1);
+            if (joysticks == 1)
+                RobotContainer.c1.setRumble(RumbleType.kRightRumble, 1);
+            else {
+                RobotContainer.c0.setRumble(RumbleType.kRightRumble, 1);
+                RobotContainer.c1.setRumble(RumbleType.kRightRumble, 1);
+            }
+        }
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        System.out.println("In Queue Execute");
-        RobotContainer.queuer.queue();
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        RobotContainer.queuer.stop();
-        SmartDashboard.putBoolean(key, false);
+        RobotContainer.c0.setRumble(RumbleType.kRightRumble, 0);
+        RobotContainer.c1.setRumble(RumbleType.kRightRumble, 0);
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        System.out.println("In Queue Is Finshed");
-        if(RobotContainer.irSensorOveride)
-            return true;
-        return RobotContainer.queuer.checkQueuer();
+        return System.currentTimeMillis() - startTime > duration * 1000;
     }
 }

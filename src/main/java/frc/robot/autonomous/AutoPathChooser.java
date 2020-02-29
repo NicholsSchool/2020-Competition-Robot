@@ -19,7 +19,7 @@ import frc.robot.commands.VisionPIDTurn;
  */
 public class AutoPathChooser {
     private static final double BB_DRIVE_SPEED = 0.55;
-    private static final double BB_DRIVE_DISTANCE = -24;
+    private static final double BB_DRIVE_DISTANCE = -36;
 
     private static final int AUTO_SHOOT_TIMEOUT = 10;
 
@@ -36,19 +36,69 @@ public class AutoPathChooser {
                 return getShootPath();
             case 1: 
                 return getShootPath2();
+            case 2: 
+                return getShootPath3();
+            case 3:
+                return getShootPath4();
+            case 4:
+                return layupPath();
             default:
                 return new BBDrive(BB_DRIVE_DISTANCE, BB_DRIVE_SPEED);
         }
     }
 
-    private static CommandBase getShootPath2()
+    private static CommandBase layupPath()
     {
-        int PID_DART_MOVE_VALUE = 355; 
+        return new BBDrive(10*12, 0.60).withTimeout(7).alongWith(new PIDDartMove(270).withTimeout(5))
+        .andThen(new TimedAutoShoot(BALLS_IN_SYSTEM).withTimeout(TIMED_AUTO_SHOOT_TIMEOUT));
+    }
+
+    /*
+        No vision align, at an angle, a little in front of line
+    */
+    private static CommandBase getShootPath4()
+    {
+        int dartMoveValue = 355;
         if (RobotContainer.app.isSwitchPressed())
             RobotContainer.irSensorOveride = true;
 
         if (RobotContainer.distanceSensor.isRangeValid())
-            return  new VisionPIDTurn().withTimeout(2).alongWith(new PIDDartMove(PID_DART_MOVE_VALUE).withTimeout(5))
+            return new PIDDartMove(dartMoveValue).withTimeout(5)
+                    .andThen(new TimedAutoShoot(BALLS_IN_SYSTEM).withTimeout(TIMED_AUTO_SHOOT_TIMEOUT))
+                    .andThen( new BBDrive(BB_DRIVE_DISTANCE, BB_DRIVE_SPEED).withTimeout(4) );
+        else
+            return new DRArmMove(false).withTimeout(0.5)
+                    .andThen(new TimedAutoShoot(BALLS_IN_SYSTEM).withTimeout(TIMED_AUTO_SHOOT_TIMEOUT))
+                    .andThen( new BBDrive(BB_DRIVE_DISTANCE, BB_DRIVE_SPEED).withTimeout(4));
+    }
+
+    /*
+     * Used for vision align and directly at an angle for the goal 
+     */
+    private static CommandBase getShootPath3()
+    {
+        int PID_DART_MOVE_VALUE = 345;
+        return getShootFirstPath(PID_DART_MOVE_VALUE);
+    }
+
+
+    /*
+    Used for vision align and directly in front of goal
+    */
+    private static CommandBase getShootPath2()
+    {
+        int PID_DART_MOVE_VALUE = 355; 
+        return getShootFirstPath(PID_DART_MOVE_VALUE);
+  
+    }
+
+    private static CommandBase getShootFirstPath(int dartMoveValue)
+    {
+      if (RobotContainer.app.isSwitchPressed())
+            RobotContainer.irSensorOveride = true;
+
+        if (RobotContainer.distanceSensor.isRangeValid())
+            return  new VisionPIDTurn().withTimeout(2).alongWith(new PIDDartMove(dartMoveValue).withTimeout(5))
                     .andThen(new TimedAutoShoot(BALLS_IN_SYSTEM).withTimeout(TIMED_AUTO_SHOOT_TIMEOUT))
                     .andThen(new BBDrive(BB_DRIVE_DISTANCE, BB_DRIVE_SPEED));
         else

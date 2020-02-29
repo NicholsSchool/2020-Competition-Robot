@@ -105,9 +105,9 @@ public class RobotContainer {
 
         c1.lTrigger.whileHeld(new Intake()).whenReleased(new Queue());
 
-        c1.rTrigger.whileHeld(new Shoot()); // 5
+        c1.rTrigger.whileHeld(new Shoot().andThen( new JoystickRumble(0.5, 2, () -> queuer.isEmpty() ) )); // 5
 
-        c1.rBumper.whileHeld(new ShootOne()); // 1
+        c1.rBumper.whileHeld(new ShootOne().andThen(new JoystickRumble(0.5, 2, () -> queuer.isEmpty()))); // 1
         c1.lBumper.whenPressed(new Agitate().withTimeout(Constants.QUEUER_AGITATE_TIME)
                 .andThen(new ReverseAgitate().withTimeout(Constants.QUEUER_AGITATE_TIME)));
         
