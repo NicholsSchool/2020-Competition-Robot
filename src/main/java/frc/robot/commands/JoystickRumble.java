@@ -13,16 +13,21 @@ import frc.robot.RobotContainer;
 import frc.robot.util.Condition;
 
 public class JoystickRumble extends CommandBase {
-    private double duration;
+    private double rumbleTime;
+    private double waitTime;
     private int joysticks;
-    private long startTime;
     private Condition condition;
+
+    private long startTime;
+    private boolean shouldRumble;
 
     /**
      * Creates a new JoystickRumble.
      */
-    public JoystickRumble(double time, int joystick, Condition c ) {
-        this.duration = time;
+    public JoystickRumble(double rumbleTime, double waitTime, int joysticks, Condition c) {
+        this.rumbleTime = rumbleTime * 1000;
+        this.waitTime = waitTime * 1000;
+        this.joysticks = joysticks;
         this.condition = c;
         // Use addRequirements() here to declare subsystem dependencies.
 
@@ -31,8 +36,18 @@ public class JoystickRumble extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        if (condition.isReady()) {
-            startTime = System.currentTimeMillis();
+        startTime = System.currentTimeMillis();
+        shouldRumble = true;
+    }
+
+    // Called every time the scheduler runs while the command is scheduled.
+    @Override
+    public void execute() {
+        if(!condition.isReady()) {
+            shouldRumble = false;
+        }
+
+        if (shouldRumble && System.currentTimeMillis() - startTime > waitTime) {
             if (joysticks == 0)
                 RobotContainer.c0.setRumble(RumbleType.kRightRumble, 1);
             if (joysticks == 1)
@@ -42,11 +57,6 @@ public class JoystickRumble extends CommandBase {
                 RobotContainer.c1.setRumble(RumbleType.kRightRumble, 1);
             }
         }
-    }
-
-    // Called every time the scheduler runs while the command is scheduled.
-    @Override
-    public void execute() {
     }
 
     // Called once the command ends or is interrupted.
@@ -59,6 +69,6 @@ public class JoystickRumble extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return System.currentTimeMillis() - startTime > duration * 1000;
+        return System.currentTimeMillis() - startTime > rumbleTime;
     }
 }

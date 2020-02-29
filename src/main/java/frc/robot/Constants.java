@@ -35,13 +35,14 @@ public final class Constants {
 
     public static final double RAMP_TIME = 0.05;
 
-    public static final double DRIVE_TRAIN_EQUALIZIER = 0.9;
+    public static final double DRIVE_TRAIN_EQUALIZIER = 0.95;
 
     public static final int CONFIG_TIMEOUT = 100;
 
     public static final double QUEUE_MOVE_SPEED = 0.8;
     public static final double QUEUE_DELAY_TIME = 0.0;
     public static final double QUEUER_AGITATE_SPEED = -0.5;
+    public static final double QUEUER_REVERSE_AGITATE_TIME = 0.1;
     public static final double QUEUER_AGITATE_TIME = 0.05;
     public static final double TIMED_SHOOT_GAP = 1.5;
 

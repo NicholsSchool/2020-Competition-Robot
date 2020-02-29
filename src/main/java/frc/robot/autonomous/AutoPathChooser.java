@@ -42,6 +42,8 @@ public class AutoPathChooser {
                 return getShootPath4();
             case 4:
                 return layupPath();
+            case 5:
+                return new TimedAutoShoot(BALLS_IN_SYSTEM);
             default:
                 return new BBDrive(BB_DRIVE_DISTANCE, BB_DRIVE_SPEED);
         }
@@ -49,7 +51,7 @@ public class AutoPathChooser {
 
     private static CommandBase layupPath()
     {
-        return new BBDrive(10*12, 0.60).withTimeout(7).alongWith(new PIDDartMove(270).withTimeout(5))
+        return new BBDrive(10*12, 0.75).withTimeout(5).alongWith(new PIDDartMove(270).withTimeout(5))
         .andThen(new TimedAutoShoot(BALLS_IN_SYSTEM).withTimeout(TIMED_AUTO_SHOOT_TIMEOUT));
     }
 
@@ -58,7 +60,7 @@ public class AutoPathChooser {
     */
     private static CommandBase getShootPath4()
     {
-        int dartMoveValue = 355;
+        int dartMoveValue = 345;
         if (RobotContainer.app.isSwitchPressed())
             RobotContainer.irSensorOveride = true;
 

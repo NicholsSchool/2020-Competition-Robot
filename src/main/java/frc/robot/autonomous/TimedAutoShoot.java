@@ -40,9 +40,14 @@ public class TimedAutoShoot extends CommandBase {
       if(startTime == 0)
         startTime = System.currentTimeMillis();
 
-      for(int i = 0; i < ballsInSystem; i ++)
+      for(int i = 0; i < ballsInSystem + 1; i ++)
+      {
         if(System.currentTimeMillis() - startTime >= Constants.TIMED_SHOOT_GAP * 1000 * i)
           RobotContainer.queuer.move(Constants.QUEUE_MOVE_SPEED, 4 - i);
+
+        if(i == ballsInSystem && System.currentTimeMillis() - startTime >= Constants.TIMED_SHOOT_GAP * 1000 * (i - 1))
+          RobotContainer.queuer.move(Constants.QUEUE_MOVE_SPEED, 4 - i);
+      }
     }
   }
 
