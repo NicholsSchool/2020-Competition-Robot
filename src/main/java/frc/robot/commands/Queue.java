@@ -7,10 +7,12 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 
 public class Queue extends CommandBase {
+    private String key = "Queuing";
     /**
      * Creates a new Queue.
      */
@@ -22,11 +24,13 @@ public class Queue extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
+        SmartDashboard.putBoolean(key, true);
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
+        System.out.println("In Queue Execute");
         RobotContainer.queuer.queue();
     }
 
@@ -34,11 +38,15 @@ public class Queue extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         RobotContainer.queuer.stop();
+        SmartDashboard.putBoolean(key, false);
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
+        System.out.println("In Queue Is Finshed");
+        if(RobotContainer.irSensorOveride)
+            return true;
         return RobotContainer.queuer.checkQueuer();
     }
 }

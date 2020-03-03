@@ -5,27 +5,11 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.sensors;
-
-import java.util.Arrays;
-
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;
+package frc.robot.util;
 
 /**
  * Add your docs here.
  */
-public class IRSystem {
-    private NetworkTableEntry beamsEntry;
-    
-    public IRSystem()
-    {
-        beamsEntry = NetworkTableInstance.getDefault().getTable("SmartDashboard").getEntry("BeamArray");
-    }
-
-    public boolean[] getValues()
-    {
-        boolean[] values =  beamsEntry.getBooleanArray(new boolean[5]);
-        return values;
-    }
+public interface Condition {
+    boolean isReady();
 }

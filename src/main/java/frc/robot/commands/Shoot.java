@@ -7,6 +7,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
@@ -43,6 +44,8 @@ public class Shoot extends CommandBase {
     public void end(boolean interrupted) {
         RobotContainer.shooter.stop();
         RobotContainer.queuer.stop();
+        // RobotContainer.c0.setRumble(RumbleType.kRightRumble, 1);
+        // RobotContainer.c1.setRumble(RumbleType.kRightRumble, 1);
     }
 
     @Override

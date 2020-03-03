@@ -66,6 +66,7 @@ public class RobotContainer {
         irSystem = new IRSystem();
         distanceSensor = new DistanceSensor();
         camera = new Cameras();
+        camera.start();
         app = new APP();
 
         irSensorOveride = false;
@@ -104,21 +105,24 @@ public class RobotContainer {
 
         c1.lTrigger.whileHeld(new Intake()).whenReleased(new Queue());
 
-        c1.rTrigger.whileHeld(new Shoot()); // 5
+        c1.rTrigger.whileHeld(new Shoot().andThen( new JoystickRumble(0.5, 0.25, 2, () -> queuer.isEmpty() ) )); // 5
 
-        c1.rBumper.whileHeld(new ShootOne()); // 1
+        c1.rBumper.whileHeld(new ShootOne().andThen(new JoystickRumble(0.5, 0.25, 2, () -> queuer.isEmpty()))); // 1
         c1.lBumper.whenPressed(new Agitate().withTimeout(Constants.QUEUER_AGITATE_TIME)
                 .andThen(new ReverseAgitate().withTimeout(Constants.QUEUER_AGITATE_TIME)));
         
         c1.b.whenPressed(new InstantCommand(() -> irSensorOveride = true))
         .whenReleased(new InstantCommand(() -> irSensorOveride = false));
 
-        c1.start.and(c1.select).whenActive(new InstantCommand(() -> climber.toggleExtender(),
-        climber));
-        c0.y.and(c1.y).whenActive(new InstantCommand(() -> climber.engageBreak(),
-        climber));
-        c0.x.and(c1.x).whenActive(new InstantCommand(() -> climber.disengageBreak(),
-        climber));
+        c1.start.and(c1.select).whenActive(new InstantCommand(() -> climber.toggleExtender(),climber));
+
+        c0.y.and(c0.dpadUp).whenActive(new InstantCommand(() -> climber.engageBreak(),
+        climber)
+        .andThen( new JoystickRumble( 0.5, 0.25,2, () -> true ) ));
+
+        c0.x.and(c0.dpadUp).whenActive(new InstantCommand(() -> climber.disengageBreak(),
+        climber)
+        .andThen(new JoystickRumble(0.5, 0.25, 2, () -> true)));
 
 
         c0.lTrigger.whenPressed(new InstantCommand(() -> driveTrain.engageBackOmnis()));
@@ -129,7 +133,8 @@ public class RobotContainer {
 
         // c1.b.whileHeld(new SpinCWS());
         c1.lStick.and(c1.rStick).whileActiveContinuous(new Outtake());
-        c1.dpadRight.whenPressed(new PIDDartMove(345));
+        c1.dpadLeft.whileHeld(new PIDDartMove(300));
+        c1.dpadRight.whileHeld(new PIDDartMove(270));
 
         // Need: auto align, arm up and down, control pannel pos
 
@@ -141,8 +146,6 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
-        return new BBDrive(-36, 0.55)
-        .andThen(new VisionPIDTurn().withTimeout(2)).alongWith(new PIDDartMove(350))
-        .andThen(new Shoot().withTimeout(5));
+        return AutoPathChooser.getPath();
     }
 }

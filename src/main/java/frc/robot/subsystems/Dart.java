@@ -63,5 +63,6 @@ public class Dart extends SubsystemBase {
     @Override
     public void periodic() {
         SmartDashboard.putNumber("Arm Sensor Distance", RobotContainer.distanceSensor.getDistance());
+        SmartDashboard.putBoolean("Arm Sensor Is Valid", RobotContainer.distanceSensor.isRangeValid());
     }
 }

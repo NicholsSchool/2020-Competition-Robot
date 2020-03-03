@@ -103,10 +103,12 @@ public class Queuer extends SubsystemBase {
         
         updateNumberOfBalls();
         for(int i = 0; i < locks.length - 1; i ++) // -1 because lock5 should not spin
+        {
             if(i >= locks.length - numBallsInCorrectPos - 1)
                 move(0, i);
             else
                 move(Constants.QUEUE_MOVE_SPEED, i);
+        }
     }
     
     public void unloadOne()
@@ -154,14 +156,17 @@ public class Queuer extends SubsystemBase {
         int totalBalls = 0;
         boolean[] sensorValues = RobotContainer.irSystem.getValues();
         for(int i = sensorValues.length - 1; i >= 0; i --)
+        {
             if(!sensorValues[i])
                 totalBalls ++;
             else
                 break;
+        }
         numBallsInCorrectPos = totalBalls;
         lastUpdateTime = System.currentTimeMillis();
  
     }
+
 
     public int getNumberBallsInCorrectPosition()
     {
@@ -178,6 +183,20 @@ public class Queuer extends SubsystemBase {
     {
         for (int i = 0; i < locks.length; i++)
             move(-Constants.QUEUER_AGITATE_SPEED, i);
+    }
+
+    public boolean isEmpty()
+    {
+        boolean[] values = RobotContainer.irSystem.getValues();
+        for(boolean b : values)
+            if(!b)
+                return false;
+        return true;
+    }
+
+    public boolean isFull()
+    {
+        return numBallsInCorrectPos == locks.length;
     }
 
     /**
@@ -219,7 +238,7 @@ public class Queuer extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("Balls in Correct Position", numBallsInCorrectPos);
+      //  SmartDashboard.putNumber("Balls in Correct Position", numBallsInCorrectPos);
         boolean[] beams = RobotContainer.irSystem.getValues();
         for(int i = 0; i < beams.length; i ++)
             SmartDashboard.putBoolean("Beam " + (i + 1), beams[i]);
