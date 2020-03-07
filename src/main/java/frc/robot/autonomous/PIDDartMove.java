@@ -23,7 +23,7 @@ public class PIDDartMove extends PIDCommand {
   public PIDDartMove(double position) {
     super(
         // The controller that the command will use
-        new PIDController(0.007, 0, 0),
+        new PIDController(0.01, 0, 0),
         // This should return the measurement
         () -> RobotContainer.distanceSensor.getDistance(),
         // This should return the setpoint (can also be a constant)

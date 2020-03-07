@@ -39,7 +39,8 @@ public final class Constants {
 
     public static final int CONFIG_TIMEOUT = 100;
 
-    public static final double QUEUE_MOVE_SPEED = 0.8;
+    public static final double QUEUE_MOVE_SPEED = 0.6;
+    public static final double QUEUE_UNLOAD_SPEED = 0.6;
     public static final double QUEUE_DELAY_TIME = 0.0;
     public static final double QUEUER_AGITATE_SPEED = -0.5;
     public static final double QUEUER_REVERSE_AGITATE_TIME = 0.1;
@@ -51,8 +52,8 @@ public final class Constants {
 
     public static final double INTAKE_SPEED = 1;
 
-    public static final double SHOOTER_F = 0.052; // 0.055
-    public static final double SHOOTER_P = 0.07; //0.14
+    public static final double SHOOTER_F = 0.057; // 0.055
+    public static final double SHOOTER_P = 0.14; //0.14
     public static final double SHOOTER_I = 0;
     public static final double SHOOTER_D = 0;
     public static final double SHOOTER_RAMP_TIME = 1;
@@ -104,7 +105,7 @@ public final class Constants {
     public static final double SHOOTER_Y_OFFSET = 0.0;
     public static final double SHOOTER_Z_OFFSET = 9.0;
 
-    public static final double DART_kF = 0.06;
+    public static final double DART_kF = 0.07;
     public static final int DART_MIN_POSITION = 270;
     public static final int DART_MAX_POSITION = 360;
 	public static final long STREAM_FRAME_TIME_MS = 69;

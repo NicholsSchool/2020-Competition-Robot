@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -30,6 +31,14 @@ public class Dart extends SubsystemBase {
         dart = new WPI_TalonSRX(RobotMap.DART);
         dart.configFactoryDefault();
         dart.configOpenloopRamp(Constants.DART_RAMP_TIME);
+    }
+
+    public void setBrakeMode(boolean brake)
+    {
+        if(brake)
+            dart.setNeutralMode(NeutralMode.Brake);
+        else
+            dart.setNeutralMode(NeutralMode.Coast);
     }
 
     public void control(int pov) {

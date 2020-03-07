@@ -25,7 +25,7 @@ public class DriveTrain extends SubsystemBase {
     private WPI_TalonSRX rMaster;
     private WPI_VictorSPX rSlave;
 
-    public static Solenoid backOmnisSolenoid;
+//    public static Solenoid backOmnisSolenoid;
 
     private DifferentialDrive drive;
     // Odometry class for tracking robot pose
@@ -41,13 +41,15 @@ public class DriveTrain extends SubsystemBase {
         rMaster = new WPI_TalonSRX(RobotMap.RIGHT_MASTER_ID);
         rSlave = new WPI_VictorSPX(RobotMap.RIGHT_SLAVE_ID);
 
-        backOmnisSolenoid = new Solenoid(RobotMap.COMPRESSOR_ID, RobotMap.BACK_OMNIS_SOLENOID_CHANNEL);
+   //     backOmnisSolenoid = new Solenoid(RobotMap.COMPRESSOR_ID, RobotMap.BACK_OMNIS_SOLENOID_CHANNEL);
 
         lMaster.configFactoryDefault();
         lSlave.configFactoryDefault();
 
         rMaster.configFactoryDefault();
         rSlave.configFactoryDefault();
+
+        rSlave.setInverted(true);
 
         lSlave.follow(lMaster);
         rSlave.follow(rMaster);
@@ -86,8 +88,8 @@ public class DriveTrain extends SubsystemBase {
      * @param rightSpeed - speed of right motor.
      */
     public void move(double leftSpeed, double rightSpeed) {
-        if(RobotContainer.climber.isClimbEngaged())
-            leftSpeed = rightSpeed;
+        // if(RobotContainer.climber.isClimbEngaged())
+        //     leftSpeed = rightSpeed;
 
         drive.tankDrive(leftSpeed * govener, rightSpeed * govener);
 
@@ -151,16 +153,17 @@ public class DriveTrain extends SubsystemBase {
     }
 
     public boolean areBackOminsEngaged() {
-        return backOmnisSolenoid.get() == Constants.BACK_OMNIS_ENGAGED;
+        return true;
+      //  return backOmnisSolenoid.get() == Constants.BACK_OMNIS_ENGAGED;
     }
 
     //Can't turn with them engaged
     public void engageBackOmnis(){
-        backOmnisSolenoid.set(Constants.BACK_OMNIS_ENGAGED);
+    //    backOmnisSolenoid.set(Constants.BACK_OMNIS_ENGAGED);
     }
 
     public void disengageBackOmnis() {
-        backOmnisSolenoid.set(Constants.BACK_OMNIS_DISENGAGED);
+    //    backOmnisSolenoid.set(Constants.BACK_OMNIS_DISENGAGED);
     }
 
     @Override

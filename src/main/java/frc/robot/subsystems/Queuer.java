@@ -122,24 +122,24 @@ public class Queuer extends SubsystemBase {
         boolean[] sensorValues = RobotContainer.irSystem.getValues();
         if(RobotContainer.irSensorOveride)
         {
-            moveAll(Constants.QUEUE_MOVE_SPEED);
+            moveAll(Constants.QUEUE_UNLOAD_SPEED);
             return;
         }
         for(int i = locks.length - 1; i >= 0; i--)
         {
             if(i + 1 >= sensorValues.length) // lock5 should always move when shooting
-                move(Constants.QUEUE_MOVE_SPEED, i); 
+                move(Constants.QUEUE_UNLOAD_SPEED, i); 
             else if(sensorValues[i + 1] && !sensorValues[i])  
             {
-                move(Constants.QUEUE_MOVE_SPEED, i + 1);
-                move(Constants.QUEUE_MOVE_SPEED, i);
+                move(Constants.QUEUE_UNLOAD_SPEED, i + 1);
+                move(Constants.QUEUE_UNLOAD_SPEED, i);
             }
             else 
                 move(0, i);
         }
         //If the top sensor isn't broken, the ball must stuck at the fourth lock as well, so move that
         if(!sensorValues[sensorValues.length - 1])
-            move(Constants.QUEUE_MOVE_SPEED, 3);
+            move(Constants.QUEUE_UNLOAD_SPEED, 3);
     }
 
 
