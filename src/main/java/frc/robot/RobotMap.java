@@ -21,7 +21,8 @@ public class RobotMap {
     public static final int LEFT_MASTER_ID = 22;
     public static final int LEFT_SLAVE_ID = 24;
 
-    public static final int CWS_MOTOR_ID = 23;
+    public static final int CWS_MOTOR_ID = 3; // nonsense value
+    public static final int FEEDER_MOTOR_ID = 23;
 
     public static final int EXTENDER_SOLENOID_CHANNEL = 1;
     public static final int CLIMBBREAK_SOLENOID_CHANNEL = 2;

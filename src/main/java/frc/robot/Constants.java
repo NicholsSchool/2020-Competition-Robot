@@ -39,20 +39,24 @@ public final class Constants {
 
     public static final int CONFIG_TIMEOUT = 100;
 
-    public static final double QUEUE_MOVE_SPEED = 0.8;
+    public static final double QUEUE_MOVE_SPEED = 0.6;
+    public static final double QUEUE_UNLOAD_SPEED = 0.6;
     public static final double QUEUE_DELAY_TIME = 0.0;
     public static final double QUEUER_AGITATE_SPEED = -0.5;
     public static final double QUEUER_REVERSE_AGITATE_TIME = 0.1;
     public static final double QUEUER_AGITATE_TIME = 0.05;
     public static final double TIMED_SHOOT_GAP = 1.5;
 
+    public static final double FEEDER_FEED_SPEED = 0.5;
+    public static final double FEEDER_SPIT_OUT_SPEED = -0.5;
+
     public static final double DART_SPEED = 0.5;
     public static final double DART_RAMP_TIME = 0.5;
 
     public static final double INTAKE_SPEED = 1;
 
-    public static final double SHOOTER_F = 0.052; // 0.055
-    public static final double SHOOTER_P = 0.07; //0.14
+    public static final double SHOOTER_F = 0.057; // 0.055
+    public static final double SHOOTER_P = 0.14; //0.14
     public static final double SHOOTER_I = 0;
     public static final double SHOOTER_D = 0;
     public static final double SHOOTER_RAMP_TIME = 1;
@@ -104,30 +108,8 @@ public final class Constants {
     public static final double SHOOTER_Y_OFFSET = 0.0;
     public static final double SHOOTER_Z_OFFSET = 9.0;
 
-    public static final double DART_kF = 0.06;
+    public static final double DART_kF = 0.07;
     public static final int DART_MIN_POSITION = 270;
     public static final int DART_MAX_POSITION = 360;
 	public static final long STREAM_FRAME_TIME_MS = 69;
-
-
-
-
-    // // values for your robot.
-    // public static final double ksVolts = 1.05;
-    // public static final double kvVoltSecondsPerMeter = 0.08;
-    // public static final double kaVoltSecondsSquaredPerMeter = 0.0138;
-
-    // // Example value only - as above, this must be tuned for your drive!
-    // public static final double kPDriveVel = 0.65;
-
-    // public static final double kTrackwidthMeters = 20.6878 * METERS_PER_INCH;
-    // public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(
-    //         kTrackwidthMeters);
-
-    // public static final double kMaxSpeedMetersPerSecond = 1;
-    // public static final double kMaxAccelerationMetersPerSecondSquared = 1;
-
-    // public static final double kRamseteB = 2;
-    // public static final double kRamseteZeta = 0.7;
-
 }

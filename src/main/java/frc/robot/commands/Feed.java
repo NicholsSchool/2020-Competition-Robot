@@ -10,13 +10,13 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 
-public class FlywheelSpin extends CommandBase {
+public class Feed extends CommandBase {
   /**
-   * Creates a new FlywheelSpin.
+   * Creates a new Feed.
    */
-  public FlywheelSpin() {
+  public Feed() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotContainer.shooter);
+    addRequirements(RobotContainer.feeder);
   }
 
   // Called when the command is initially scheduled.
@@ -27,13 +27,13 @@ public class FlywheelSpin extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.shooter.shoot();
+    RobotContainer.feeder.feed();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    RobotContainer.shooter.stop();
+    RobotContainer.feeder.stop();
   }
 
   // Returns true when the command should end.

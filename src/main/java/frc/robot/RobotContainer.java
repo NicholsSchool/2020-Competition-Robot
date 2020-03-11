@@ -41,6 +41,7 @@ public class RobotContainer {
     public static IRSystem irSystem;
     public static DistanceSensor distanceSensor;
     public static Climber climber;
+    public static Feeder feeder;
 
     public static Shooter shooter;
     public static Queuer queuer;
@@ -73,7 +74,7 @@ public class RobotContainer {
         compressor = new Compressor(RobotMap.COMPRESSOR_ID);
         driveTrain = new DriveTrain();
         climber = new Climber();
-
+        feeder = new Feeder();
         spinner = new ColorWheelSpinner();
         queuer = new Queuer();
         dart = new Dart();
@@ -101,11 +102,12 @@ public class RobotContainer {
         c0.start.whileHeld(new VisionPIDTurn());
         c0.rBumper.whenPressed(new PlayMusic());
 
-        c0.rTrigger.whileHeld(new Intake()).whenReleased(new Queue());
+        c0.rTrigger.whileHeld(new Intake().alongWith(new Feed())).whenReleased(new Queue());
 
-        c1.lTrigger.whileHeld(new Intake()).whenReleased(new Queue());
+        c1.lTrigger.whileHeld(new Intake().alongWith(new Feed())).whenReleased(new Queue());
 
-        c1.rTrigger.whileHeld(new Shoot().andThen( new JoystickRumble(0.5, 0.25, 2, () -> queuer.isEmpty() ) )); // 5
+        c1.y.whileHeld(new FlywheelSpin());
+        c1.rTrigger.whileHeld(new TimedShoot(0).andThen( new JoystickRumble(0.5, 0.25, 2, () -> queuer.isEmpty() ) )); // 5
 
         c1.rBumper.whileHeld(new ShootOne().andThen(new JoystickRumble(0.5, 0.25, 2, () -> queuer.isEmpty()))); // 1
         c1.lBumper.whenPressed(new Agitate().withTimeout(Constants.QUEUER_AGITATE_TIME)
@@ -125,15 +127,15 @@ public class RobotContainer {
         .andThen(new JoystickRumble(0.5, 0.25, 2, () -> true)));
 
 
-        c0.lTrigger.whenPressed(new InstantCommand(() -> driveTrain.engageBackOmnis()));
-        c0.lBumper.whenPressed(new InstantCommand(() -> driveTrain.disengageBackOmnis()));
+        // c0.lTrigger.whenPressed(new InstantCommand(() -> driveTrain.engageBackOmnis()));
+        // c0.lBumper.whenPressed(new InstantCommand(() -> driveTrain.disengageBackOmnis()));
 
         c0.a.whenPressed(new InstantCommand(() -> driveTrain.setFastMode(true)));
         c0.b.whenPressed(new InstantCommand(() -> driveTrain.setFastMode(false)));
 
         // c1.b.whileHeld(new SpinCWS());
-        c1.lStick.and(c1.rStick).whileActiveContinuous(new Outtake());
-        c1.dpadLeft.whileHeld(new PIDDartMove(300));
+        c1.lStick.and(c1.rStick).whileActiveContinuous(new Outtake().alongWith(new SpitOut()));
+        c1.dpadLeft.whileHeld(new PIDDartMove(310));
         c1.dpadRight.whileHeld(new PIDDartMove(270));
 
         // Need: auto align, arm up and down, control pannel pos
