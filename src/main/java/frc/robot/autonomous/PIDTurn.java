@@ -22,14 +22,15 @@ public class PIDTurn extends PIDCommand {
     public PIDTurn(double agl) {
         super(
                 // The controller that the command will use
-                new PIDController(0.005, 0, 0),
+                new PIDController(0.015, 0, 0.0015),
                 // This should return the measurement
                 () -> RobotContainer.navX.getAngle(),
                 // This should return the setpoint (can also be a constant)
                 () -> agl,
                 // This uses the output
                 output -> {
-                    RobotContainer.driveTrain.move(output, -output);
+                    output += Math.copySign(Constants.DRIVE_TRAIN_TURN_kF, output);
+                    RobotContainer.driveTrain.move(-output, output);
 
                     // Use the output here
                 });
