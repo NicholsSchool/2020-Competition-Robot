@@ -127,8 +127,8 @@ public class RobotContainer {
         .andThen(new JoystickRumble(0.5, 0.25, 2, () -> true)));
 
 
-        c0.lTrigger.whenPressed(new InstantCommand(() -> driveTrain.engageBackOmnis()));
-        c0.lBumper.whenPressed(new InstantCommand(() -> driveTrain.disengageBackOmnis()));
+        // c0.lTrigger.whenPressed(new InstantCommand(() -> driveTrain.engageBackOmnis()));
+        // c0.lBumper.whenPressed(new InstantCommand(() -> driveTrain.disengageBackOmnis()));
 
         c0.a.whenPressed(new InstantCommand(() -> driveTrain.setFastMode(true)));
         c0.b.whenPressed(new InstantCommand(() -> driveTrain.setFastMode(false)));

@@ -22,6 +22,7 @@ public class Feeder extends SubsystemBase {
     public Feeder() {
         feederMotor = new WPI_TalonSRX(RobotMap.FEEDER_MOTOR_ID);
         feederMotor.configFactoryDefault();
+        feederMotor.setInverted(true);
     }
 
     public void spitOut()
