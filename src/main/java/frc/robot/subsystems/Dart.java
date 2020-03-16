@@ -18,14 +18,11 @@ import frc.robot.RobotContainer;
 import frc.robot.RobotMap;
 
 public class Dart extends SubsystemBase {
-    /**
-     * Creates a new Dart.
-     */
 
     private WPI_TalonSRX dart;
 
     /**
-     * this instantiates the dart object
+     * Creates a new Dart instance
      */
     public Dart() {
         dart = new WPI_TalonSRX(RobotMap.DART);
@@ -33,6 +30,12 @@ public class Dart extends SubsystemBase {
         dart.configOpenloopRamp(Constants.DART_RAMP_TIME);
     }
 
+     
+    /**
+     * Sets the dart in brake mode, making it resist changes in position when no power is applied
+     * 
+     * @param brake boolean, true to set brake mode, false for coast mode
+     */
     public void setBrakeMode(boolean brake)
     {
         if(brake)
@@ -41,6 +44,11 @@ public class Dart extends SubsystemBase {
             dart.setNeutralMode(NeutralMode.Coast);
     }
 
+    /**
+     * Controls the dart movement based off pov input 
+     * 
+     * @param pov int value of joystick pov
+     */
     public void control(int pov) {
         if (pov == 315 || pov == 0 || pov == 45)
             move(Constants.DART_SPEED);
@@ -51,7 +59,7 @@ public class Dart extends SubsystemBase {
     }
 
     /**
-     * this sets the dart to the speed inputed
+     * Sets the dart to the speed inputed
      * 
      * @param speed dart movement speed
      */
@@ -60,14 +68,14 @@ public class Dart extends SubsystemBase {
     }
 
     /**
-     * this can be called apon to stop the dart object from moving
+     * Stops the dart
      */
     public void stop() {
         dart.stopMotor();
     }
 
     /**
-     * this displays the eletrical current the dart is getting
+     * Outputs info to the SmartDashboard
      */
     @Override
     public void periodic() {

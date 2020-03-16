@@ -8,7 +8,7 @@
 package frc.robot.util;
 
 /**
- * Add your docs here.
+ * Interface used for true/false conditions which can change
  */
 public interface Condition {
     boolean isReady();

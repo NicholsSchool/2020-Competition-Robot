@@ -3,8 +3,16 @@ package frc.robot.util;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
+/**
+ * This class is used to instantiate and retrieve values from all buttons, triggers, and pov inputs of 
+ * a Xbox Controller
+ */
 public class XboxController extends Joystick{
 
+    /**
+     * Creates a new XboxController instance
+     * @param port the id of the port the controller is plugged into
+     */
 	public XboxController(int port) {
         super(port);
         

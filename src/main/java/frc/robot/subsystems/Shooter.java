@@ -29,7 +29,7 @@ public class Shooter extends SubsystemBase {
     private boolean isAtVelocity;
 
     /**
-     * Crestes a new Shooter.
+     * Crestes a new Shooter instance
      */
     public Shooter() {
 
@@ -48,9 +48,18 @@ public class Shooter extends SubsystemBase {
     
     }
 
+    /**
+     * Returns true if the shooter is at the desired velocity
+     * 
+     * @return true if the shooter is at the desired velocity
+     */
     public boolean isAtVelocity() {
         return isAtVelocity;
     }
+
+    /**
+     * Spins the shooter in reverse
+     */
     public void reverse()
     {
         move(-Math.abs(Constants.SHOOTER_REVERSE_SPEED));
@@ -62,22 +71,23 @@ public class Shooter extends SubsystemBase {
     }
 
     /**
-     * starts the shooter
+     * Spins the shooter to the desired shoot velocity
      */
-
     public void shoot() {
         setVelocity(Constants.SHOOT_VELOCITY);
         isAtVelocity =  shooter.getSelectedSensorVelocity() > Constants.SHOOT_VELOCITY  - Constants.SHOOTER_VELOCITY_THRESHOLD;
     }
     /**
-     * stops the shooter's motor.
+     * Stops the shooter
      */
-
     public void stop() {
         shooter.stopMotor();
         isAtVelocity = false;
     }
 
+    /**
+     * Outputs info to the SmartDashboard
+     */
     @Override
     public void periodic() {
         SmartDashboard.putNumber("Shooter Velocity", shooter.getSelectedSensorVelocity());
@@ -89,14 +99,23 @@ public class Shooter extends SubsystemBase {
         shooter.set(ControlMode.Velocity, velocity);
     }
 
+    /**
+     * Plays music using the shooter's Falcon motor
+     */
     public void playMusic() {
         orchestra.play();
     }
 
+    /**
+     * Stops music from the shooter's Falcon motor
+     */
     public void stopMusic() {
         orchestra.stop();
     }
 
+    /**
+     * Pauses music from the shooter's Falcon motor
+     */
     public void pauseMusic() {
         orchestra.pause();
     }

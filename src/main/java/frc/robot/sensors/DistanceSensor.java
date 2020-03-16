@@ -12,28 +12,35 @@ import com.revrobotics.Rev2mDistanceSensor.Port;
 import com.revrobotics.Rev2mDistanceSensor.Unit;
 import com.revrobotics.Rev2mDistanceSensor.RangeProfile;
 
-import frc.robot.Constants;
 
-/**
- * Add your docs here.
- */
 public class DistanceSensor {
 
     private Rev2mDistanceSensor distanceSensor;
+
+    /**
+     * Creates a new DistanceSensor instance
+     */
     public DistanceSensor()
     {
         distanceSensor = new Rev2mDistanceSensor(Port.kOnboard, Unit.kMillimeters, RangeProfile.kHighAccuracy);
         distanceSensor.setAutomaticMode(true);
     } 
 
+    /**
+     * Returns the distance away from arm detected by sensor
+     * 
+     * @return the distance away from arm detected by sensor
+     */
     public double getDistance()
     {
-        //This if is a test to avoid getting -1
-        if(!isRangeValid()) {
-        }
         return distanceSensor.getRange();
     }
 
+    /**
+     * Returns true if the distance sensor is getting valid values
+     * 
+     * @return true if the distance sensor is getting valid values
+     */
     public boolean isRangeValid()
     {
         return distanceSensor.isRangeValid();

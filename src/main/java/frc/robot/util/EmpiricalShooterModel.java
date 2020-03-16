@@ -9,9 +9,7 @@ package frc.robot.util;
 
 import frc.robot.Constants;
 
-/**
- * Add your docs here.
- */
+
 public class EmpiricalShooterModel {
 
     public static final int AUTO_DART_POSITION = 330;

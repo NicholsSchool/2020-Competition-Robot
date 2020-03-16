@@ -7,25 +7,31 @@
 
 package frc.robot.sensors;
 
-import java.util.Arrays;
 
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
-/**
- * Add your docs here.
- */
+
 public class IRSystem {
     private NetworkTableEntry beamsEntry;
     
+    /**
+     * Creates a new IRSystem instance
+     */
     public IRSystem()
     {
         beamsEntry = NetworkTableInstance.getDefault().getTable("SmartDashboard").getEntry("BeamArray");
     }
 
+    /**
+     * Returns a boolean array of sensor values, true indicating empty location,
+     * false indicating ball in location
+     * 
+     * @return a boolean array of sensor values, true indicating empty location,
+     *         false indicating ball in location
+     */
     public boolean[] getValues()
     {
-        boolean[] values =  beamsEntry.getBooleanArray(new boolean[5]);
-        return values;
+        return beamsEntry.getBooleanArray(new boolean[5]);
     }
 }

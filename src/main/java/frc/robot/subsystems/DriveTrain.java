@@ -32,7 +32,7 @@ public class DriveTrain extends SubsystemBase {
     private final DifferentialDriveOdometry m_odometry;
 
     /**
-     * Creates a new DriveTrain.
+     * Creates a new DriveTrain instance
      */
     public DriveTrain() {
         lMaster = new WPI_TalonSRX(RobotMap.LEFT_MASTER_ID);
@@ -82,10 +82,10 @@ public class DriveTrain extends SubsystemBase {
 
     /**
      * 
-     * method used to move.
+     * Moves the drivetrain
      * 
-     * @param leftSpeed  - speed of left motor.
-     * @param rightSpeed - speed of right motor.
+     * @param leftSpeed  - speed of left side.
+     * @param rightSpeed - speed of right side.
      */
     public void move(double leftSpeed, double rightSpeed) {
         if(RobotContainer.climber.isClimbEngaged())
@@ -95,6 +95,10 @@ public class DriveTrain extends SubsystemBase {
 
     }
 
+    /**
+     * Sets the drive train into either slow or fast mode
+     * @param setFast boolean, true for fast mode, false for slow mode
+     */
     public void setFastMode(boolean setFast) {
         if (setFast) {
             govener = Constants.DRIVE_FAST_MODE;
@@ -103,15 +107,28 @@ public class DriveTrain extends SubsystemBase {
         }
     }
 
+    /**
+     * Returns the estimated pose of the robot
+     * @return the estimated pose of the robot
+     */
     public Pose2d getPose() {
         return m_odometry.getPoseMeters();
     }
 
+    /**
+     * Returns the wheel speeds of the differential drive
+     * @return the wheel speeds of the differential drive
+     */
     public DifferentialDriveWheelSpeeds getWheelSpeeds() {
         return new DifferentialDriveWheelSpeeds(lMaster.getSelectedSensorVelocity() * Constants.METERS_PER_TICK,
                 rMaster.getSelectedSensorVelocity() * Constants.METERS_PER_TICK);
     }
 
+    /**
+     * Applys the given volts to each side of the tank drive
+     * @param leftVolts
+     * @param rightVolts
+     */
     public void tankDriveVolts(double leftVolts, double rightVolts) {
         lMaster.setVoltage(leftVolts);
         rMaster.setVoltage(-rightVolts);
@@ -119,55 +136,53 @@ public class DriveTrain extends SubsystemBase {
     }
 
     /**
-     * 
-     * Projects the encoder values of the Master motors, and angles for the navX.
-     * 
+     * Resets all encoder values
      */
-    public void encoderTest() {
-        SmartDashboard.putNumber("lMaster", lMaster.getSelectedSensorPosition());
-        SmartDashboard.putNumber("rMaster", rMaster.getSelectedSensorPosition());
-        SmartDashboard.putNumber("NavX", RobotContainer.navX.getAngle());
-        SmartDashboard.putNumber("Drive Governor", govener);
-    }
-
     public void resetEncoders() {
         lMaster.setSelectedSensorPosition(0);
         rMaster.setSelectedSensorPosition(0);
     }
 
     /**
-     * returns sensor position.
+     * returns value of left encoder
      * 
-     * @return
+     * @return the value of the left encoder
      */
     public int getEncoderValue() {
         return lMaster.getSelectedSensorPosition();
     }
 
     /**
-     * resets encoder value.
+     * Returns true if the back omnis are engaged
+     * @return true if the bacl omnis are engaged
      */
-    public void resetEncoder() {
-        lMaster.getSelectedSensorPosition(0);
-        rMaster.getSelectedSensorPosition(0);
-    }
-
     public boolean areBackOminsEngaged() {
         return backOmnisSolenoid.get() == Constants.BACK_OMNIS_ENGAGED;
     }
 
-    //Can't turn with them engaged
+    /**
+     * Engages the back omni wheels
+     */
     public void engageBackOmnis(){
         backOmnisSolenoid.set(Constants.BACK_OMNIS_ENGAGED);
     }
 
+    /**
+     * Disengaged the back omni wheels
+     */
     public void disengageBackOmnis() {
         backOmnisSolenoid.set(Constants.BACK_OMNIS_DISENGAGED);
     }
 
+    /**
+     * Outputs info to the SmartDashboard
+     */
     @Override
     public void periodic() {
-        encoderTest();
+        SmartDashboard.putNumber("lMaster", lMaster.getSelectedSensorPosition());
+        SmartDashboard.putNumber("rMaster", rMaster.getSelectedSensorPosition());
+        SmartDashboard.putNumber("NavX", RobotContainer.navX.getAngle());
+        SmartDashboard.putNumber("Drive Governor", govener);
         m_odometry.update(Rotation2d.fromDegrees(RobotContainer.navX.getAngle()),
                 lMaster.getSelectedSensorPosition() * Constants.METERS_PER_TICK,
                 rMaster.getSelectedSensorPosition() * Constants.METERS_PER_TICK);
@@ -178,9 +193,7 @@ public class DriveTrain extends SubsystemBase {
     }
 
     /**
-     * 
-     * stops motors.
-     * 
+     * Stops the drivetrain
      */
     public void stop() {
         lMaster.stopMotor();

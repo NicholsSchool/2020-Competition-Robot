@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.commands.AutoShoot;
-import frc.robot.commands.Shoot;
 import frc.robot.commands.VisionPIDTurn;
 
 /**

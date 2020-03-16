@@ -6,27 +6,32 @@ public class NavX {
 
     private AHRS navX;
 
+    /**
+     * Creates a new NavX instance
+     * @param ahrs the AHRS instance to use
+     */
     public NavX(AHRS ahrs) {
         this.navX = ahrs;
     }
     /**
-     *  returns the angle to be displayed through smart dashboard.
-     * @return
+     * Returns the current angle of the robot
+     * 
+     * @return the current angle of the robot
      */
     public double getAngle() {
         return navX.getYaw();
 
     }
     /**
-     * returns if at desired spot.
-     * @param angle - current angle
-     * @return
+     * returns true if at desired angle
+     * @param angle angle to compare
+     * @return true if at desired angle
      */
     public boolean atAngle(double angle) {
         return (getAngle() < angle + 5 && getAngle() > angle - 5);
     }
     /**
-     * resets navX
+     * Resets navX
      */
     public void reset() {
         navX.reset();
