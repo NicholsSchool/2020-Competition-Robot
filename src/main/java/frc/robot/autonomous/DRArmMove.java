@@ -5,20 +5,21 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.autonomous;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.RobotContainer;
 
-public class TakeIn extends CommandBase {
+public class DRArmMove extends CommandBase {
+  private boolean moveUp;
   /**
-   * Creates a new TakeIn.
+   * Creates a new DRArmMove.
    */
-  public TakeIn() 
-  {
+  public DRArmMove(boolean moveUp) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotContainer.intake);
-    
+    addRequirements(RobotContainer.dart);
+    this.moveUp = moveUp;
   }
 
   // Called when the command is initially scheduled.
@@ -28,16 +29,17 @@ public class TakeIn extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() 
-  {
-    RobotContainer.intake.takeIn();
+  public void execute() {
+    if(moveUp)
+      RobotContainer.dart.move(Constants.DART_SPEED);
+    else
+      RobotContainer.dart.move(-Constants.DART_SPEED);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) 
-  {
-    RobotContainer.intake.stop();
+  public void end(boolean interrupted) {
+    RobotContainer.dart.stop();
   }
 
   // Returns true when the command should end.

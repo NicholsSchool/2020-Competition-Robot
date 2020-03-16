@@ -11,43 +11,42 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 
 public class UnloadQueuer extends CommandBase {
-  /**
-   * Creates a new UnloadQueuer.
-   */
-  public UnloadQueuer() {
-    // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotContainer.queuer);
-    addRequirements(RobotContainer.intake);
-  }
+    /**
+     * Creates a new UnloadQueuer.
+     */
+    public UnloadQueuer() {
+        // Use addRequirements() here to declare subsystem dependencies.
+        addRequirements(RobotContainer.queuer);
+    }
 
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {
-    
-  }
+    // Called when the command is initially scheduled.
+    @Override
+    public void initialize() {
 
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
-    if(RobotContainer.shooter.isAtVelocity())
-        RobotContainer.queuer.unload();
-  }
+    }
 
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {
-    RobotContainer.queuer.stop();
-    RobotContainer.intake.stop();
-  }
+    // Called every time the scheduler runs while the command is scheduled.
+    @Override
+    public void execute() {
+        if (RobotContainer.shooter.isAtVelocity())
+            RobotContainer.queuer.unload();
+    }
 
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    boolean isEmpty = true;
-    boolean[] sensorValues = RobotContainer.irSystem.getValues();
-    for(boolean b : sensorValues)
-      if(!b)
-        isEmpty = false;
-      return isEmpty;
-  }
+    // Called once the command ends or is interrupted.
+    @Override
+    public void end(boolean interrupted) {
+        RobotContainer.queuer.stop();
+    }
+
+    // Returns true when the command should end.
+    @Override
+    public boolean isFinished() {
+        if(RobotContainer.irSensorOveride)
+            return false;
+        boolean[] sensorValues = RobotContainer.irSystem.getValues();
+        for (boolean b : sensorValues)
+            if (!b)
+                return false;
+        return true;
+    }
 }

@@ -12,26 +12,26 @@ import frc.robot.RobotContainer;
 
 public class PlayMusic extends CommandBase {
 
-  public PlayMusic() {
-    addRequirements(RobotContainer.shooter);
-  }
+    public PlayMusic() {
+        addRequirements(RobotContainer.shooter);
+    }
 
-  @Override
-  public void initialize() {
-    RobotContainer.shooter.playMusic();
-  }
+    @Override
+    public void initialize() {
+        RobotContainer.shooter.playMusic();
+    }
 
-  @Override
-  public void execute() {
-  }
+    @Override
+    public void execute() {
+    }
 
-  @Override
-  public void end(boolean interrupted) {
-    RobotContainer.shooter.stopMusic();
-  }
+    @Override
+    public void end(boolean interrupted) {
+        RobotContainer.shooter.stopMusic();
+    }
 
-  @Override
-  public boolean isFinished() {
-    return false;
-  }
+    @Override
+    public boolean isFinished() {
+        return false;
+    }
 }

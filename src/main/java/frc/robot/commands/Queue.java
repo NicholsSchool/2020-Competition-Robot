@@ -7,40 +7,46 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 
 public class Queue extends CommandBase {
-  /**
-   * Creates a new Queue.
-   */
-  public Queue() {
-    // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotContainer.queuer);
-  }
+    private String key = "Queuing";
+    /**
+     * Creates a new Queue.
+     */
+    public Queue() {
+        // Use addRequirements() here to declare subsystem dependencies.
+        addRequirements(RobotContainer.queuer);
+    }
 
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {
-  }
+    // Called when the command is initially scheduled.
+    @Override
+    public void initialize() {
+        SmartDashboard.putBoolean(key, true);
+    }
 
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
-    System.out.println("Queueing ball");
-    RobotContainer.queuer.queue();
-  }
+    // Called every time the scheduler runs while the command is scheduled.
+    @Override
+    public void execute() {
+        System.out.println("In Queue Execute");
+        RobotContainer.queuer.queue();
+    }
 
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {
-    System.out.println("Stopping Queue");
-    RobotContainer.queuer.stop();
-  }
+    // Called once the command ends or is interrupted.
+    @Override
+    public void end(boolean interrupted) {
+        RobotContainer.queuer.stop();
+        SmartDashboard.putBoolean(key, false);
+    }
 
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return RobotContainer.queuer.checkQueuer();
-  }
+    // Returns true when the command should end.
+    @Override
+    public boolean isFinished() {
+        System.out.println("In Queue Is Finshed");
+        if(RobotContainer.irSensorOveride)
+            return true;
+        return RobotContainer.queuer.checkQueuer();
+    }
 }

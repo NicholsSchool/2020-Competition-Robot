@@ -5,56 +5,49 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.autonomous;
+package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
 import frc.robot.RobotContainer;
 
-public class BBDrive extends CommandBase {
-    public double desiredDistance;
-    public double speed;
-
+public class ShootOne extends CommandBase {
     /**
-     * Creates a new BBDrive.
+     * Creates a new ShootOne.
      */
-    public BBDrive(double dst, double spd) {
-        desiredDistance = dst / Constants.INCHES_PER_TICK;
-        speed = spd;
-        addRequirements(RobotContainer.driveTrain);
+    public ShootOne() {
         // Use addRequirements() here to declare subsystem dependencies.
+        addRequirements(RobotContainer.shooter);
+        addRequirements(RobotContainer.queuer);
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        RobotContainer.driveTrain.resetEncoders();
-        System.out.println("Target distance: " + desiredDistance);
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        double delta = desiredDistance - RobotContainer.driveTrain.getEncoderValue();
-
-        if (delta > 0) {
-            RobotContainer.driveTrain.move(speed, speed * Constants.DRIVE_TRAIN_EQUALIZIER);
-        } else {
-            RobotContainer.driveTrain.move(-speed, -speed * Constants.DRIVE_TRAIN_EQUALIZIER);
-        }
-
+        RobotContainer.shooter.shoot();
+        if (RobotContainer.shooter.isAtVelocity())
+            RobotContainer.queuer.unloadOne();
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        RobotContainer.driveTrain.stop();
+        RobotContainer.shooter.stop();
+        RobotContainer.queuer.stop();
+        // RobotContainer.c0.setRumble(RumbleType.kRightRumble, 1);
+        // RobotContainer.c1.setRumble(RumbleType.kRightRumble, 1);
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        double delta = desiredDistance - RobotContainer.driveTrain.getEncoderValue();
-        return Math.abs(delta) < Constants.AUTO_DRIVE_TOLERANCE;
+        if (RobotContainer.irSensorOveride)
+            return false;
+        boolean[] values = RobotContainer.irSystem.getValues();
+        return values[values.length - 1];
     }
 }
