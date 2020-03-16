@@ -42,7 +42,7 @@ public class PIDDrive extends PIDCommand {
     @Override
     public void initialize() {
         super.initialize();
-        RobotContainer.driveTrain.resetEncoder();
+        RobotContainer.driveTrain.resetEncoders();
     }
 
     // Returns true when the command should end.

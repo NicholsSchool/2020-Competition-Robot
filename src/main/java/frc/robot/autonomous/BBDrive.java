@@ -28,7 +28,7 @@ public class BBDrive extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        RobotContainer.driveTrain.resetEncoder();
+        RobotContainer.driveTrain.resetEncoders();
         System.out.println("Target distance: " + desiredDistance);
     }
 

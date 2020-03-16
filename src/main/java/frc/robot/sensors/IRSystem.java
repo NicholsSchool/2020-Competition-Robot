@@ -7,7 +7,6 @@
 
 package frc.robot.sensors;
 
-import java.util.Arrays;
 
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;

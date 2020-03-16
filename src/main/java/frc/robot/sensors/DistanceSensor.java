@@ -12,7 +12,6 @@ import com.revrobotics.Rev2mDistanceSensor.Port;
 import com.revrobotics.Rev2mDistanceSensor.Unit;
 import com.revrobotics.Rev2mDistanceSensor.RangeProfile;
 
-import frc.robot.Constants;
 
 public class DistanceSensor {
 
