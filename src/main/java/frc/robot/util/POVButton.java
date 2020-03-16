@@ -10,18 +10,29 @@ package frc.robot.util;
 import edu.wpi.first.wpilibj2.command.button.Button;
 
 /**
- * Add your docs here.
+ * This class is used to allow the behavior of an XboxController's POV controls (DPAD) to 
+ * be controlled like any other button
  */
 public class POVButton extends Button{
 
     private XboxController controller;
     private int povValue;
+
+    /**
+     * Creates a new POVButton instance
+     * @param controller the controller to link to
+     * @param povValue the value for the button
+     */
     public POVButton( XboxController controller, int povValue)
     {
         this.controller = controller;
         this.povValue = povValue;
     }
     
+    /**
+     * Returns true if the button is pressed
+     * @return true if the button is pressed
+     */
     @Override
     public boolean get() {
         return controller.getPOV() == povValue;

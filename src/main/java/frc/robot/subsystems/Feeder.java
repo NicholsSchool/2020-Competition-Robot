@@ -17,7 +17,7 @@ public class Feeder extends SubsystemBase {
 
     private WPI_TalonSRX feederMotor;
     /**
-     * Creates a new Feeder.
+     * Creates a new Feeder instance
      */
     public Feeder() {
         feederMotor = new WPI_TalonSRX(RobotMap.FEEDER_MOTOR_ID);
@@ -25,26 +25,43 @@ public class Feeder extends SubsystemBase {
         feederMotor.setInverted(true);
     }
 
+    /**
+     * Spits out balls in the system
+     */
     public void spitOut()
     {
         move(Constants.FEEDER_SPIT_OUT_SPEED);
     }
 
+    /**
+     * Feeds in balls to the system
+     */
     public void feed()
     {
         move(Constants.FEEDER_FEED_SPEED);
     }
 
+    /**
+     * Moves the feeder motor at the given speed
+     * 
+     * @param speed the speed to move the feeder motor
+     */
     public void move(double speed)
     {
         feederMotor.set(speed);
     }
 
+    /**
+     * Stops the feeder
+     */
     public void stop()
     {
         feederMotor.stopMotor();
     }
 
+     /**
+     * Outputs info to the SmartDashboard
+     */
     @Override
     public void periodic() {
     // This method will be called once per scheduler run

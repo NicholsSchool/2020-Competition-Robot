@@ -27,9 +27,8 @@ public class Queuer extends SubsystemBase {
     private long lastUpdateTime;
 
     /**
-     *  Constructor Method creating motors 
+     *  Creates a new Queuer instance
      */
-
     public Queuer() {
 
         lock1 = new WPI_TalonSRX(RobotMap.INTAKE_ID);
@@ -55,21 +54,19 @@ public class Queuer extends SubsystemBase {
     }
 
     /**
-     * @param speed paramater to input the speed of all the motors
-     * 
-     *  Method moving all the motors at the same speed
+     * Moves all the locks at the given speed
+     * @param speed  the speed to move all the locks at
      */
-
     public void moveAll(double speed) {
         for (int i = 0; i < locks.length; i++)
             locks[i].set(speed);
     }
 
     /**
-     * @param speed parameter to input the speed of the motors
-     * @param index parameter for the index of the motor you want to move
+     * Moves the specified lock at the given speed
      * 
-     *  Method that moves one motor within the queuer class
+     * @param speed  the speed to move the lock at
+     * @param index  the index of the lock to move
      */
 
     public void move(double speed, int index) {
@@ -79,47 +76,61 @@ public class Queuer extends SubsystemBase {
     }
 
     /**
-     * @return boolean to see if the ball is in place 
+     * returns true if all balls are in the correct state within the queuer system
      * 
-     *  Checking the queuer as to see if there is a ball in the locks
+     * @return true if all balls are in the correct state within the queuer system
      */
-
     public boolean checkQueuer()
     {
         boolean[] sensorValues = RobotContainer.irSystem.getValues();
         boolean falseFound = false;
+        // We start from the entry point of the system and work are way up
         for(int i = 0; i < sensorValues.length; i ++)
         {
-            if(!sensorValues[i])
+            if(!sensorValues[i]) // If we find a false value, that means we have found a ball in the system
                 falseFound = true;
 
-            if(falseFound && sensorValues[i])
+            // If we found a ball and now we see an empty spot, the ball was in the
+            // incorrect state
+            if(falseFound && sensorValues[i]) 
                 return false;
         }
         return true;
     }
 
+    /**
+     * Queues the balls in the system
+     */
     public void queue() {
         
         updateNumberOfBalls();
         for(int i = 0; i < locks.length - 1; i ++) // -1 because lock5 should not spin
         {
-            if(i >= locks.length - numBallsInCorrectPos - 1)
+            // Don't move locks which have balls in the correct position
+            if(i >= locks.length - numBallsInCorrectPos - 1) 
                 move(0, i);
             else
                 move(Constants.QUEUE_MOVE_SPEED, i);
         }
     }
     
+    /**
+     * Shoots one ball (possibly two)
+     */
     public void unloadOne()
     {
         move(Constants.QUEUE_MOVE_SPEED, locks.length - 1);
         move(Constants.QUEUE_MOVE_SPEED, locks.length - 2);
     }
 
+    /**
+     * Unloads the balls in the system upwards for the shooter to shoot them
+     */
     public void unload()
     {
         boolean[] sensorValues = RobotContainer.irSystem.getValues();
+
+        // Move everything regardless of sensors if driver has override on
         if(RobotContainer.irSensorOveride)
         {
             moveAll(Constants.QUEUE_UNLOAD_SPEED);
@@ -129,6 +140,7 @@ public class Queuer extends SubsystemBase {
         {
             if(i + 1 >= sensorValues.length) // lock5 should always move when shooting
                 move(Constants.QUEUE_UNLOAD_SPEED, i); 
+            //If the next position is empty and the current position has a ball, then move these locks
             else if(sensorValues[i + 1] && !sensorValues[i])  
             {
                 move(Constants.QUEUE_UNLOAD_SPEED, i + 1);
@@ -137,14 +149,17 @@ public class Queuer extends SubsystemBase {
             else 
                 move(0, i);
         }
-        //If the top sensor isn't broken, the ball must stuck at the fourth lock as well, so move that
+        //If the top sensor isn't broken, the ball must be stuck at the fourth lock as well, so move that
         if(!sensorValues[sensorValues.length - 1])
             move(Constants.QUEUE_UNLOAD_SPEED, 3);
     }
 
-
+    /**
+     * Updates the number of balls in the correct position within the system
+     */
     public void updateNumberOfBalls()
     {
+        // Delay update if necessarry 
         if(System.currentTimeMillis() - lastUpdateTime < Constants.QUEUE_DELAY_TIME * 1000)
             return;
         if (RobotContainer.irSensorOveride)
@@ -155,6 +170,8 @@ public class Queuer extends SubsystemBase {
      
         int totalBalls = 0;
         boolean[] sensorValues = RobotContainer.irSystem.getValues();
+        // Loop from the top of the system downwards and count the balls. 
+        // If a ball is not there, then stop counting
         for(int i = sensorValues.length - 1; i >= 0; i --)
         {
             if(!sensorValues[i])
@@ -167,24 +184,38 @@ public class Queuer extends SubsystemBase {
  
     }
 
-
+    /**
+     * Returns the number of balls in correct position within the system
+     * 
+     * @return the number of balls in correct position within the system
+     */
     public int getNumberBallsInCorrectPosition()
     {
         return numBallsInCorrectPos;
     }
 
+    /**
+     * Agitates the system upwards
+     */
     public void agitate()
     {
         for(int i = 0; i < locks.length; i ++)
             move(Constants.QUEUER_AGITATE_SPEED, i);
     }
 
+    /**
+     * Agitates the system downwards
+     */
     public void reverseAgitate()
     {
         for (int i = 0; i < locks.length; i++)
             move(-Constants.QUEUER_AGITATE_SPEED, i);
     }
 
+    /**
+     * Returns true if the system is empty
+     * @return true if the system is empty
+     */
     public boolean isEmpty()
     {
         boolean[] values = RobotContainer.irSystem.getValues();
@@ -194,30 +225,33 @@ public class Queuer extends SubsystemBase {
         return true;
     }
 
+    /**
+     * Returns true if the system is full with 5 balls
+     * 
+     * @return true if the system is full with 5 balls
+     */
     public boolean isFull()
     {
         return numBallsInCorrectPos == locks.length;
     }
 
     /**
-     * Sets the intake motor values to INTAKE_SPEED, a double value in the Constants
-     * class.
+     * Intakes balls from lock1
      */
     public void intake() {
         move(Constants.INTAKE_SPEED, 0);
     }
 
     /**
-     * Does the same thing as intake(), but in the other direction.
+     * Outtakes balls from lock1
      */
     public void outtake() {
         move(-Constants.INTAKE_SPEED, 0);
     }
 
     /**
-     *  Method stopping each lock motor
+     * Stops all locks
      */
-
     public void stop()
     {
         lock1.stopMotor();
@@ -227,15 +261,17 @@ public class Queuer extends SubsystemBase {
         lock5.stopMotor();
     }
 
+    /**
+     * Stops intaking (lock 1)
+     */
     public void stopIntake()
     {
         lock1.stopMotor();
     }
 
     /**
-     *  Method getting the current of each lock motor 
+     * Outputs info to the SmartDashboard
      */
-
     @Override
     public void periodic() {
       //  SmartDashboard.putNumber("Balls in Correct Position", numBallsInCorrectPos);

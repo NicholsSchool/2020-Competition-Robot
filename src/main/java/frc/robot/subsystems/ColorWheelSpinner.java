@@ -35,7 +35,7 @@ public class ColorWheelSpinner extends SubsystemBase {
     }
 
     /**
-     * spins Color Wheel Spinner.
+     * spins the Color Wheel Spinner.
      */
     public void spin() {
         move(Constants.CWS_SPINNER_SPEED);
@@ -47,7 +47,7 @@ public class ColorWheelSpinner extends SubsystemBase {
     }
 
     /**
-     * stops spinner
+     * Stops color wheel spinner
      */
     public void stop() {
         cWSMotor.stopMotor();

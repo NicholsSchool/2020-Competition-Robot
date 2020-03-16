@@ -11,14 +11,15 @@ import edu.wpi.first.cameraserver.CameraServer;
 
 public class Cameras extends Thread {
 
-    // private UsbCamera cam;
-    // private VideoSink server;
 
-    CameraServer cs;
-    UsbCamera cam;
+    private CameraServer cs;
+    private UsbCamera cam;
 
     private long timeOfLastFrame;
 
+    /**
+     * Creates a new Cameras instance
+     */
     public Cameras() {
         cs = CameraServer.getInstance();
         cam = cs.startAutomaticCapture("cam0", 0);
@@ -28,6 +29,9 @@ public class Cameras extends Thread {
         timeOfLastFrame = 0;
     }
 
+    /**
+     * Displays camera footage at a set FPS
+     */
     @Override
     public void run() {
         CvSink sink = cs.getVideo();
