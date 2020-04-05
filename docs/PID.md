@@ -30,4 +30,11 @@ The Integral is the area under any given curve. The I term multiplies itself wit
 
 
 ## Tuning
-There are lots of guides explaining tuning
+There are lots of guides explaining tuning for PID loops. You can follow the [WPI guide](https://docs.wpilib.org/en/latest/docs/software/advanced-control/introduction/tuning-pid-controller.html) or if you are tuning talon, then use the [CTRE Guide](https://phoenix-documentation.readthedocs.io/en/latest/ch16_ClosedLoop.html#velocity-closed-loop-control-mode). 
+
+This is the way our team has tuned loops in the past:
+
+1. Set all values to 0
+2. Increase F until the mechanism is barely moving
+3. Increase P till it gets to the desired state
+4. If there is oscilation increase D (not normally needed)
