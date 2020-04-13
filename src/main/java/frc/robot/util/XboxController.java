@@ -1,6 +1,7 @@
 package frc.robot.util;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
@@ -78,6 +79,67 @@ public class XboxController extends Joystick{
     public double getRightY()
     {
         return -getRawAxis(5);
+    }
+
+    /**
+     * This class is used to allow the behavior of an XboxController's Trigger to be
+     * controlled like any other button
+     */
+    public class Trigger extends Button {
+        private XboxController controller;
+        private int axisID;
+
+        /**
+         * Creates a Trigger instance
+         * 
+         * @param controller the controller to link to
+         * @param axisID     the axis id of the desired trigger
+         */
+        public Trigger(XboxController controller, int axisID) {
+            this.controller = controller;
+            this.axisID = axisID;
+        }
+
+        /**
+         * returns true if the trigger is pressed down
+         * 
+         * @return true if the trigger is pressed down
+         */
+        @Override
+        public boolean get() {
+            return controller.getRawAxis(axisID) > 0.75;
+        }
+    }
+
+    /**
+     * This class is used to allow the behavior of an XboxController's POV controls
+     * (DPAD) to be controlled like any other button
+     */
+    public class POVButton extends Button {
+
+        private XboxController controller;
+        private int povValue;
+
+        /**
+         * Creates a new POVButton instance
+         * 
+         * @param controller the controller to link to
+         * @param povValue   the value for the button
+         */
+        public POVButton(XboxController controller, int povValue) {
+            this.controller = controller;
+            this.povValue = povValue;
+        }
+
+        /**
+         * Returns true if the button is pressed
+         * 
+         * @return true if the button is pressed
+         */
+        @Override
+        public boolean get() {
+            return controller.getPOV() == povValue;
+        }
     }
 
 }
