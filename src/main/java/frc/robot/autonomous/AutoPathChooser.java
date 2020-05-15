@@ -14,7 +14,7 @@ import frc.robot.commands.AutoShoot;
 import frc.robot.commands.VisionPIDTurn;
 
 /**
- * Add your docs here.
+ * Class which creates and lets you choose Auto Paths
  */
 public class AutoPathChooser {
     private static final double BB_DRIVE_SPEED = 0.55;
@@ -32,13 +32,13 @@ public class AutoPathChooser {
         switch(dial)
         {
             case 0:
-                return getShootPath();
+                return driveFirstThenShoot();
             case 1: 
-                return getShootPath2();
+                return shootFirstHigherAngle();
             case 2: 
-                return getShootPath3();
+                return shootFirstLowerAngle();
             case 3:
-                return getShootPath4();
+                return noVisionShoot();
             case 4:
                 return layupPath();
             case 5:
@@ -57,7 +57,7 @@ public class AutoPathChooser {
     /*
         No vision align, at an angle, a little in front of line
     */
-    private static CommandBase getShootPath4()
+    private static CommandBase noVisionShoot()
     {
         int dartMoveValue = 345;
         if (RobotContainer.app.isSwitchPressed())
@@ -76,7 +76,7 @@ public class AutoPathChooser {
     /*
      * Used for vision align and directly at an angle for the goal 
      */
-    private static CommandBase getShootPath3()
+    private static CommandBase shootFirstLowerAngle()
     {
         int PID_DART_MOVE_VALUE = 345;
         return getShootFirstPath(PID_DART_MOVE_VALUE);
@@ -86,7 +86,7 @@ public class AutoPathChooser {
     /*
     Used for vision align and directly in front of goal
     */
-    private static CommandBase getShootPath2()
+    private static CommandBase shootFirstHigherAngle()
     {
         int PID_DART_MOVE_VALUE = 355; 
         return getShootFirstPath(PID_DART_MOVE_VALUE);
@@ -109,7 +109,7 @@ public class AutoPathChooser {
     }
 
 
-    private static CommandBase getShootPath()
+    private static CommandBase driveFirstThenShoot()
     {
         int PID_DART_MOVE_VALUE = 345;
         if(RobotContainer.app.isSwitchPressed())
