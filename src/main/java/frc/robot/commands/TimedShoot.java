@@ -52,6 +52,10 @@ public class TimedShoot extends CommandBase {
             for (int i = 0; i < ballsInSystem; i++) {
                 if (timeElapsed() >= shootGap * i) {
                     System.out.println("Unloading: " + (4 - i));
+                    // We are doing "4 - i" because we want to start shooting from the top
+                    // The reason we didn't loop starting from the top, is because we took advantage
+                    // of the ability to check if each motor's time to go had passed (look at if
+                    // statement)
                     RobotContainer.queuer.move(Constants.QUEUE_UNLOAD_SPEED, 4 - i);
                 }
             }
