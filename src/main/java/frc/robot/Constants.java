@@ -63,7 +63,7 @@ public final class Constants {
 
     public static final int CAMERA_WIDTH = 320;
     public static final int CAMERA_HEIGHT = 240;
-    public static final int FRAME_RATE = 60;
+    public static final int CAMERA_FRAME_RATE = 60;
 
     public static final String MUSIC_FILE = "megalovania.chrp";
     public static final boolean BREAK_SWITCH_ENGAGE = true;
